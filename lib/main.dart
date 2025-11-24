@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'recepcionista/recepcionista_dashboard.dart';
+import 'Recepcionista/recepcionist_dashboard.dart';
 
 void main() {
   runApp(const MyApp());
