@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-//import 'farmacia/dashboard.dart';
-import 'medico/dashboard_medico.dart';
+import 'farmacia/dashboard.dart';
+//import 'medico/dashboard_medico.dart';
 
 void main() {
   runApp(const ProyectoHospitalApp());
@@ -24,7 +24,8 @@ class ProyectoHospitalApp extends StatelessWidget {
         useMaterial3: false,
       ),
       // 👇 Ya no usamos rutas ni initialRoute, solo un home.
-      home: const DoctorDashboardScreen(),
+      //home: const DoctorDashboardScreen(),
+      home: const DashboardScreen(),
     );
   }
 }
