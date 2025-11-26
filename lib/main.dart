@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'farmacia/dashboard.dart';
-//import 'medico/dashboard_medico.dart';
 
 void main() {
   runApp(const ProyectoHospitalApp());
@@ -13,7 +11,10 @@ class ProyectoHospitalApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData base = ThemeData.light();
+    // Aquí indicamos si queremos Material 3 o no
+    final ThemeData base = ThemeData.light(
+      useMaterial3: false, // 👈 ahora se configura en el constructor
+    );
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -21,10 +22,8 @@ class ProyectoHospitalApp extends StatelessWidget {
       theme: base.copyWith(
         textTheme: GoogleFonts.archivoNarrowTextTheme(base.textTheme),
         scaffoldBackgroundColor: Colors.white,
-        useMaterial3: false,
+        // ya NO ponemos useMaterial3 aquí
       ),
-      // 👇 Ya no usamos rutas ni initialRoute, solo un home.
-      //home: const DoctorDashboardScreen(),
       home: const DashboardScreen(),
     );
   }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "501174918096",
+    "project_id": "gestor-hospital-bd",
+    "storage_bucket": "gestor-hospital-bd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501174918096:android:28814c7d5af87d50cfb7d5",
+        "android_client_info": {
+          "package_name": "com.example.hospital_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiw9wON-99uLFi3IxhfYWojZSnDMP-Hik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
