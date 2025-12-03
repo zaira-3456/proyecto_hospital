@@ -1,0 +1,8 @@
+Analyzing proyecto_hospital...                                  
+
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\medico\widgets\dialogos_medico.dart:71:40 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\medico\widgets\dialogos_medico.dart:306:34 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\medico\widgets\dialogos_medico.dart:332:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\medico\widgets\dialogos_medico.dart:481:34 - deprecated_member_use
+
+4 issues found. (ran in 40.5s)
