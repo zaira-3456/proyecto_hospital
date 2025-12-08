@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Recepcionista/recepcionist_dashboard.dart';
+import 'recepcionist_dashboard.dart';
 import 'models/cita_models.dart';
 import 'services/cita_data_service.dart';
 import 'services/appointments_service.dart';

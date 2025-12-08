@@ -61,193 +61,154 @@ class _GestionCitasPageState extends State<GestionCitasPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          double width = constraints.maxWidth;
-          bool isMobile = width < 850;
-          bool isTablet = width >= 850 && width < 1280;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double width = constraints.maxWidth;
+        bool isMobile = width < 850;
+        bool isTablet = width >= 850 && width < 1280;
 
-          double horizontalPadding = isMobile ? 20 : (isTablet ? 30 : 50);
-          double headerFontSize = isMobile ? 28 : (isTablet ? 34 : 40);
-          double subtitleFontSize = isMobile ? 14 : (isTablet ? 16 : 18);
-          double titleFontSize = isMobile ? 20 : (isTablet ? 24 : 28);
+        double horizontalPadding = isMobile ? 20 : (isTablet ? 30 : 50);
+        double headerFontSize = isMobile ? 20 : 24;
+        double subtitleFontSize = 14;
+        double titleFontSize = isMobile ? 18 : 20;
 
-          return Row(
-            children: [
-              if (!isMobile) const SideMenuReception(),
+        return Column(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+                vertical: isMobile ? 20 : 24,
+              ),
+              decoration: const BoxDecoration(color: Color(0xFFFFFFFF)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Gestión de Citas',
+                    style: TextStyle(
+                      fontFamily: 'Archivo',
+                      fontSize: headerFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Edita o cancela tus citas confirmadas',
+                    style: TextStyle(
+                      fontFamily: 'Archivo',
+                      fontSize: subtitleFontSize,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
-              Expanded(
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.all(horizontalPadding),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: horizontalPadding,
-                        vertical: isMobile ? 20 : 30,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.grey.shade300,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      decoration: const BoxDecoration(color: Color(0xFFFFFFFF)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (isMobile)
-                            Row(
-                              children: [
-                                Builder(
-                                  builder: (context) => IconButton(
-                                    icon: const Icon(Icons.menu, size: 28),
-                                    onPressed: () {
-                                      Scaffold.of(context).openDrawer();
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    'Gestión de Citas',
-                                    style: TextStyle(
-                                      fontFamily: 'Archivo',
-                                      fontSize: headerFontSize,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          else
-                            Text(
-                              'Gestión de Citas',
-                              style: TextStyle(
-                                fontFamily: 'Archivo',
-                                fontSize: headerFontSize,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                              ),
-                            ),
-                          SizedBox(height: isMobile ? 5 : 10),
-                          Text(
-                            'Edita o cancela tus citas confirmadas',
-                            style: TextStyle(
-                              fontFamily: 'Archivo',
-                              fontSize: subtitleFontSize,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black87,
-                            ),
+                      child: TextField(
+                        controller: _searchController,
+                        onChanged: _onSearchChanged,
+                        decoration: const InputDecoration(
+                          hintText: 'Buscar cita...',
+                          hintStyle: TextStyle(
+                            fontFamily: 'Archivo',
+                            fontSize: 16,
+                            color: Colors.grey,
                           ),
-                        ],
-                      ),
-                    ),
-
-                    Expanded(
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.all(horizontalPadding),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: Colors.grey.shade300,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: TextField(
-                                controller: _searchController,
-                                onChanged: _onSearchChanged,
-                                decoration: const InputDecoration(
-                                  hintText: 'Buscar cita...',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Archivo',
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                  ),
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    color: Colors.grey,
-                                  ),
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 14,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            const SizedBox(height: 30),
-
-                            Text(
-                              'Todas las Citas',
-                              style: TextStyle(
-                                fontFamily: 'Archivo',
-                                fontSize: titleFontSize,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                              ),
-                            ),
-
-                            const SizedBox(height: 25),
-
-                            if (_isLoading)
-                              const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(50),
-                                  child: CircularProgressIndicator(
-                                    color: Color(0xFF1991DB),
-                                  ),
-                                ),
-                              )
-                            else if (_citasFiltradas.isEmpty)
-                              const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(50),
-                                  child: Text(
-                                    'No se encontraron citas',
-                                    style: TextStyle(
-                                      fontFamily: 'Archivo',
-                                      fontSize: 18,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            else
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: _citasFiltradas.length,
-                                itemBuilder: (context, index) {
-                                  return _CitaCard(
-                                    cita: _citasFiltradas[index],
-                                    isMobile: isMobile,
-                                    onEdit: () =>
-                                        _showEditDialog(_citasFiltradas[index]),
-                                    onCancel: () => _showCancelDialog(
-                                      _citasFiltradas[index],
-                                    ),
-                                    onDelete: () =>
-                                        _confirmDelete(_citasFiltradas[index]),
-                                  );
-                                },
-                              ),
-                          ],
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 14,
+                          ),
                         ),
                       ),
                     ),
+
+                    const SizedBox(height: 30),
+
+                    Text(
+                      'Todas las Citas',
+                      style: TextStyle(
+                        fontFamily: 'Archivo',
+                        fontSize: titleFontSize,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                      ),
+                    ),
+
+                    const SizedBox(height: 25),
+
+                    if (_isLoading)
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(50),
+                          child: CircularProgressIndicator(
+                            color: Color(0xFF1991DB),
+                          ),
+                        ),
+                      )
+                    else if (_citasFiltradas.isEmpty)
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(50),
+                          child: Text(
+                            'No se encontraron citas',
+                            style: TextStyle(
+                              fontFamily: 'Archivo',
+                              fontSize: 18,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                      )
+                    else
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _citasFiltradas.length,
+                        itemBuilder: (context, index) {
+                          return _CitaCard(
+                            cita: _citasFiltradas[index],
+                            isMobile: isMobile,
+                            onEdit: () =>
+                                _showEditDialog(_citasFiltradas[index]),
+                            onCancel: () => _showCancelDialog(
+                              _citasFiltradas[index],
+                            ),
+                            onDelete: () =>
+                                _confirmDelete(_citasFiltradas[index]),
+                          );
+                        },
+                      ),
                   ],
                 ),
               ),
-            ],
-          );
-        },
-      ),
-
-      drawer: const Drawer(child: SideMenuReception(isDrawer: true)),
+            ),
+          ],
+        );
+      },
     );
   }
 

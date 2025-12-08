@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/finance_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/financial_models.dart';
 import '../services/database_service.dart';
 import '../widgets/finance_sidebar.dart';
@@ -119,7 +121,10 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
       backgroundColor: Colors.grey.shade50,
       appBar: isSmallScreen
           ? AppBar(
-              title: const Text('Panel Financiero'),
+              title: Text(
+                'Panel Financiero',
+                style: GoogleFonts.archivo(),
+              ),
               backgroundColor: const Color(0xFF00BCD4),
               foregroundColor: Colors.white,
             )
@@ -178,22 +183,22 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Panel Financiero',
-                                  style: TextStyle(
-                                    fontSize: isSmallScreen ? 20 : 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                  ),
+                              Text(
+                                'Panel Financiero',
+                                style: GoogleFonts.archivo(
+                                  fontSize: isSmallScreen ? 20 : 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
                                 ),
+                              ),
                                 const SizedBox(height: 4),
-                                Text(
-                                  'Bienvenido, ${widget.user.name}',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey.shade600,
-                                  ),
+                              Text(
+                                'Bienvenido, ${widget.user.name}',
+                                style: GoogleFonts.archivoNarrow(
+                                  fontSize: 14,
+                                  color: Colors.grey.shade600,
                                 ),
+                              ),
                               ],
                             ),
                             IconButton(
@@ -437,3 +442,5 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
     );
   }
 }
+
+

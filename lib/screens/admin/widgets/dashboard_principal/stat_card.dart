@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class StatCard extends StatelessWidget {
   final String title;
@@ -61,7 +62,7 @@ class StatCard extends StatelessWidget {
                       title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: GoogleFonts.archivo(
                         fontSize: isSmall ? 13 : 15,
                         fontWeight: FontWeight.w600,
                         color: const Color(0xff32465a),
@@ -73,7 +74,7 @@ class StatCard extends StatelessWidget {
 
                     Text(
                       value,
-                      style: TextStyle(
+                      style: GoogleFonts.archivo(
                         fontSize: isSmall ? 26 : 32,
                         fontWeight: FontWeight.bold,
                         color: const Color(0xff0d1b2a),
@@ -84,7 +85,7 @@ class StatCard extends StatelessWidget {
 
                     Text(
                       subtext,
-                      style: TextStyle(
+                      style: GoogleFonts.archivoNarrow(
                         fontSize: isSmall ? 13 : 14,
                         color: Colors.grey.shade600,
                       ),

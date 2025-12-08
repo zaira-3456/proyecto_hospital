@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FinanceSidebar extends StatelessWidget {
   final String selectedMenu;
@@ -16,17 +18,17 @@ class FinanceSidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 280,
-      color: const Color(0xFFB3E5FC), // Light cyan background
+      color: kFLightBlue, // Light cyan background
       child: Column(
         children: [
           // Header
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-            color: const Color(0xFF00BCD4), // Cyan
-            child: const Text(
+            color: kFPrimaryBlue, // Cyan
+            child: Text(
               'Finanzas',
-              style: TextStyle(
+              style: GoogleFonts.archivo(
                 color: Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -80,16 +82,19 @@ class FinanceSidebar extends StatelessWidget {
             child: ElevatedButton(
               onPressed: onLogout,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF00BCD4),
+                backgroundColor: kFPrimaryBlue,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Cerrar sesión',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                style: GoogleFonts.archivo(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -114,13 +119,13 @@ class FinanceSidebar extends StatelessWidget {
       child: ListTile(
         leading: Icon(
           icon,
-          color: isSelected ? const Color(0xFF00BCD4) : Colors.black87,
+          color: isSelected ? kFPrimaryBlue : Colors.black87,
           size: 26,
         ),
         title: Text(
           title,
-          style: TextStyle(
-            color: isSelected ? const Color(0xFF00BCD4) : Colors.black87,
+          style: GoogleFonts.archivo(
+            color: isSelected ? kFPrimaryBlue : Colors.black87,
             fontSize: 16,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
           ),
@@ -132,3 +137,5 @@ class FinanceSidebar extends StatelessWidget {
     );
   }
 }
+
+

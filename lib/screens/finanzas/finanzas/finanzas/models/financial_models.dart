@@ -40,11 +40,13 @@ class User {
   final String username;
   final String name;
   final String role; // 'finance', 'doctor', 'admin', etc.
+  final bool isFirstLogin;
 
   User({
     required this.username,
     required this.name,
     required this.role,
+    this.isFirstLogin = false,
   });
 }
 
@@ -129,3 +131,4 @@ class ChangeHistoryEntry {
     required this.modifiedBy,
   });
 }
+

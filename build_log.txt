@@ -1,0 +1,725 @@
+[ +360 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[  +49 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[  +32 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[   +6 ms] Skipping pub get: version match.
+[  +42 ms] Found plugin url_launcher at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher-6.3.2\
+[   +2 ms] Found plugin url_launcher_windows at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_windows-3.1.5\
+[   +3 ms] Found plugin url_launcher_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_web-2.4.1\
+[   +2 ms] Found plugin url_launcher_macos at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_macos-3.2.5\
+[   +1 ms] Found plugin url_launcher_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_linux-3.2.2\
+[   +4 ms] Found plugin url_launcher_ios at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_ios-6.3.6\
+[   +1 ms] Found plugin url_launcher_android at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\
+[   +3 ms] Found plugin path_provider at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +1 ms] Found plugin path_provider_windows at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +4 ms] Found plugin path_provider_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +2 ms] Found plugin path_provider_foundation at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.4.4\
+[   +1 ms] Found plugin path_provider_android at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.21\
+[  +31 ms] Found plugin firebase_auth at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth-6.1.2\
+[   +2 ms] Found plugin firebase_core at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-4.2.1\
+[   +1 ms] Found plugin firebase_core_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core_web-3.3.0\
+[   +1 ms] Found plugin firebase_auth_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth_web-6.1.0\
+[   +3 ms] Found plugin desktop_webview_auth at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\desktop_webview_auth-0.0.16\
+[   +2 ms] Found plugin app_links at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links-6.4.1\
+[   +1 ms] Found plugin app_links_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_web-1.0.4\
+[   +1 ms] Found plugin app_links_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_linux-1.0.3\
+[        ] Found plugin gtk at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\gtk-2.1.0\
+[        ] Found plugin file_picker at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\file_picker-8.3.7\
+[   +3 ms] Found plugin flutter_plugin_android_lifecycle at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.33\
+[   +3 ms] Found plugin cloud_firestore at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore-6.1.0\
+[   +1 ms] Found plugin cloud_firestore_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore_web-5.1.0\
+[  +40 ms] Found plugin url_launcher at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher-6.3.2\
+[        ] Found plugin url_launcher_windows at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_windows-3.1.5\
+[   +2 ms] Found plugin url_launcher_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_web-2.4.1\
+[   +6 ms] Found plugin url_launcher_macos at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_macos-3.2.5\
+[   +2 ms] Found plugin url_launcher_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_linux-3.2.2\
+[   +1 ms] Found plugin url_launcher_ios at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_ios-6.3.6\
+[   +1 ms] Found plugin url_launcher_android at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\
+[   +3 ms] Found plugin path_provider at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +1 ms] Found plugin path_provider_windows at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +4 ms] Found plugin path_provider_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +2 ms] Found plugin path_provider_foundation at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.4.4\
+[   +2 ms] Found plugin path_provider_android at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.21\
+[  +29 ms] Found plugin firebase_auth at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth-6.1.2\
+[   +3 ms] Found plugin firebase_core at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-4.2.1\
+[   +2 ms] Found plugin firebase_core_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core_web-3.3.0\
+[   +1 ms] Found plugin firebase_auth_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth_web-6.1.0\
+[   +3 ms] Found plugin desktop_webview_auth at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\desktop_webview_auth-0.0.16\
+[   +3 ms] Found plugin app_links at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links-6.4.1\
+[   +1 ms] Found plugin app_links_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_web-1.0.4\
+[   +2 ms] Found plugin app_links_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_linux-1.0.3\
+[   +1 ms] Found plugin gtk at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\gtk-2.1.0\
+[   +2 ms] Found plugin file_picker at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\file_picker-8.3.7\
+[   +2 ms] Found plugin flutter_plugin_android_lifecycle at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.33\
+[   +3 ms] Found plugin cloud_firestore at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore-6.1.0\
+[   +1 ms] Found plugin cloud_firestore_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore_web-5.1.0\
+[   +8 ms] Skipping generating web_plugin_registrant.dart because it is up-to-date.
+[  +17 ms] Found plugin url_launcher at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher-6.3.2\
+[        ] Found plugin url_launcher_windows at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_windows-3.1.5\
+[   +1 ms] Found plugin url_launcher_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_web-2.4.1\
+[   +1 ms] Found plugin url_launcher_macos at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_macos-3.2.5\
+[        ] Found plugin url_launcher_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_linux-3.2.2\
+[   +1 ms] Found plugin url_launcher_ios at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_ios-6.3.6\
+[        ] Found plugin url_launcher_android at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\
+[   +1 ms] Found plugin path_provider at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[        ] Found plugin path_provider_windows at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +3 ms] Found plugin path_provider_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +1 ms] Found plugin path_provider_foundation at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.4.4\
+[        ] Found plugin path_provider_android at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.21\
+[   +9 ms] Found plugin firebase_auth at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth-6.1.2\
+[   +1 ms] Found plugin firebase_core at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-4.2.1\
+[   +1 ms] Found plugin firebase_core_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core_web-3.3.0\
+[        ] Found plugin firebase_auth_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth_web-6.1.0\
+[   +1 ms] Found plugin desktop_webview_auth at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\desktop_webview_auth-0.0.16\
+[   +1 ms] Found plugin app_links at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links-6.4.1\
+[        ] Found plugin app_links_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_web-1.0.4\
+[   +1 ms] Found plugin app_links_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_linux-1.0.3\
+[        ] Found plugin gtk at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\gtk-2.1.0\
+[        ] Found plugin file_picker at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\file_picker-8.3.7\
+[   +1 ms] Found plugin flutter_plugin_android_lifecycle at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.33\
+[   +1 ms] Found plugin cloud_firestore at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore-6.1.0\
+[        ] Found plugin cloud_firestore_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore_web-5.1.0\
+[   +4 ms] Generating C:\Users\Azfix\Desktop\hospital\proyecto_hospital\android\app\src\main\java\io\flutter\plugins\GeneratedPluginRegistrant.java
+[   +1 ms] Skipping generating GeneratedPluginRegistrant.java because it is up-to-date.
+[   +3 ms] Skipping generating generated_plugin_registrant.h because it is up-to-date.
+[        ] Skipping generating generated_plugin_registrant.cc because it is up-to-date.
+[        ] Skipping generating generated_plugins.cmake because it is up-to-date.
+[   +1 ms] Skipping generating generated_plugin_registrant.h because it is up-to-date.
+[        ] Skipping generating generated_plugin_registrant.cc because it is up-to-date.
+[        ] Skipping generating generated_plugins.cmake because it is up-to-date.
+[   +1 ms] Skipping generating GeneratedPluginRegistrant.h because it is up-to-date.
+[        ] Skipping generating GeneratedPluginRegistrant.m because it is up-to-date.
+[   +1 ms] Skipping generating GeneratedPluginRegistrant.swift because it is up-to-date.
+[ +114 ms] executing: C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe -format json -products * -utf8 -latest -version 16 -requires Microsoft.VisualStudio.Workload.NativeDesktop Microsoft.VisualStudio.Component.VC.Tools.x86.x64 Microsoft.VisualStudio.Component.VC.CMake.Project
+[  +41 ms] Exit code 0 from: C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe -format json -products * -utf8 -latest -version 16 -requires Microsoft.VisualStudio.Workload.NativeDesktop Microsoft.VisualStudio.Component.VC.Tools.x86.x64 Microsoft.VisualStudio.Component.VC.CMake.Project
+[        ] [
+             {
+               "instanceId": "67d0b1d4",
+               "installDate": "2025-10-20T22:12:28Z",
+               "installationName": "VisualStudio/17.14.18+36616.10.-october.2025-",
+               "installationPath": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community",
+               "installationVersion": "17.14.36616.10",
+               "productId": "Microsoft.VisualStudio.Product.Community",
+               "productPath": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\devenv.exe",
+               "state": 4294967295,
+               "isComplete": true,
+               "isLaunchable": true,
+               "isPrerelease": false,
+               "isRebootRequired": false,
+               "displayName": "Visual Studio Community 2022",
+               "description": "Powerful IDE, free for students, open-source contributors, and individuals",
+               "channelId": "VisualStudio.17.Release",
+               "channelUri": "https://aka.ms/vs/17/release/channel",
+               "enginePath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\resources\\app\\ServiceHub\\Services\\Microsoft.VisualStudio.Setup.Service",
+               "installedChannelId": "VisualStudio.17.Release",
+               "installedChannelUri": "https://aka.ms/vs/17/release/channel",
+               "releaseNotes": "https://docs.microsoft.com/en-us/visualstudio/releases/2022/release-notes-v17.14#17.14.18",
+               "resolvedInstallationPath": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community",
+               "thirdPartyNotices": "https://go.microsoft.com/fwlink/?LinkId=661288",
+               "updateDate": "2025-10-20T22:12:28.4349903Z",
+               "catalog": {
+                 "buildBranch": "d17.14",
+                 "buildVersion": "17.14.36616.10",
+                 "id": "VisualStudio/17.14.18+36616.10.-october.2025-",
+                 "localBuild": "build-lab",
+                 "manifestName": "VisualStudio",
+                 "manifestType": "installer",
+                 "productDisplayVersion": "17.14.18 (October 2025)",
+                 "productLine": "Dev17",
+                 "productLineVersion": "2022",
+                 "productMilestone": "RTW",
+                 "productMilestoneIsPreRelease": "False",
+                 "productName": "Visual Studio",
+                 "productPatchVersion": "18",
+                 "productPreReleaseMilestoneSuffix": "1.0",
+                 "productReleaseNameSuffix": "(October 2025)",
+                 "productSemanticVersion": "17.14.18+36616.10.-october.2025-",
+                 "requiredEngineVersion": "3.14.2086.54749"
+               },
+               "properties": {
+                 "campaignId": "",
+                 "channelManifestId": "VisualStudio.17.Release/17.14.18+36616.10.-october.2025-",
+                 "includeRecommended": "1",
+                 "nickname": "",
+                 "setupEngineFilePath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\setup.exe"
+               }
+             }
+           ]
+[   +2 ms] Building Windows application...
+[   +4 ms] executing: C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -S C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows -B C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64 -G Visual Studio 17 2022 -A x64 -DFLUTTER_TARGET_PLATFORM=windows-x64
+[        ] -- Using cached Firebase SDK zip file
+[        ] -- Using cached extracted Firebase SDK
+[  +19 ms] -- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+[   +2 ms] -- Configuring done (0.1s)
+[+1278 ms] -- Generating done (1.2s)
+[  +24 ms] -- Build files have been written to: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64
+[  +19 ms] executing: C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe --build C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64 --config Release --target INSTALL --verbose
+[  +68 ms] Change Dir: 'C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64'
+[        ] Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" INSTALL.vcxproj /p:Configuration=Release /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+[  +59 ms] Versión de MSBuild 17.14.23+b0019275e para .NET Framework
+[  +30 ms] Compilación iniciada a las 04/12/2025 12:37:29 p. m..
+[ +149 ms] Proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\INSTALL.vcxproj" en nodo 1 (destinos predeterminados).
+[        ] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\INSTALL.vcxproj" (1) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\ZERO_CHECK.vcxproj" (2) en el nodo 1 (destinos predeterminados).
+[        ] PrepareForBuild:
+[        ]   Creando directorio "x64\Release\ZERO_CHECK\".
+[   +7 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "x64\Release\ZERO_CHECK\ZERO_CHECK.tlog\".
+[   +2 ms] InitializeBuildStatus:
+[        ]   Se creará "x64\Release\ZERO_CHECK\ZERO_CHECK.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "x64\Release\ZERO_CHECK\ZERO_CHECK.tlog\unsuccessfulbuild".
+[  +72 ms] CustomBuild:
+[        ]   1>Checking Build System
+[  +69 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "x64\Release\ZERO_CHECK\ZERO_CHECK.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "x64\Release\ZERO_CHECK\ZERO_CHECK.tlog\ZERO_CHECK.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\ZERO_CHECK.vcxproj" (destinos predeterminados).
+[  +35 ms] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\INSTALL.vcxproj" (1) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\ALL_BUILD.vcxproj" (3) en el nodo 1 (destinos predeterminados).
+[        ] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\ALL_BUILD.vcxproj" (3) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\desktop_webview_auth\desktop_webview_auth_DEPENDENCIES_DOWNLOAD.vcxproj" (4) en el nodo 1 (destinos predeterminados).
+[        ] PrepareForBuild:
+[        ]   Creando directorio "x64\Release\desktop_webview_auth_DEPENDENCIES_DOWNLOAD\".
+[   +2 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "x64\Release\desktop_webview_auth_DEPENDENCIES_DOWNLOAD\desktop_.94EC680F.tlog\".
+[   +1 ms] InitializeBuildStatus:
+[        ]   Se creará "x64\Release\desktop_webview_auth_DEPENDENCIES_DOWNLOAD\desktop_.94EC680F.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "x64\Release\desktop_webview_auth_DEPENDENCIES_DOWNLOAD\desktop_.94EC680F.tlog\unsuccessfulbuild".
+[   +2 ms] PreBuildEvent:
+[        ]   setlocal
+[        ]   ..\..\nuget.exe install Microsoft.Windows.ImplementationLibrary -Version 1.0.211019.2 -ExcludeVersion -OutputDirectory C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/packages
+[        ]   if %errorlevel% neq 0 goto :cmEnd
+[        ]   ..\..\nuget.exe install Microsoft.Web.WebView2 -Version 1.0.1108.44 -ExcludeVersion -OutputDirectory C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/packages
+[        ]   if %errorlevel% neq 0 goto :cmEnd
+[        ]   :cmEnd
+[        ]   endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+[        ]   :cmErrorLevel
+[        ]   exit /b %1
+[        ]   :cmDone
+[        ]   if %errorlevel% neq 0 goto :VCEnd
+[        ]   :VCEnd
+[ +331 ms]   Feeds used:
+[        ]     C:\Users\Azfix\.nuget\packages\
+[        ]     https://api.nuget.org/v3/index.json
+[  +43 ms]   Ya se ha instalado el paquete "Microsoft.Windows.ImplementationLibrary.1.0.211019.2".
+[ +292 ms]   Feeds used:
+[        ]     C:\Users\Azfix\.nuget\packages\
+[        ]     https://api.nuget.org/v3/index.json
+[  +49 ms]   Ya se ha instalado el paquete "Microsoft.Web.WebView2.1.0.1108.44".
+[  +55 ms] CustomBuild:
+[        ]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/.plugin_symlinks/desktop_webview_auth/windows/CMakeLists.txt
+[  +51 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "x64\Release\desktop_webview_auth_DEPENDENCIES_DOWNLOAD\desktop_.94EC680F.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "x64\Release\desktop_webview_auth_DEPENDENCIES_DOWNLOAD\desktop_.94EC680F.tlog\desktop_webview_auth_DEPENDENCIES_DOWNLOAD.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\desktop_webview_auth\desktop_webview_auth_DEPENDENCIES_DOWNLOAD.vcxproj" (destinos predeterminados).
+[  +28 ms] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\ALL_BUILD.vcxproj" (3) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\app_links\app_links_plugin.vcxproj" (5) en el nodo 1 (destinos predeterminados).
+[        ] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\app_links\app_links_plugin.vcxproj" (5) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\flutter_assemble.vcxproj" (6) en el nodo 1 (destinos predeterminados).
+[        ] PrepareForBuild:
+[        ]   Creando directorio "x64\Release\flutter_assemble\".
+[   +1 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "x64\Release\flutter_assemble\flutter_assemble.tlog\".
+[   +1 ms] InitializeBuildStatus:
+[        ]   Se creará "x64\Release\flutter_assemble\flutter_assemble.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "x64\Release\flutter_assemble\flutter_assemble.tlog\unsuccessfulbuild".
+[   +2 ms] CustomBuild:
+[        ]   'La compilación de "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\CMakeFiles\98089d1ad2475a3304c24069996f79eb\flutter_assemble.rule" depende de "C:\USERS\AZFIX\DESKTOP\HOSPITAL\PROYECTO_HOSPITAL\WINDOWS\FLUTTER\EPHEMERAL\FLUTTER_WINDOWS.DLL", que se genera por la compilación de "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\CMakeFiles\084a4606b9f617319b866e6723c05df7\flutter_windows.dll.rule". Los elementos no se pueden compilar en paralelo.'
+[  +60 ms]   Generating C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/flutter_windows.dll, C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/flutter_export.h, C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/flutter_windows.h, C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/flutter_messenger.h, C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/flutter_plugin_registrar.h, C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/flutter_texture_registrar.h, C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/cpp_client_wrapper/core_implementations.cc, C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/cpp_client_wrapper/standard_codec.cc, C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/cpp_client_wrapper/plugin_registrar.cc, C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/cpp_client_wrapper/flutter_engine.cc, C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/cpp_client_wrapper/flutter_view_controller.cc, _phony_
+[+1146 ms]   [ +250 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ]   [   +3 ms] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[   +5 ms]   [   +6 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ]   [   +1 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[  +36 ms]   [  +35 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ]   [   +1 ms] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ]   [        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[  +37 ms]   [  +37 ms] Initializing file store
+[  +19 ms]   [  +19 ms] Skipping target: gen_localizations
+[   +2 ms]   [   +2 ms] gen_dart_plugin_registrant: Starting due to {InvalidatedReasonKind.outputSetAddition: The following outputs were added to the output set: C:\Users\Azfix\Desktop\hospital\proyecto_hospital\.dart_tool\flutter_build\dart_plugin_registrant.dart, InvalidatedReasonKind.inputChanged: The following inputs have updated contents: C:\Users\Azfix\Desktop\hospital\proyecto_hospital\.dart_tool\package_config.json}
+[   +2 ms]   [   +2 ms] dart_build: Starting due to {}
+[        ]   [        ] unpack_windows: Starting due to {}
+[+1238 ms]   [+1238 ms] unpack_windows: Complete
+[+4341 ms]   [+4341 ms] No packages with native assets. Skipping native assets compilation.
+[   +1 ms]   [   +2 ms] dart_build: Complete
+[  +17 ms]   [  +17 ms] install_code_assets: Starting due to {}
+[   +1 ms]   [   +1 ms] Writing native assets json to file:///C:/Users/Azfix/Desktop/hospital/proyecto_hospital/.dart_tool/flutter_build/ceed7fedf10ec3b7ea5ad2545d181a6b/native_assets.json.
+[   +3 ms]   [   +3 ms] Writing C:\Users\Azfix\Desktop\hospital\proyecto_hospital\.dart_tool\flutter_build\ceed7fedf10ec3b7ea5ad2545d181a6b\native_assets.json done.
+[   +5 ms]   [   +5 ms] Found plugin url_launcher at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher-6.3.2\
+[   +2 ms]   [   +2 ms] install_code_assets: Complete
+[  +32 ms]   [  +32 ms] Found plugin url_launcher_windows at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_windows-3.1.5\
+[   +5 ms]   [   +6 ms] Found plugin url_launcher_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_web-2.4.1\
+[   +2 ms]   [   +2 ms] Found plugin url_launcher_macos at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_macos-3.2.5\
+[   +1 ms]   [   +1 ms] Found plugin url_launcher_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_linux-3.2.2\
+[   +2 ms]   [   +2 ms] Found plugin url_launcher_ios at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_ios-6.3.6\
+[   +1 ms]   [   +1 ms] Found plugin url_launcher_android at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\
+[   +2 ms]   [   +2 ms] Found plugin path_provider at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +1 ms]   [   +1 ms] Found plugin path_provider_windows at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +3 ms]   [   +3 ms] Found plugin path_provider_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +2 ms]   [   +2 ms] Found plugin path_provider_foundation at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.4.4\
+[   +1 ms]   [   +1 ms] Found plugin path_provider_android at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.21\
+[  +23 ms]   [  +23 ms] Found plugin firebase_auth at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth-6.1.2\
+[   +2 ms]   [   +2 ms] Found plugin firebase_core at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-4.2.1\
+[   +2 ms]   [   +2 ms] Found plugin firebase_core_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core_web-3.3.0\
+[   +7 ms]   [   +7 ms] Found plugin firebase_auth_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth_web-6.1.0\
+[   +3 ms]   [   +3 ms] Found plugin desktop_webview_auth at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\desktop_webview_auth-0.0.16\
+[   +2 ms]   [   +2 ms] Found plugin app_links at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links-6.4.1\
+[        ]   [        ] Found plugin app_links_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_web-1.0.4\
+[   +1 ms]   [   +1 ms] Found plugin app_links_linux at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_linux-1.0.3\
+[        ]   [        ] Found plugin gtk at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\gtk-2.1.0\
+[        ]   [        ] Found plugin file_picker at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\file_picker-8.3.7\
+[   +3 ms]   [   +3 ms] Found plugin flutter_plugin_android_lifecycle at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.33\
+[   +3 ms]   [   +3 ms] Found plugin cloud_firestore at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore-6.1.0\
+[   +1 ms]   [   +1 ms] Found plugin cloud_firestore_web at C:\Users\Azfix\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore_web-5.1.0\
+[  +10 ms]   [  +10 ms] Skipping generating dart_plugin_registrant.dart because it is up-to-date.
+[        ]   [        ] gen_dart_plugin_registrant: Complete
+[   +2 ms]   [   +2 ms] kernel_snapshot_program: Starting due to {}
+[   +6 ms]   [   +6 ms] C:\flutter_windows_3.35.6-stable\flutter\bin\cache\dart-sdk\bin\dartaotruntime.exe C:\flutter_windows_3.35.6-stable\flutter\bin\cache\dart-sdk\bin\snapshots\frontend_server_aot.dart.snapshot --sdk-root C:\flutter_windows_3.35.6-stable\flutter\bin\cache\artifacts\engine\common\flutter_patched_sdk_product/ --target=flutter --no-print-incremental-dependencies -DFLUTTER_VERSION=3.35.6 -DFLUTTER_CHANNEL=stable -DFLUTTER_GIT_URL=https://github.com/flutter/flutter.git -DFLUTTER_FRAMEWORK_REVISION=9f455d2486 -DFLUTTER_ENGINE_REVISION=d2913632a4 -DFLUTTER_DART_VERSION=3.9.2 -Ddart.vm.profile=false -Ddart.vm.product=true --delete-tostring-package-uri=dart:ui --delete-tostring-package-uri=package:flutter --aot --tfa --target-os windows --packages C:\Users\Azfix\Desktop\hospital\proyecto_hospital\.dart_tool\package_config.json --output-dill C:\Users\Azfix\Desktop\hospital\proyecto_hospital\.dart_tool\flutter_build\ceed7fedf10ec3b7ea5ad2545d181a6b\app.dill --depfile C:\Users\Azfix\Desktop\hospital\proyecto_hospital\.dart_tool\flutter_build\ceed7fedf10ec3b7ea5ad2545d181a6b\kernel_snapshot_program.d --source file:///C:/Users/Azfix/Desktop/hospital/proyecto_hospital/.dart_tool/flutter_build/dart_plugin_registrant.dart --source package:flutter/src/dart_plugin_registrant.dart -Dflutter.dart_plugin_registrant=file:///C:/Users/Azfix/Desktop/hospital/proyecto_hospital/.dart_tool/flutter_build/dart_plugin_registrant.dart --verbosity=error package:hospital_app/main.dart
+[+12140 ms]   [+12139 ms] kernel_snapshot_program: Complete
+[ +697 ms]   [ +697 ms] aot_elf_release: Starting due to {InvalidatedReasonKind.inputChanged: The following inputs have updated contents: C:\flutter_windows_3.35.6-stable\flutter\packages\flutter_tools\lib\src\build_system\targets\common.dart,C:\Users\Azfix\Desktop\hospital\proyecto_hospital\.dart_tool\flutter_build\ceed7fedf10ec3b7ea5ad2545d181a6b\app.dill,C:\flutter_windows_3.35.6-stable\flutter\bin\cache\engine.stamp,C:\flutter_windows_3.35.6-stable\flutter\bin\cache\engine.stamp,C:\flutter_windows_3.35.6-stable\flutter\bin\cache\engine.stamp, InvalidatedReasonKind.outputSetAddition: The following outputs were added to the output set: C:\Users\Azfix\Desktop\hospital\proyecto_hospital\.dart_tool\flutter_build\ceed7fedf10ec3b7ea5ad2545d181a6b\app.so}
+[   +1 ms]   [   +2 ms] targetingApplePlatform = false
+[        ]   [        ] extractAppleDebugSymbols = true
+[        ]   [        ] Will strip AOT snapshot during build.
+[        ]   [        ] executing: C:\flutter_windows_3.35.6-stable\flutter\bin\cache\artifacts\engine\windows-x64-release\gen_snapshot --deterministic --snapshot_kind=app-aot-elf --elf=C:\Users\Azfix\Desktop\hospital\proyecto_hospital\.dart_tool\flutter_build\ceed7fedf10ec3b7ea5ad2545d181a6b\app.so --strip C:\Users\Azfix\Desktop\hospital\proyecto_hospital\.dart_tool\flutter_build\ceed7fedf10ec3b7ea5ad2545d181a6b\app.dill
+[+10558 ms]   [+10558 ms] aot_elf_release: Complete
+[  +45 ms]   [  +45 ms] windows_aot_bundle: Starting due to {InvalidatedReasonKind.inputChanged: The following inputs have updated contents: C:\Users\Azfix\Desktop\hospital\proyecto_hospital\.dart_tool\flutter_build\ceed7fedf10ec3b7ea5ad2545d181a6b\app.so, InvalidatedReasonKind.outputSetAddition: The following outputs were added to the output set: C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\app.so}
+[   +4 ms]   [   +5 ms] windows_aot_bundle: Complete
+[  +54 ms]   [  +54 ms] release_bundle_windows-x64_assets: Starting due to {}
+[ +141 ms]   [ +141 ms] shaderc command: [C:\flutter_windows_3.35.6-stable\flutter\bin\cache\artifacts\engine\windows-x64\impellerc.exe, --sksl, --runtime-stage-gles, --runtime-stage-gles3, --runtime-stage-vulkan, --iplr, --sl=C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\flutter_assets\shaders/ink_sparkle.frag, --spirv=C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\flutter_assets\shaders/ink_sparkle.frag.spirv, --input=C:\flutter_windows_3.35.6-stable\flutter\packages\flutter\lib\src\material\shaders\ink_sparkle.frag, --input-type=frag, --include=C:\flutter_windows_3.35.6-stable\flutter\packages\flutter\lib\src\material\shaders, --include=C:\flutter_windows_3.35.6-stable\flutter\bin\cache\artifacts\engine\windows-x64\shader_lib]
+[ +558 ms]   [ +557 ms] release_bundle_windows-x64_assets: Complete
+[ +243 ms]   [ +243 ms] Persisting file store
+[  +11 ms]   [  +11 ms] Done persisting file store
+[  +28 ms]   [  +28 ms] build succeeded.
+[   +5 ms]   [   +5 ms] "flutter assemble" took 30,335ms.
+[  +82 ms]   [  +82 ms] Running 1 shutdown hook
+[        ]   [        ] Shutdown hooks complete
+[ +140 ms]   [ +139 ms] exiting with code 0
+[  +42 ms]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/CMakeLists.txt
+[  +31 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "x64\Release\flutter_assemble\flutter_assemble.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "x64\Release\flutter_assemble\flutter_assemble.tlog\flutter_assemble.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\flutter_assemble.vcxproj" (destinos predeterminados).
+[  +18 ms] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\app_links\app_links_plugin.vcxproj" (5) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\flutter_wrapper_plugin.vcxproj" (7) en el nodo 1 (destinos predeterminados).
+[        ] PrepareForBuild:
+[        ]   Creando directorio "flutter_wrapper_plugin.dir\Release\".
+[   +2 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\Release\".
+[        ]   Creando directorio "flutter_wrapper_plugin.dir\Release\flutter_.1F7E5F72.tlog\".
+[   +1 ms] InitializeBuildStatus:
+[        ]   Se creará "flutter_wrapper_plugin.dir\Release\flutter_.1F7E5F72.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "flutter_wrapper_plugin.dir\Release\flutter_.1F7E5F72.tlog\unsuccessfulbuild".
+[  +39 ms] CustomBuild:
+[        ]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/CMakeLists.txt
+[ +100 ms] ClCompile:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral /nologo /W4 /WX /diagnostics:column /O2 /Ob2 /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D _HAS_EXCEPTIONS=0 /D UNICODE /D _UNICODE /D "CMAKE_INTDIR=\"Release\"" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"flutter_wrapper_plugin.dir\Release\\" /Fd"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\Release\flutter_wrapper_plugin.pdb" /external:W4 /Gd /TP /wd4100 /errorReport:queue C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\core_implementations.cc C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\standard_codec.cc C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\plugin_registrar.cc
+[  +51 ms]   core_implementations.cc
+[ +613 ms]   standard_codec.cc
+[ +769 ms]   plugin_registrar.cc
+[ +388 ms]   Generando código...
+[ +835 ms] Lib:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\Lib.exe /OUT:"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\Release\flutter_wrapper_plugin.lib" /NOLOGO /MACHINE:X64  /machine:x64 flutter_wrapper_plugin.dir\Release\core_implementations.obj
+[        ]   flutter_wrapper_plugin.dir\Release\standard_codec.obj
+[        ]   flutter_wrapper_plugin.dir\Release\plugin_registrar.obj
+[  +70 ms]   flutter_wrapper_plugin.vcxproj -> C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\Release\flutter_wrapper_plugin.lib
+[  +10 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "flutter_wrapper_plugin.dir\Release\flutter_.1F7E5F72.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "flutter_wrapper_plugin.dir\Release\flutter_.1F7E5F72.tlog\flutter_wrapper_plugin.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\flutter_wrapper_plugin.vcxproj" (destinos predeterminados).
+[   +4 ms] PrepareForBuild:
+[        ]   Creando directorio "app_links_plugin.dir\Release\".
+[   +1 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\app_links\Release\".
+[        ]   Creando directorio "app_links_plugin.dir\Release\app_links_plugin.tlog\".
+[   +1 ms] InitializeBuildStatus:
+[        ]   Se creará "app_links_plugin.dir\Release\app_links_plugin.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "app_links_plugin.dir\Release\app_links_plugin.tlog\unsuccessfulbuild".
+[  +32 ms] CustomBuild:
+[        ]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/.plugin_symlinks/app_links/windows/CMakeLists.txt
+[  +40 ms] ClCompile:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\include /nologo /W4 /WX /diagnostics:column /O2 /Ob2 /D _WINDLL /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D _HAS_EXCEPTIONS=0 /D FLUTTER_PLUGIN_IMPL /D UNICODE /D _UNICODE /D "CMAKE_INTDIR=\"Release\"" /D app_links_plugin_EXPORTS /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"app_links_plugin.dir\Release\\" /Fd"app_links_plugin.dir\Release\vc143.pdb" /external:W4 /Gd /TP /wd4100 /errorReport:queue C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\app_links\windows\app_links_plugin_c_api.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\app_links\windows\app_links_plugin.cpp
+[  +35 ms]   app_links_plugin_c_api.cpp
+[ +806 ms]   app_links_plugin.cpp
+[+1020 ms]   Generando código...
+[ +627 ms] Link:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\app_links\Release\app_links_plugin.dll" /INCREMENTAL:NO /NOLOGO ..\..\flutter\Release\flutter_wrapper_plugin.lib C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\flutter_windows.dll.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/app_links/Release/app_links_plugin.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/app_links/Release/app_links_plugin.lib" /MACHINE:X64  /machine:x64 /DLL app_links_plugin.dir\Release\app_links_plugin_c_api.obj
+[        ]   app_links_plugin.dir\Release\app_links_plugin.obj
+[  +56 ms]      Creando biblioteca C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/app_links/Release/app_links_plugin.lib y objeto C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/app_links/Release/app_links_plugin.exp
+[  +91 ms]   app_links_plugin.vcxproj -> C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\app_links\Release\app_links_plugin.dll
+[   +4 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "app_links_plugin.dir\Release\app_links_plugin.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "app_links_plugin.dir\Release\app_links_plugin.tlog\app_links_plugin.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\app_links\app_links_plugin.vcxproj" (destinos predeterminados).
+[  +30 ms] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\ALL_BUILD.vcxproj" (3) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\cloud_firestore\cloud_firestore_plugin.vcxproj" (8) en el nodo 1 (destinos predeterminados).
+[        ] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\cloud_firestore\cloud_firestore_plugin.vcxproj" (8) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_core\firebase_core_plugin.vcxproj" (9) en el nodo 1 (destinos predeterminados).
+[        ] PrepareForBuild:
+[        ]   Creando directorio "firebase_core_plugin.dir\Release\".
+[   +1 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_core\Release\".
+[        ]   Creando directorio "firebase_core_plugin.dir\Release\firebase.76CA79EB.tlog\".
+[   +1 ms] InitializeBuildStatus:
+[        ]   Se creará "firebase_core_plugin.dir\Release\firebase.76CA79EB.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "firebase_core_plugin.dir\Release\firebase.76CA79EB.tlog\unsuccessfulbuild".
+[  +31 ms] CustomBuild:
+[        ]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/.plugin_symlinks/firebase_core/windows/CMakeLists.txt
+[  +39 ms] ClCompile:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\generated /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\include /nologo /W4 /WX /diagnostics:column /O2 /Ob2 /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D _HAS_EXCEPTIONS=0 /D FLUTTER_PLUGIN_IMPL /D INTERNAL_EXPERIMENTAL=1 /D UNICODE /D _UNICODE /D "CMAKE_INTDIR=\"Release\"" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"firebase_core_plugin.dir\Release\\" /Fd"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_core\Release\firebase_core_plugin.pdb" /external:W0 /Gd /TP /wd4100 /errorReport:queue  /external:I "C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/extracted/firebase_cpp_sdk_windows/include" C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_core\windows\firebase_core_plugin_c_api.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_core\windows\firebase_core_plugin.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_core\windows\messages.g.cpp
+[  +34 ms]   firebase_core_plugin_c_api.cpp
+[ +930 ms]   firebase_core_plugin.cpp
+[+1171 ms]   messages.g.cpp
+[ +753 ms]   Generando código...
+[+1292 ms] Lib:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\Lib.exe /OUT:"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_core\Release\firebase_core_plugin.lib" /NOLOGO /MACHINE:X64  /machine:x64 firebase_core_plugin.dir\Release\firebase_core_plugin_c_api.obj
+[        ]   firebase_core_plugin.dir\Release\firebase_core_plugin.obj
+[        ]   firebase_core_plugin.dir\Release\messages.g.obj
+[  +98 ms]   firebase_core_plugin.vcxproj -> C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_core\Release\firebase_core_plugin.lib
+[  +10 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "firebase_core_plugin.dir\Release\firebase.76CA79EB.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "firebase_core_plugin.dir\Release\firebase.76CA79EB.tlog\firebase_core_plugin.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_core\firebase_core_plugin.vcxproj" (destinos predeterminados).
+[   +6 ms] PrepareForBuild:
+[        ]   Creando directorio "cloud_firestore_plugin.dir\Release\".
+[   +2 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\cloud_firestore\Release\".
+[        ]   Creando directorio "cloud_firestore_plugin.dir\Release\cloud_fi.B61CECF5.tlog\".
+[   +1 ms] InitializeBuildStatus:
+[        ]   Se creará "cloud_firestore_plugin.dir\Release\cloud_fi.B61CECF5.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "cloud_firestore_plugin.dir\Release\cloud_fi.B61CECF5.tlog\unsuccessfulbuild".
+[  +48 ms] CustomBuild:
+[        ]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/.plugin_symlinks/cloud_firestore/windows/CMakeLists.txt
+[  +44 ms] ClCompile:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\generated /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_core\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\include /nologo /W4 /WX /diagnostics:column /O2 /Ob2 /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D _HAS_EXCEPTIONS=0 /D FLUTTER_PLUGIN_IMPL /D INTERNAL_EXPERIMENTAL=1 /D UNICODE /D _UNICODE /D "CMAKE_INTDIR=\"Release\"" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"cloud_firestore_plugin.dir\Release\\" /Fd"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\cloud_firestore\Release\cloud_firestore_plugin.pdb" /external:W0 /Gd /TP /wd4100 /errorReport:queue  /external:I "C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/extracted/firebase_cpp_sdk_windows/include" C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\cloud_firestore\windows\cloud_firestore_plugin_c_api.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\cloud_firestore\windows\cloud_firestore_plugin.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\cloud_firestore\windows\messages.g.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\cloud_firestore\windows\firestore_codec.cpp
+[  +38 ms]   cloud_firestore_plugin_c_api.cpp
+[+1064 ms]   cloud_firestore_plugin.cpp
+[+1929 ms]   messages.g.cpp
+[+1027 ms]   firestore_codec.cpp
+[+1126 ms]   Generando código...
+[+2858 ms] Lib:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\Lib.exe /OUT:"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\cloud_firestore\Release\cloud_firestore_plugin.lib" /NOLOGO /MACHINE:X64  /machine:x64 cloud_firestore_plugin.dir\Release\cloud_firestore_plugin_c_api.obj
+[        ]   cloud_firestore_plugin.dir\Release\cloud_firestore_plugin.obj
+[        ]   cloud_firestore_plugin.dir\Release\messages.g.obj
+[        ]   cloud_firestore_plugin.dir\Release\firestore_codec.obj
+[  +87 ms]   cloud_firestore_plugin.vcxproj -> C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\cloud_firestore\Release\cloud_firestore_plugin.lib
+[  +12 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "cloud_firestore_plugin.dir\Release\cloud_fi.B61CECF5.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "cloud_firestore_plugin.dir\Release\cloud_fi.B61CECF5.tlog\cloud_firestore_plugin.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\cloud_firestore\cloud_firestore_plugin.vcxproj" (destinos predeterminados).
+[  +15 ms] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\ALL_BUILD.vcxproj" (3) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\desktop_webview_auth\desktop_webview_auth_plugin.vcxproj" (10) en el nodo 1 (destinos predeterminados).
+[        ] PrepareForBuild:
+[        ]   Creando directorio "desktop_webview_auth_plugin.dir\Release\".
+[   +1 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\desktop_webview_auth\Release\".
+[        ]   Creando directorio "desktop_webview_auth_plugin.dir\Release\desktop_.39F62DB9.tlog\".
+[   +1 ms] InitializeBuildStatus:
+[        ]   Se creará "desktop_webview_auth_plugin.dir\Release\desktop_.39F62DB9.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "desktop_webview_auth_plugin.dir\Release\desktop_.39F62DB9.tlog\unsuccessfulbuild".
+[  +37 ms] CustomBuild:
+[        ]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/.plugin_symlinks/desktop_webview_auth/windows/CMakeLists.txt
+[  +36 ms] ClCompile:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\packages\Microsoft.Windows.ImplementationLibrary\build\native\..\..\include\ /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\packages\Microsoft.Web.WebView2\build\native\include\ /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\include /nologo /W4 /WX /diagnostics:column /O2 /Ob2 /D _WINDLL /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D _HAS_EXCEPTIONS=0 /D FLUTTER_PLUGIN_IMPL /D UNICODE /D _UNICODE /D "CMAKE_INTDIR=\"Release\"" /D desktop_webview_auth_plugin_EXPORTS /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"desktop_webview_auth_plugin.dir\Release\\" /Fd"desktop_webview_auth_plugin.dir\Release\vc143.pdb" /external:W4 /Gd /TP /wd4100 /errorReport:queue C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\desktop_webview_auth\windows\desktop_webview_auth_plugin.cpp
+[  +47 ms]   desktop_webview_auth_plugin.cpp
+[+2054 ms] Link:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\desktop_webview_auth\Release\desktop_webview_auth_plugin.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\packages\Microsoft.Web.WebView2\build\native\x64 WebView2Loader.dll.lib ..\..\flutter\Release\flutter_wrapper_plugin.lib C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\flutter_windows.dll.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/desktop_webview_auth/Release/desktop_webview_auth_plugin.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/desktop_webview_auth/Release/desktop_webview_auth_plugin.lib" /MACHINE:X64  /machine:x64 /DLL desktop_webview_auth_plugin.dir\Release\desktop_webview_auth_plugin.obj
+[  +48 ms]      Creando biblioteca C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/desktop_webview_auth/Release/desktop_webview_auth_plugin.lib y objeto C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/desktop_webview_auth/Release/desktop_webview_auth_plugin.exp
+[  +82 ms]   desktop_webview_auth_plugin.vcxproj -> C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\desktop_webview_auth\Release\desktop_webview_auth_plugin.dll
+[   +5 ms] _CopyOutOfDateSourceItemsToOutputDirectoryAlways:
+[        ]   Copiando el archivo de "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\packages\Microsoft.Web.WebView2\build\native\x64\WebView2Loader.dll" en "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\desktop_webview_auth\Release\WebView2Loader.dll".
+[   +4 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "desktop_webview_auth_plugin.dir\Release\desktop_.39F62DB9.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "desktop_webview_auth_plugin.dir\Release\desktop_.39F62DB9.tlog\desktop_webview_auth_plugin.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\desktop_webview_auth\desktop_webview_auth_plugin.vcxproj" (destinos predeterminados).
+[  +17 ms] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\ALL_BUILD.vcxproj" (3) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_auth\firebase_auth_plugin.vcxproj" (11) en el nodo 1 (destinos predeterminados).
+[        ] PrepareForBuild:
+[        ]   Creando directorio "firebase_auth_plugin.dir\Release\".
+[   +1 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_auth\Release\".
+[        ]   Creando directorio "firebase_auth_plugin.dir\Release\firebase.50CD9313.tlog\".
+[   +1 ms] InitializeBuildStatus:
+[        ]   Se creará "firebase_auth_plugin.dir\Release\firebase.50CD9313.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "firebase_auth_plugin.dir\Release\firebase.50CD9313.tlog\unsuccessfulbuild".
+[  +33 ms] CustomBuild:
+[        ]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/.plugin_symlinks/firebase_auth/windows/CMakeLists.txt
+[  +35 ms] ClCompile:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\generated /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_core\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\include /nologo /W4 /WX /diagnostics:column /O2 /Ob2 /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D _HAS_EXCEPTIONS=0 /D FLUTTER_PLUGIN_IMPL /D INTERNAL_EXPERIMENTAL=1 /D UNICODE /D _UNICODE /D "CMAKE_INTDIR=\"Release\"" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"firebase_auth_plugin.dir\Release\\" /Fd"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_auth\Release\firebase_auth_plugin.pdb" /external:W0 /Gd /TP /wd4100 /errorReport:queue  /external:I "C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/extracted/firebase_cpp_sdk_windows/include" C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_auth\windows\firebase_auth_plugin_c_api.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_auth\windows\firebase_auth_plugin.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_auth\windows\messages.g.cpp
+[  +44 ms]   firebase_auth_plugin_c_api.cpp
+[ +969 ms]   firebase_auth_plugin.cpp
+[+1692 ms]   messages.g.cpp
+[+1374 ms]   Generando código...
+[+2549 ms] Lib:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\Lib.exe /OUT:"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_auth\Release\firebase_auth_plugin.lib" /NOLOGO /MACHINE:X64  /machine:x64 firebase_auth_plugin.dir\Release\firebase_auth_plugin_c_api.obj
+[        ]   firebase_auth_plugin.dir\Release\firebase_auth_plugin.obj
+[        ]   firebase_auth_plugin.dir\Release\messages.g.obj
+[  +88 ms]   firebase_auth_plugin.vcxproj -> C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_auth\Release\firebase_auth_plugin.lib
+[   +6 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "firebase_auth_plugin.dir\Release\firebase.50CD9313.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "firebase_auth_plugin.dir\Release\firebase.50CD9313.tlog\firebase_auth_plugin.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\firebase_auth\firebase_auth_plugin.vcxproj" (destinos predeterminados).
+[  +16 ms] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\ALL_BUILD.vcxproj" (3) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\flutter_wrapper_app.vcxproj" (12) en el nodo 1 (destinos predeterminados).
+[        ] PrepareForBuild:
+[        ]   Creando directorio "flutter_wrapper_app.dir\Release\".
+[   +2 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "flutter_wrapper_app.dir\Release\flutter_.AA6C9EB4.tlog\".
+[   +1 ms] InitializeBuildStatus:
+[        ]   Se creará "flutter_wrapper_app.dir\Release\flutter_.AA6C9EB4.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "flutter_wrapper_app.dir\Release\flutter_.AA6C9EB4.tlog\unsuccessfulbuild".
+[  +41 ms] CustomBuild:
+[        ]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/CMakeLists.txt
+[  +55 ms] ClCompile:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral /nologo /W4 /WX /diagnostics:column /O2 /Ob2 /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D _HAS_EXCEPTIONS=0 /D UNICODE /D _UNICODE /D "CMAKE_INTDIR=\"Release\"" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"flutter_wrapper_app.dir\Release\\" /Fd"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\Release\flutter_wrapper_app.pdb" /external:W4 /Gd /TP /wd4100 /errorReport:queue C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\core_implementations.cc C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\standard_codec.cc C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\flutter_engine.cc C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\flutter_view_controller.cc
+[  +35 ms]   core_implementations.cc
+[ +683 ms]   standard_codec.cc
+[ +787 ms]   flutter_engine.cc
+[ +718 ms]   flutter_view_controller.cc
+[ +693 ms]   Generando código...
+[ +869 ms] Lib:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\Lib.exe /OUT:"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\Release\flutter_wrapper_app.lib" /NOLOGO /MACHINE:X64  /machine:x64 flutter_wrapper_app.dir\Release\core_implementations.obj
+[        ]   flutter_wrapper_app.dir\Release\standard_codec.obj
+[        ]   flutter_wrapper_app.dir\Release\flutter_engine.obj
+[        ]   flutter_wrapper_app.dir\Release\flutter_view_controller.obj
+[  +94 ms]   flutter_wrapper_app.vcxproj -> C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\Release\flutter_wrapper_app.lib
+[  +10 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "flutter_wrapper_app.dir\Release\flutter_.AA6C9EB4.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "flutter_wrapper_app.dir\Release\flutter_.AA6C9EB4.tlog\flutter_wrapper_app.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\flutter\flutter_wrapper_app.vcxproj" (destinos predeterminados).
+[  +38 ms] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\ALL_BUILD.vcxproj" (3) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\runner\hospital_app.vcxproj" (13) en el nodo 1 (destinos predeterminados).
+[        ] El proyecto "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\runner\hospital_app.vcxproj" (13) está compilando "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\url_launcher_windows\url_launcher_windows_plugin.vcxproj" (14) en el nodo 1 (destinos predeterminados).
+[        ] PrepareForBuild:
+[        ]   Creando directorio "url_launcher_windows_plugin.dir\Release\".
+[   +1 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\url_launcher_windows\Release\".
+[        ]   Creando directorio "url_launcher_windows_plugin.dir\Release\url_laun.E9EAD90A.tlog\".
+[   +1 ms] InitializeBuildStatus:
+[        ]   Se creará "url_launcher_windows_plugin.dir\Release\url_laun.E9EAD90A.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "url_launcher_windows_plugin.dir\Release\url_laun.E9EAD90A.tlog\unsuccessfulbuild".
+[  +36 ms] CustomBuild:
+[        ]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/windows/CMakeLists.txt
+[  +39 ms] ClCompile:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\include /nologo /W4 /WX /diagnostics:column /O2 /Ob2 /D _WINDLL /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D _HAS_EXCEPTIONS=0 /D FLUTTER_PLUGIN_IMPL /D UNICODE /D _UNICODE /D "CMAKE_INTDIR=\"Release\"" /D url_launcher_windows_plugin_EXPORTS /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"url_launcher_windows_plugin.dir\Release\\" /Fd"url_launcher_windows_plugin.dir\Release\vc143.pdb" /external:W4 /Gd /TP /wd4100 /errorReport:queue C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\url_launcher_windows\windows\url_launcher_windows.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\url_launcher_windows\windows\messages.g.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\url_launcher_windows\windows\system_apis.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\url_launcher_windows\windows\url_launcher_plugin.cpp
+[  +46 ms]   url_launcher_windows.cpp
+[ +924 ms]   messages.g.cpp
+[ +636 ms]   system_apis.cpp
+[ +259 ms]   url_launcher_plugin.cpp
+[ +962 ms]   Generando código...
+[ +827 ms] Link:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\url_launcher_windows\Release\url_launcher_windows_plugin.dll" /INCREMENTAL:NO /NOLOGO ..\..\flutter\Release\flutter_wrapper_plugin.lib shlwapi.lib C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\flutter_windows.dll.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/url_launcher_windows/Release/url_launcher_windows_plugin.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/url_launcher_windows/Release/url_launcher_windows_plugin.lib" /MACHINE:X64  /machine:x64 /DLL url_launcher_windows_plugin.dir\Release\url_launcher_windows.obj
+[        ]   url_launcher_windows_plugin.dir\Release\messages.g.obj
+[        ]   url_launcher_windows_plugin.dir\Release\system_apis.obj
+[        ]   url_launcher_windows_plugin.dir\Release\url_launcher_plugin.obj
+[  +47 ms]      Creando biblioteca C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/url_launcher_windows/Release/url_launcher_windows_plugin.lib y objeto C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/plugins/url_launcher_windows/Release/url_launcher_windows_plugin.exp
+[  +82 ms]   url_launcher_windows_plugin.vcxproj -> C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\url_launcher_windows\Release\url_launcher_windows_plugin.dll
+[   +7 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "url_launcher_windows_plugin.dir\Release\url_laun.E9EAD90A.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "url_launcher_windows_plugin.dir\Release\url_laun.E9EAD90A.tlog\url_launcher_windows_plugin.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\plugins\url_launcher_windows\url_launcher_windows_plugin.vcxproj" (destinos predeterminados).
+[   +6 ms] PrepareForBuild:
+[        ]   Creando directorio "hospital_app.dir\Release\".
+[   +2 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\runner\Release\".
+[        ]   Creando directorio "hospital_app.dir\Release\hospital_app.tlog\".
+[   +1 ms] InitializeBuildStatus:
+[        ]   Se creará "hospital_app.dir\Release\hospital_app.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "hospital_app.dir\Release\hospital_app.tlog\unsuccessfulbuild".
+[  +83 ms] CustomBuild:
+[        ]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/runner/CMakeLists.txt
+[  +56 ms] ClCompile:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\app_links\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\cloud_firestore\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_core\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\desktop_webview_auth\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_auth\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\url_launcher_windows\windows\include /nologo /W4 /WX /diagnostics:column /O2 /Ob2 /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D _HAS_EXCEPTIONS=0 /D "FLUTTER_VERSION=\"1.0.0+1\"" /D FLUTTER_VERSION_MAJOR=1 /D FLUTTER_VERSION_MINOR=0 /D FLUTTER_VERSION_PATCH=0 /D FLUTTER_VERSION_BUILD=1 /D NOMINMAX /D UNICODE /D _UNICODE /D FLUTTER_PLUGIN_IMPL /D "CMAKE_INTDIR=\"Release\"" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"hospital_app.dir\Release\\" /Fd"hospital_app.dir\Release\vc143.pdb" /external:W0 /Gd /TP /wd4100 /errorReport:queue  /external:I "C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/extracted/firebase_cpp_sdk_windows/include" C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\runner\flutter_window.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\runner\main.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\runner\utils.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\runner\win32_window.cpp C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\generated_plugin_registrant.cc
+[  +46 ms]   flutter_window.cpp
+[ +827 ms]   main.cpp
+[ +841 ms]   utils.cpp
+[+1082 ms]   win32_window.cpp
+[ +818 ms]   generated_plugin_registrant.cc
+[ +767 ms]   Generando código...
+[ +498 ms] ResourceCompile:
+[        ]   C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\rc.exe /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D _HAS_EXCEPTIONS=0 /D "FLUTTER_VERSION=\\\"1.0.0+1\\\"" /D FLUTTER_VERSION_MAJOR=1 /D FLUTTER_VERSION_MINOR=0 /D FLUTTER_VERSION_PATCH=0 /D FLUTTER_VERSION_BUILD=1 /D NOMINMAX /D UNICODE /D _UNICODE /D FLUTTER_PLUGIN_IMPL /D "CMAKE_INTDIR=\\\"Release\\\"" /l"0x0409" /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\cpp_client_wrapper\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\app_links\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\cloud_firestore\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_core\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\desktop_webview_auth\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\firebase_auth\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\.plugin_symlinks\url_launcher_windows\windows\include /IC:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\extracted\firebase_cpp_sdk_windows\include /nologo /fo"hospital_app.dir\Release\Runner.res" C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\runner\Runner.rc 
+[  +89 ms] Link:
+[        ]   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\runner\Release\hospital_app.exe" /INCREMENTAL:NO /NOLOGO ..\flutter\Release\flutter_wrapper_app.lib dwmapi.lib ..\plugins\app_links\Release\app_links_plugin.lib ..\plugins\cloud_firestore\Release\cloud_firestore_plugin.lib ..\plugins\desktop_webview_auth\Release\desktop_webview_auth_plugin.lib ..\plugins\firebase_auth\Release\firebase_auth_plugin.lib ..\plugins\firebase_core\Release\firebase_core_plugin.lib ..\plugins\url_launcher_windows\Release\url_launcher_windows_plugin.lib ..\extracted\firebase_cpp_sdk_windows\libs\windows\VS2019\MD\x64\Release\firebase_firestore.lib shell32.lib Bcrypt.lib DbgHelp.lib advapi32.lib ws2_32.lib crypt32.lib rpcrt4.lib ole32.lib ..\extracted\firebase_cpp_sdk_windows\libs\windows\VS2019\MD\x64\Release\firebase_app.lib icu.lib ..\extracted\firebase_cpp_sdk_windows\libs\windows\VS2019\MD\x64\Release\firebase_auth.lib ..\flutter\Release\flutter_wrapper_plugin.lib C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\flutter\ephemeral\flutter_windows.dll.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:C:\Users\Azfix\Desktop\hospital\proyecto_hospital\windows\runner\runner.exe.manifest /PDB:"C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/hospital_app.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/hospital_app.lib" /MACHINE:X64  /machine:x64 hospital_app.dir\Release\Runner.res
+[        ]   hospital_app.dir\Release\flutter_window.obj
+[        ]   hospital_app.dir\Release\main.obj
+[        ]   hospital_app.dir\Release\utils.obj
+[        ]   hospital_app.dir\Release\win32_window.obj
+[        ]   hospital_app.dir\Release\generated_plugin_registrant.obj
+[ +578 ms]      Creando biblioteca C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/hospital_app.lib y objeto C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/hospital_app.exp
+[ +628 ms]   hospital_app.vcxproj -> C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\runner\Release\hospital_app.exe
+[  +13 ms] _CopyOutOfDateSourceItemsToOutputDirectoryAlways:
+[        ]   Copiando el archivo de "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\packages\Microsoft.Web.WebView2\build\native\x64\WebView2Loader.dll" en "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\runner\Release\WebView2Loader.dll".
+[   +5 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "hospital_app.dir\Release\hospital_app.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "hospital_app.dir\Release\hospital_app.tlog\hospital_app.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\runner\hospital_app.vcxproj" (destinos predeterminados).
+[   +7 ms] PrepareForBuild:
+[        ]   Creando directorio "x64\Release\ALL_BUILD\".
+[   +6 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "x64\Release\ALL_BUILD\ALL_BUILD.tlog\".
+[   +2 ms] InitializeBuildStatus:
+[        ]   Se creará "x64\Release\ALL_BUILD\ALL_BUILD.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "x64\Release\ALL_BUILD\ALL_BUILD.tlog\unsuccessfulbuild".
+[  +81 ms] CustomBuild:
+[        ]   Building Custom Rule C:/Users/Azfix/Desktop/hospital/proyecto_hospital/windows/CMakeLists.txt
+[  +80 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "x64\Release\ALL_BUILD\ALL_BUILD.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "x64\Release\ALL_BUILD\ALL_BUILD.tlog\ALL_BUILD.lastbuildstate".
+[        ] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\ALL_BUILD.vcxproj" (destinos predeterminados).
+[   +5 ms] PrepareForBuild:
+[        ]   Creando directorio "x64\Release\INSTALL\".
+[   +3 ms]   La salida estructurada está habilitada. El formato del diagnóstico del compilador reflejará la jerarquía de errores. Consulte https://aka.ms/cpp/structured-output para obtener más detalles.
+[        ]   Creando directorio "x64\Release\INSTALL\INSTALL.tlog\".
+[   +2 ms] InitializeBuildStatus:
+[        ]   Se creará "x64\Release\INSTALL\INSTALL.tlog\unsuccessfulbuild" porque se especificó "AlwaysCreate".
+[        ]   Aplicando tarea Touch a "x64\Release\INSTALL\INSTALL.tlog\unsuccessfulbuild".
+[  +54 ms] CustomBuild:
+[        ]   1>
+[  +23 ms] PostBuildEvent:
+[        ]   setlocal
+[        ]   "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DBUILD_TYPE=Release -P cmake_install.cmake
+[        ]   if %errorlevel% neq 0 goto :cmEnd
+[        ]   :cmEnd
+[        ]   endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+[        ]   :cmErrorLevel
+[        ]   exit /b %1
+[        ]   :cmDone
+[        ]   if %errorlevel% neq 0 goto :VCEnd
+[        ]   :VCEnd
+[ +103 ms]   -- Install configuration: "Release"
+[ +141 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/icudtl.dat
+[  +14 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/flutter_windows.dll
+[ +212 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/app_links_plugin.dll
+[  +19 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/cloud_firestore_plugin.lib
+[  +88 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/desktop_webview_auth_plugin.dll
+[  +22 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/firebase_auth_plugin.lib
+[  +50 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/firebase_core_plugin.lib
+[  +86 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/url_launcher_windows_plugin.dll
+[   +4 ms]   -- Up-to-date: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release
+[        ]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets
+[   +1 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/AssetManifest.bin
+[   +1 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/AssetManifest.json
+[   +2 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/assets
+[   +2 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/assets/images
+[   +2 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/assets/images/empresa.png
+[   +5 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/assets/images/logo_empresa.png
+[   +3 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/assets/images/logo_hospital.png
+[   +4 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/FontManifest.json
+[   +3 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/fonts
+[   +1 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+[  +11 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/NativeAssetsManifest.json
+[   +1 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/NOTICES.Z
+[   +2 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/packages
+[   +1 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/packages/cupertino_icons
+[   +1 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/packages/cupertino_icons/assets
+[   +1 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+[   +5 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/shaders
+[   +1 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/flutter_assets/shaders/ink_sparkle.frag
+[   +3 ms]   -- Installing: C:/Users/Azfix/Desktop/hospital/proyecto_hospital/build/windows/x64/runner/Release/data/app.so
+[  +48 ms] FinalizeBuildStatus:
+[        ]   Se eliminará el archivo "x64\Release\INSTALL\INSTALL.tlog\unsuccessfulbuild".
+[        ]   Aplicando tarea Touch a "x64\Release\INSTALL\INSTALL.tlog\INSTALL.lastbuildstate".
+[   +1 ms] Compilación del proyecto terminada "C:\Users\Azfix\Desktop\hospital\proyecto_hospital\build\windows\x64\INSTALL.vcxproj" (destinos predeterminados).
+[   +6 ms] Compilación correcta.
+[        ]     0 Advertencia(s)
+[        ]     0 Errores
+[        ] Tiempo transcurrido 00:01:15.90
+[  +72 ms] Building Windows application... (completed in 77.6s)
+[   +4 ms] √ Built build\windows\x64\runner\Release\hospital_app.exe
+[   +1 ms] "flutter windows" took 78,137ms.
+[ +115 ms] Running 1 shutdown hook
+[   +1 ms] Shutdown hooks complete
+[ +209 ms] exiting with code 0

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
 import '../models/financial_models.dart';
 
 class ExpenseRequestDetailsDialog extends StatelessWidget {
@@ -174,7 +175,7 @@ class ExpenseRequestDetailsDialog extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       child: DataTable(
                         headingRowColor: MaterialStateProperty.all(
-                          const Color(0xFF81D4FA), // Light Blue
+                          kFLightBlue, // Light Blue
                         ),
                         columnSpacing: isSmallScreen ? 24 : 56,
                         columns: [
@@ -278,3 +279,5 @@ class ExpenseRequestDetailsDialog extends StatelessWidget {
     );
   }
 }
+
+

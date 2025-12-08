@@ -173,3 +173,4 @@ class _AreaChartWidgetState extends State<AreaChartWidget> with SingleTickerProv
     }).toList();
   }
 }
+

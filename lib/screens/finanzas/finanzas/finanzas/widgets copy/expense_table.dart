@@ -78,3 +78,4 @@ class ExpenseTable extends StatelessWidget {
     );
   }
 }
+

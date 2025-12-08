@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // 👈 NUEVO
 
-import 'widgets/diseño_enfermeria.dart';
+import 'widgets/diseno_enfermeria.dart';
 import 'widgets/dialogos_enfermeria.dart';
 
 class NursePatientsScreen extends StatelessWidget {
@@ -10,9 +10,7 @@ class NursePatientsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NurseLayout(
-      selectedIndex: 1,
-      child: Padding(
+    return Padding(
         padding: const EdgeInsets.all(24),
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -193,38 +191,78 @@ class NursePatientsScreen extends StatelessWidget {
                                                       ),
                                                     ),
                                                     DataCell(
-                                                      TextButton(
-                                                        style:
-                                                            TextButton.styleFrom(
-                                                          padding:
-                                                              EdgeInsets.zero,
-                                                          minimumSize:
-                                                              const Size(0, 0),
-                                                        ),
-                                                        onPressed: () {
-                                                          showDialog(
-                                                            context: context,
-                                                            builder: (_) =>
-                                                                PatientDetailsDialog(
-                                                              nombre:
-                                                                  p.nombre,
-                                                              edad: p.edad,
-                                                              habitacion:
-                                                                  p.habitacion,
-                                                              critico:
-                                                                  p.critico,
+                                                      Row(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          TextButton(
+                                                            style: TextButton.styleFrom(
+                                                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                                                              minimumSize: const Size(0, 0),
                                                             ),
-                                                          );
-                                                        },
-                                                        child: Text(
-                                                          'Ver',
-                                                          style: GoogleFonts
-                                                              .archivoNarrow(
-                                                            fontSize: 13,
-                                                            color:
-                                                                kNPrimaryBlue,
+                                                            onPressed: () {
+                                                              showDialog(
+                                                                context: context,
+                                                                builder: (_) => PatientDetailsDialog(
+                                                                  nombre: p.nombre,
+                                                                  edad: p.edad,
+                                                                  habitacion: p.habitacion,
+                                                                  critico: p.critico,
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Text(
+                                                              'Ver',
+                                                              style: GoogleFonts.archivoNarrow(
+                                                                fontSize: 13,
+                                                                color: kNPrimaryBlue,
+                                                              ),
+                                                            ),
                                                           ),
-                                                        ),
+                                                          const SizedBox(width: 4),
+                                                          TextButton(
+                                                            style: TextButton.styleFrom(
+                                                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                                                              minimumSize: const Size(0, 0),
+                                                            ),
+                                                            onPressed: () async {
+                                                              final nuevoEstado = p.critico ? 'estable' : 'critico';
+                                                              try {
+                                                                await FirebaseFirestore.instance
+                                                                    .collection('pacientes')
+                                                                    .doc(p.id)
+                                                                    .update({'estado': nuevoEstado});
+                                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                                  SnackBar(
+                                                                    content: Text(
+                                                                      'Estado de ${p.nombre} cambiado a ${nuevoEstado.toUpperCase()}',
+                                                                      style: GoogleFonts.archivoNarrow(),
+                                                                    ),
+                                                                    backgroundColor: nuevoEstado == 'critico' 
+                                                                        ? kNRedAlert 
+                                                                        : kNGreenDark,
+                                                                  ),
+                                                                );
+                                                              } catch (e) {
+                                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                                  SnackBar(
+                                                                    content: Text(
+                                                                      'Error al cambiar estado: $e',
+                                                                      style: GoogleFonts.archivoNarrow(),
+                                                                    ),
+                                                                    backgroundColor: kNRedAlert,
+                                                                  ),
+                                                                );
+                                                              }
+                                                            },
+                                                            child: Text(
+                                                              p.critico ? 'Estabilizar' : 'Marcar Crítico',
+                                                              style: GoogleFonts.archivoNarrow(
+                                                                fontSize: 13,
+                                                                color: p.critico ? kNGreenDark : kNRedAlert,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ],
@@ -248,8 +286,7 @@ class NursePatientsScreen extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
+      );
   }
 }
 
@@ -279,12 +316,14 @@ class _StatusChip extends StatelessWidget {
 }
 
 class NursePatient {
+  final String id;
   final String nombre;
   final String habitacion;
   final String edad;
   final bool critico;
 
   NursePatient({
+    required this.id,
     required this.nombre,
     required this.habitacion,
     required this.edad,
@@ -331,6 +370,7 @@ class NursePatient {
     }
 
     return NursePatient(
+      id: doc.id,
       nombre: nombre,
       habitacion: habitacion,
       edad: edadTexto,

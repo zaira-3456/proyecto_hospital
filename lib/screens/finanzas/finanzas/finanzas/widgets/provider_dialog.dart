@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
 import '../models/provider_models.dart';
 
 class ProviderDialog extends StatefulWidget {
@@ -148,7 +149,7 @@ class _ProviderDialogState extends State<ProviderDialog> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF0288D1), // Blue color
+                      backgroundColor: kFPrimaryBlue, // Blue color
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
@@ -212,9 +213,11 @@ class _ProviderDialogState extends State<ProviderDialog> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFF0288D1)),
+          borderSide: const BorderSide(color: kFPrimaryBlue),
         ),
       ),
     );
   }
 }
+
+

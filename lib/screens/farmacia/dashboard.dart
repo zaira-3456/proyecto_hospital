@@ -6,15 +6,14 @@ import 'widgets/diseno_farmacia.dart';
 import 'widgets/agregar_medicamento.dart';
 import 'inventario.dart';
 import 'solicitudes.dart';
+import '../../widgets/welcome_message_widget.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return PharmacyLayout(
-      selectedIndex: 0,
-      child: LayoutBuilder(
+    return LayoutBuilder(
         builder: (context, constraints) {
           final bool narrow = constraints.maxWidth < 1050;
 
@@ -39,8 +38,8 @@ class DashboardScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        'Bienvenido, Wendy',
+                      WelcomeMessageWidget(
+                        prefix: 'Bienvenido,',
                         style: GoogleFonts.archivoNarrow(
                           fontSize: 22,
                           letterSpacing: 1,
@@ -205,8 +204,7 @@ class DashboardScreen extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
+      );
   }
 }
 

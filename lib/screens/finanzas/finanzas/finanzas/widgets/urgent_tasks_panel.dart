@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/financial_models.dart';
 
 class UrgentTasksPanel extends StatelessWidget {
@@ -18,7 +20,7 @@ class UrgentTasksPanel extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -27,9 +29,9 @@ class UrgentTasksPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Tareas Urgentes',
-            style: TextStyle(
+            style: GoogleFonts.archivo(
               fontSize: 16,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
@@ -37,12 +39,12 @@ class UrgentTasksPanel extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           if (tasks.isEmpty)
-            const Center(
+            Center(
               child: Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Text(
                   'No hay tareas urgentes',
-                  style: TextStyle(
+                  style: GoogleFonts.archivoNarrow(
                     color: Colors.grey,
                     fontSize: 14,
                   ),
@@ -88,7 +90,7 @@ class UrgentTasksPanel extends StatelessWidget {
           Expanded(
             child: Text(
               task.description,
-              style: const TextStyle(
+              style: GoogleFonts.archivoNarrow(
                 fontSize: 13,
                 color: Colors.black87,
                 height: 1.4,
@@ -100,3 +102,5 @@ class UrgentTasksPanel extends StatelessWidget {
     );
   }
 }
+
+

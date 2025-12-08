@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/finance_colors.dart';
 import '../models/financial_models.dart';
 import '../services/database_service.dart';
 import '../widgets/income_table.dart';
@@ -138,7 +139,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(message),
-          backgroundColor: const Color(0xFF00BCD4),
+          backgroundColor: kFPrimaryBlue,
         ),
       );
     }
@@ -174,7 +175,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                       onPressed: () {
                         // TODO: Implementar filtros
                       },
-                      color: const Color(0xFF00BCD4),
+                      color: kFPrimaryBlue,
                     ),
                   ],
                 ),
@@ -203,7 +204,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                                   child: IncomeBarChart(
                                     title: 'Ingresos',
                                     data: _chartData,
-                                    barColor: const Color(0xFF2196F3),
+                                    barColor: kFPrimaryBlue,
                                   ),
                                 ),
                                 const SizedBox(width: 16),
@@ -211,7 +212,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                                   child: IncomeBarChart(
                                     title: 'Reporte de Ingresos por Área',
                                     data: _areaReportData,
-                                    barColor: const Color(0xFF2196F3),
+                                    barColor: kFPrimaryBlue,
                                   ),
                                 ),
                               ],
@@ -227,7 +228,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                           title: 'Ingresos del día',
                           amount: _dailyIncomeAmount,
                           percentageChange: _dailyIncomeChange,
-                          backgroundColor: const Color(0xFFE3F2FD),
+                          backgroundColor: kFBgLight,
                         ),
                       ),
                     ],
@@ -246,7 +247,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                         title: 'Ingresos del día',
                         amount: _dailyIncomeAmount,
                         percentageChange: _dailyIncomeChange,
-                        backgroundColor: const Color(0xFFE3F2FD),
+                        backgroundColor: kFBgLight,
                       ),
                       const SizedBox(height: 24),
                       if (isTablet)
@@ -256,7 +257,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                               child: IncomeBarChart(
                                 title: 'Ingresos',
                                 data: _chartData,
-                                barColor: const Color(0xFF2196F3),
+                                barColor: kFPrimaryBlue,
                               ),
                             ),
                             const SizedBox(width: 16),
@@ -264,7 +265,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                               child: IncomeBarChart(
                                 title: 'Reporte de Ingresos por Área',
                                 data: _areaReportData,
-                                barColor: const Color(0xFF2196F3),
+                                barColor: kFPrimaryBlue,
                               ),
                             ),
                           ],
@@ -275,13 +276,13 @@ class _IncomeScreenState extends State<IncomeScreen> {
                             IncomeBarChart(
                               title: 'Ingresos',
                               data: _chartData,
-                              barColor: const Color(0xFF2196F3),
+                              barColor: kFPrimaryBlue,
                             ),
                             const SizedBox(height: 16),
                             IncomeBarChart(
                               title: 'Reporte de Ingresos por Área',
                               data: _areaReportData,
-                              barColor: const Color(0xFF2196F3),
+                              barColor: kFPrimaryBlue,
                             ),
                           ],
                         ),
@@ -292,3 +293,5 @@ class _IncomeScreenState extends State<IncomeScreen> {
           );
   }
 }
+
+

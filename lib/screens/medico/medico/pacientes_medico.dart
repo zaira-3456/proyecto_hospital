@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dashboard_medico.dart';
+
 import '../../recepcionista/recepcionista/registrar_paciente.dart';
 import '../../login/services/database_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'widgets/diseno_medico.dart';
 
@@ -36,15 +37,24 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
       int edad = 0;
       if (p['fechaNacimiento'] != null) {
         try {
-          // Asumiendo formato dd/MM/yyyy o similar si es String, o Timestamp
-          // En RegistroPacientePage se guarda como String dd/MM/yyyy
-          final parts = (p['fechaNacimiento'] as String).split('/');
-          if (parts.length == 3) {
-            final birthDate = DateTime(
-              int.parse(parts[2]),
-              int.parse(parts[1]),
-              int.parse(parts[0]),
-            );
+          DateTime? birthDate;
+          final rawDate = p['fechaNacimiento'];
+          
+          if (rawDate is Timestamp) {
+            birthDate = rawDate.toDate();
+          } else if (rawDate is String) {
+             // Asumiendo formato dd/MM/yyyy
+             final parts = rawDate.split('/');
+             if (parts.length == 3) {
+               birthDate = DateTime(
+                 int.parse(parts[2]),
+                 int.parse(parts[1]),
+                 int.parse(parts[0]),
+               );
+             }
+          }
+
+          if (birthDate != null) {
             final now = DateTime.now();
             edad = now.year - birthDate.year;
             if (now.month < birthDate.month ||
@@ -68,6 +78,7 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
         estado: 'Activo',
         fecha: 'Pendiente',
         hora: '--:--',
+        fechaNacimientoRaw: p['fechaNacimiento'], // Store raw data
       ));
     }
 
@@ -98,9 +109,9 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DoctorLayout(
-      selectedIndex: 1,
-      child: LayoutBuilder(
+    return Scaffold(
+      backgroundColor: kMWhite,
+      body: LayoutBuilder(
         builder: (context, constraints) {
           final narrow = constraints.maxWidth < 900;
 
@@ -191,10 +202,12 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => RegistroPacientePage(
-                                    returnRoute: const DoctorDashboardScreen(),
+                                    returnRoute: const DoctorLayout(),
                                   ),
                                 ),
-                              ).then((_) => _loadPatients()); // Reload after return
+                              ).then((_) {
+                                _loadPatients();
+                              }); 
                             },
                             icon: const Icon(Icons.person_add_alt_1, size: 18),
                             label: const Text('Nuevo Paciente'),
@@ -215,7 +228,11 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
                             .map(
                               (p) => Padding(
                                 padding: const EdgeInsets.only(bottom: 14.0),
-                                child: _PatientCard(patient: p, compact: narrow),
+                                child: _PatientCard(
+                                  patient: p, 
+                                  compact: narrow,
+                                  onUpdate: _loadPatients,
+                                ),
                               ),
                             )
                             .toList(),
@@ -234,8 +251,13 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
 class _PatientCard extends StatelessWidget {
   final DoctorPatient patient;
   final bool compact;
+  final VoidCallback onUpdate;
 
-  const _PatientCard({required this.patient, required this.compact});
+  const _PatientCard({
+    required this.patient, 
+    required this.compact,
+    required this.onUpdate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -362,7 +384,37 @@ class _PatientCard extends StatelessWidget {
                     style: GoogleFonts.archivoNarrow(fontSize: 13),
                   ),
                   const SizedBox(width: 4),
-                  const Icon(Icons.more_vert, size: 18),
+                  PopupMenuButton<String>(
+                    icon: const Icon(Icons.more_vert, size: 18),
+                    onSelected: (value) {
+                      if (value == 'editar') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => RegistroPacientePage(
+                              returnRoute: const DoctorLayout(),
+                              patientId: patient.id,
+                              patientData: {
+                                'nombreCompleto': patient.nombre,
+                                'genero': patient.sexo,
+                                'telefono': patient.telefono,
+                                'correo': patient.email,
+                                'fechaNacimiento': patient.fechaNacimientoRaw,
+                              },
+                            ),
+                          ),
+                        ).then((_) {
+                           onUpdate();
+                        });
+                      }
+                    },
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                      const PopupMenuItem<String>(
+                        value: 'editar',
+                        child: Text('Editar'),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ],
@@ -412,6 +464,7 @@ class DoctorPatient {
   final String estado;
   final String fecha;
   final String hora;
+  final dynamic fechaNacimientoRaw;
 
   DoctorPatient({
     required this.id,
@@ -424,5 +477,6 @@ class DoctorPatient {
     required this.estado,
     required this.fecha,
     required this.hora,
+    this.fechaNacimientoRaw,
   });
 }

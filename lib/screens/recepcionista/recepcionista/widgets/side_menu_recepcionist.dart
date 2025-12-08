@@ -1,43 +1,48 @@
 import 'package:flutter/material.dart';
-import '../gestion_citas.dart';
-import '../recepcionist_dashboard.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SideMenuReception extends StatelessWidget {
-  final bool isDrawer;
+  final String selectedMenu;
+  final Function(String) onMenuSelected;
+  final VoidCallback onLogout;
 
-  const SideMenuReception({super.key, this.isDrawer = false});
+  const SideMenuReception({
+    super.key,
+    required this.selectedMenu,
+    required this.onMenuSelected,
+    required this.onLogout,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: isDrawer ? double.infinity : 360,
+      width: 250,
       color: const Color(0xffBEE8FF),
       child: Column(
         children: [
           // ===== HEADER "RECEPCIÓN" =====
           Container(
             width: double.infinity,
-            height: 100,
+            height: 80,
             color: const Color(0xff1991DB),
             alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(left: 50),
-            child: const Text(
+            padding: const EdgeInsets.only(left: 24),
+            child: Text(
               "Recepción",
-              style: TextStyle(
-                fontFamily: 'Archivo',
+              style: GoogleFonts.archivo(
                 color: Colors.white,
-                fontSize: 32,
-                fontWeight: FontWeight.w700,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
 
-          const SizedBox(height: 40),
+          const SizedBox(height: 24),
 
           // ===== LISTA DE OPCIONES DEL MENÚ (CON SCROLL) =====
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 44),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,36 +51,21 @@ class SideMenuReception extends StatelessWidget {
                   _MenuOption(
                     icon: Icons.home,
                     text: "Inicio",
-                    onTap: () {
-                      if (isDrawer) Navigator.pop(context);
-                      // Navegar al dashboard
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ReceptionistDashboard(),
-                        ),
-                      );
-                    },
+                    isSelected: selectedMenu == 'inicio',
+                    onTap: () => onMenuSelected('inicio'),
                   ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
 
                   // OPCIÓN 2: CITAS
                   _MenuOption(
                     icon: Icons.calendar_today,
                     text: "Citas",
-                    onTap: () {
-                      if (isDrawer) Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const GestionCitasPage(),
-                        ),
-                      );
-                    },
+                    isSelected: selectedMenu == 'citas',
+                    onTap: () => onMenuSelected('citas'),
                   ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
 
                   //AGREGAR MÁS OPCIONES AQUÍ
                 ],
@@ -83,37 +73,28 @@ class SideMenuReception extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
 
           Padding(
-            padding: const EdgeInsets.only(bottom: 40),
+            padding: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
             child: SizedBox(
-              width: 227,
-              height: 50,
+              width: double.infinity,
+              height: 45,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xff1991DB),
-                  foregroundColor: const Color.fromARGB(255, 0, 0, 0),
+                  foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   elevation: 0,
                   padding: EdgeInsets.zero,
                 ),
-                onPressed: () {
-                  if (isDrawer) Navigator.pop(context);
-                  // Navegar al login y limpiar el stack de navegación
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/login',
-                    (route) => false,
-                  );
-                },
-                child: const Text(
+                onPressed: onLogout,
+                child: Text(
                   "Cerrar sesión",
-                  style: TextStyle(
-                    fontFamily: 'Archivo',
-                    fontSize: 18,
+                  style: GoogleFonts.archivo(
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -129,11 +110,13 @@ class SideMenuReception extends StatelessWidget {
 class _MenuOption extends StatelessWidget {
   final IconData icon;
   final String text;
+  final bool isSelected;
   final VoidCallback onTap;
 
   const _MenuOption({
     required this.icon,
     required this.text,
+    required this.isSelected,
     required this.onTap,
   });
 
@@ -144,28 +127,29 @@ class _MenuOption extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: 272,
-          height: 50,
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           decoration: BoxDecoration(
-            color: Colors.transparent,
+            color: isSelected
+                ? const Color(0xff1991DB).withOpacity(0.2)
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
             children: [
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: Icon(icon, size: 50, color: Colors.black),
+              Icon(
+                icon,
+                size: 20,
+                color: isSelected ? const Color(0xff1991DB) : Colors.black87,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 12),
               Expanded(
                 child: Text(
                   text,
-                  style: const TextStyle(
-                    fontFamily: 'Archivo',
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
+                  style: GoogleFonts.archivo(
+                    fontSize: 14,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                    color: isSelected ? const Color(0xff1991DB) : Colors.black87,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),

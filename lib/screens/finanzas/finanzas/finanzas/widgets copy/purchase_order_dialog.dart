@@ -237,3 +237,4 @@ class _PurchaseOrderDialogState extends State<PurchaseOrderDialog> {
     );
   }
 }
+

@@ -132,3 +132,4 @@ class FinanceSidebar extends StatelessWidget {
     );
   }
 }
+

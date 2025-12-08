@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -68,7 +69,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(
-              primary: Color(0xFF00BCD4),
+              primary: kFPrimaryBlue,
               onPrimary: Colors.white,
               onSurface: Colors.black,
             ),
@@ -180,7 +181,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                             fontSize: 14,
                           ),
                           filled: true,
-                          fillColor: const Color(0xFFF5F5F5),
+                          fillColor: kFGreyBg,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4),
                             borderSide: BorderSide(
@@ -196,7 +197,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4),
                             borderSide: const BorderSide(
-                              color: Color(0xFF00BCD4),
+                              color: kFPrimaryBlue,
                               width: 2,
                             ),
                           ),
@@ -232,7 +233,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                             fontSize: 14,
                           ),
                           filled: true,
-                          fillColor: const Color(0xFFF5F5F5),
+                          fillColor: kFGreyBg,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4),
                             borderSide: BorderSide(
@@ -248,7 +249,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4),
                             borderSide: const BorderSide(
-                              color: Color(0xFF00BCD4),
+                              color: kFPrimaryBlue,
                               width: 2,
                             ),
                           ),
@@ -281,7 +282,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                             fontSize: 14,
                           ),
                           filled: true,
-                          fillColor: const Color(0xFFF5F5F5),
+                          fillColor: kFGreyBg,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4),
                             borderSide: BorderSide(
@@ -297,7 +298,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4),
                             borderSide: const BorderSide(
-                              color: Color(0xFF00BCD4),
+                              color: kFPrimaryBlue,
                               width: 2,
                             ),
                           ),
@@ -327,7 +328,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                             fontSize: 14,
                           ),
                           filled: true,
-                          fillColor: const Color(0xFFF5F5F5),
+                          fillColor: kFGreyBg,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4),
                             borderSide: BorderSide(
@@ -343,7 +344,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4),
                             borderSide: const BorderSide(
-                              color: Color(0xFF00BCD4),
+                              color: kFPrimaryBlue,
                               width: 2,
                             ),
                           ),
@@ -372,7 +373,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                             vertical: 12,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF5F5F5),
+                            color: kFGreyBg,
                             border: Border.all(
                               color: Colors.grey[300]!,
                             ),
@@ -415,7 +416,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                             fontSize: 14,
                           ),
                           filled: true,
-                          fillColor: const Color(0xFFF5F5F5),
+                          fillColor: kFGreyBg,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4),
                             borderSide: BorderSide(
@@ -431,7 +432,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4),
                             borderSide: const BorderSide(
-                              color: Color(0xFF00BCD4),
+                              color: kFPrimaryBlue,
                               width: 2,
                             ),
                           ),
@@ -469,7 +470,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                         child: ElevatedButton(
                           onPressed: _handleSubmit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF00BCD4),
+                            backgroundColor: kFPrimaryBlue,
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             shape: RoundedRectangleBorder(
@@ -508,3 +509,5 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
     );
   }
 }
+
+

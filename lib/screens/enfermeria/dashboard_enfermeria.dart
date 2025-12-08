@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // <= NUEVO
 
-import 'widgets/diseño_enfermeria.dart';
+import 'widgets/diseno_enfermeria.dart';
 import 'widgets/dialogos_enfermeria.dart';
 import 'pacientes.dart';
 import 'medicamentos.dart';
@@ -12,9 +12,7 @@ class NurseDashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NurseLayout(
-      selectedIndex: 0,
-      child: LayoutBuilder(
+    return LayoutBuilder(
         builder: (context, constraints) {
           final bool narrow = constraints.maxWidth < 1050;
 
@@ -192,8 +190,7 @@ class NurseDashboardScreen extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
+      );
   }
 }
 

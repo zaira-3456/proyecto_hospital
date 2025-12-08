@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../widgets/user_name_widget.dart';
 
 // IMPORTA LAS PANTALLAS DEL MÓDULO MÉDICO
 import '../dashboard_medico.dart';
@@ -26,6 +27,7 @@ const Color kMGreenDark = Color(0xFF05531A);
 const Color kMRed = Color(0xFFDD0000);
 const Color kMRedSoft = Color(0x66FF2B28); // 40%
 const Color kMYellow = Color(0xFFFFE046);
+const Color kMOrange = Color(0xFFFF9800);
 
 const Color kMGreyText = Color(0xFF5C5B5B);
 const Color kMGreyBorder = Color(0xFF8F8E8E);
@@ -39,16 +41,59 @@ const Color kMBgLight = Color(0xFFF7FAFF);
 const String kMDoctorLogoPath = 'assets/images/logo_hospital.png';
 
 /// LAYOUT GENERAL DEL PANEL MÉDICO
-class DoctorLayout extends StatelessWidget {
-  final Widget child;
-  final int
-  selectedIndex; // 0..5 (Inicio, Pacientes, Estudios, Expedientes, Resultados, Recetas)
+class DoctorLayout extends StatefulWidget {
+  final int initialIndex;
 
   const DoctorLayout({
     super.key,
-    required this.child,
-    required this.selectedIndex,
+    this.initialIndex = 0,
   });
+
+  @override
+  State<DoctorLayout> createState() => _DoctorLayoutState();
+}
+
+class _DoctorLayoutState extends State<DoctorLayout> {
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
+
+  void _handleMenuSelected(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  void _handleLogout() {
+    Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+  }
+
+  Widget _getCurrentPage() {
+    switch (_selectedIndex) {
+      case 0:
+        return DoctorDashboardScreen(
+          onMenuSelected: _handleMenuSelected,
+        );
+      case 1:
+        return const DoctorPatientsScreen();
+      case 2:
+        return const DoctorStudiesScreen();
+      case 3:
+        return const DoctorRecordsScreen();
+      case 4:
+        return const DoctorResultsScreen();
+      case 5:
+        return const DoctorPrescriptionsScreen();
+      default:
+        return DoctorDashboardScreen(
+          onMenuSelected: _handleMenuSelected,
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +114,12 @@ class DoctorLayout extends StatelessWidget {
                 ),
               ),
             ),
-            drawer: _DoctorDrawer(selectedIndex: selectedIndex),
-            body: child,
+            drawer: _DoctorDrawer(
+              selectedIndex: _selectedIndex,
+              onMenuSelected: _handleMenuSelected,
+              onLogout: _handleLogout,
+            ),
+            body: _getCurrentPage(),
           );
         }
 
@@ -78,9 +127,16 @@ class DoctorLayout extends StatelessWidget {
           backgroundColor: kMBgLight,
           body: Row(
             children: [
-              _DoctorSideMenu(selectedIndex: selectedIndex),
+              _DoctorSideMenu(
+                selectedIndex: _selectedIndex,
+                onMenuSelected: _handleMenuSelected,
+                onLogout: _handleLogout,
+              ),
               Expanded(
-                child: Container(color: kMWhite, child: child),
+                child: Container(
+                  color: kMWhite,
+                  child: _getCurrentPage(),
+                ),
               ),
             ],
           ),
@@ -94,35 +150,14 @@ class DoctorLayout extends StatelessWidget {
 
 class _DoctorSideMenu extends StatelessWidget {
   final int selectedIndex;
+  final Function(int) onMenuSelected;
+  final VoidCallback onLogout;
 
-  const _DoctorSideMenu({required this.selectedIndex});
-
-  void _goTo(BuildContext context, int index) {
-    Widget page;
-    switch (index) {
-      case 0:
-        page = const DoctorDashboardScreen();
-        break;
-      case 1:
-        page = const DoctorPatientsScreen();
-        break;
-      case 2:
-        page = const DoctorStudiesScreen();
-        break;
-      case 3:
-        page = const DoctorRecordsScreen();
-        break;
-      case 4:
-        page = const DoctorResultsScreen();
-        break;
-      case 5:
-      default:
-        page = const DoctorPrescriptionsScreen();
-        break;
-    }
-
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => page));
-  }
+  const _DoctorSideMenu({
+    required this.selectedIndex,
+    required this.onMenuSelected,
+    required this.onLogout,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -148,13 +183,28 @@ class _DoctorSideMenu extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Text(
-                  'Panel Médico',
-                  style: GoogleFonts.archivo(
-                    color: kMWhite,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Médico',
+                        style: GoogleFonts.archivo(
+                          color: kMWhite.withOpacity(0.8),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      UserNameWidget(
+                        style: GoogleFonts.archivo(
+                          color: kMWhite,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -170,42 +220,42 @@ class _DoctorSideMenu extends StatelessWidget {
                   icon: Icons.home,
                   text: 'Inicio',
                   selected: selectedIndex == 0,
-                  onTap: () => _goTo(context, 0),
+                  onTap: () => onMenuSelected(0),
                 ),
                 const SizedBox(height: 18),
                 _SideItem(
                   icon: Icons.groups_outlined,
                   text: 'Pacientes',
                   selected: selectedIndex == 1,
-                  onTap: () => _goTo(context, 1),
+                  onTap: () => onMenuSelected(1),
                 ),
                 const SizedBox(height: 18),
                 _SideItem(
                   icon: Icons.biotech_outlined,
                   text: 'Estudios clínicos',
                   selected: selectedIndex == 2,
-                  onTap: () => _goTo(context, 2),
+                  onTap: () => onMenuSelected(2),
                 ),
                 const SizedBox(height: 18),
                 _SideItem(
                   icon: Icons.folder_open_outlined,
                   text: 'Expedientes',
                   selected: selectedIndex == 3,
-                  onTap: () => _goTo(context, 3),
+                  onTap: () => onMenuSelected(3),
                 ),
                 const SizedBox(height: 18),
                 _SideItem(
                   icon: Icons.monitor_heart_outlined,
                   text: 'Resultados',
                   selected: selectedIndex == 4,
-                  onTap: () => _goTo(context, 4),
+                  onTap: () => onMenuSelected(4),
                 ),
                 const SizedBox(height: 18),
                 _SideItem(
                   icon: Icons.receipt_long_outlined,
                   text: 'Recetas',
                   selected: selectedIndex == 5,
-                  onTap: () => _goTo(context, 5),
+                  onTap: () => onMenuSelected(5),
                 ),
               ],
             ),
@@ -225,13 +275,7 @@ class _DoctorSideMenu extends StatelessWidget {
                     fontSize: 15,
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/login',
-                    (route) => false,
-                  );
-                },
+                onPressed: onLogout,
                 child: const Text('Cerrar sesión'),
               ),
             ),
@@ -283,39 +327,20 @@ class _SideItem extends StatelessWidget {
 
 class _DoctorDrawer extends StatelessWidget {
   final int selectedIndex;
+  final Function(int) onMenuSelected;
+  final VoidCallback onLogout;
 
-  const _DoctorDrawer({required this.selectedIndex});
+  const _DoctorDrawer({
+    required this.selectedIndex,
+    required this.onMenuSelected,
+    required this.onLogout,
+  });
 
   @override
   Widget build(BuildContext context) {
-    void go(int index) {
+    void handleSelect(int index) {
       Navigator.pop(context);
-      Widget page;
-      switch (index) {
-        case 0:
-          page = const DoctorDashboardScreen();
-          break;
-        case 1:
-          page = const DoctorPatientsScreen();
-          break;
-        case 2:
-          page = const DoctorStudiesScreen();
-          break;
-        case 3:
-          page = const DoctorRecordsScreen();
-          break;
-        case 4:
-          page = const DoctorResultsScreen();
-          break;
-        case 5:
-        default:
-          page = const DoctorPrescriptionsScreen();
-          break;
-      }
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => page),
-      );
+      onMenuSelected(index);
     }
 
     return Drawer(
@@ -328,15 +353,26 @@ class _DoctorDrawer extends StatelessWidget {
                 height: 70,
                 width: double.infinity,
                 color: kMSidebarBlue,
-                alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Panel Médico',
-                  style: GoogleFonts.archivo(
-                    color: kMWhite,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Médico',
+                      style: GoogleFonts.archivo(
+                        color: kMWhite.withOpacity(0.8),
+                        fontSize: 14,
+                      ),
+                    ),
+                    UserNameWidget(
+                      style: GoogleFonts.archivo(
+                        color: kMWhite,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 24),
@@ -344,42 +380,65 @@ class _DoctorDrawer extends StatelessWidget {
                 icon: Icons.home,
                 text: 'Inicio',
                 selected: selectedIndex == 0,
-                onTap: () => go(0),
+                onTap: () => handleSelect(0),
               ),
               const SizedBox(height: 16),
               _SideItem(
                 icon: Icons.groups_outlined,
                 text: 'Pacientes',
                 selected: selectedIndex == 1,
-                onTap: () => go(1),
+                onTap: () => handleSelect(1),
               ),
               const SizedBox(height: 16),
               _SideItem(
                 icon: Icons.biotech_outlined,
                 text: 'Estudios clínicos',
                 selected: selectedIndex == 2,
-                onTap: () => go(2),
+                onTap: () => handleSelect(2),
               ),
               const SizedBox(height: 16),
               _SideItem(
                 icon: Icons.folder_open_outlined,
                 text: 'Expedientes',
                 selected: selectedIndex == 3,
-                onTap: () => go(3),
+                onTap: () => handleSelect(3),
               ),
               const SizedBox(height: 16),
               _SideItem(
                 icon: Icons.monitor_heart_outlined,
                 text: 'Resultados',
                 selected: selectedIndex == 4,
-                onTap: () => go(4),
+                onTap: () => handleSelect(4),
               ),
               const SizedBox(height: 16),
               _SideItem(
                 icon: Icons.receipt_long_outlined,
                 text: 'Recetas',
                 selected: selectedIndex == 5,
-                onTap: () => go(5),
+                onTap: () => handleSelect(5),
+              ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kMSidebarBlue,
+                      foregroundColor: kMWhite,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      textStyle: GoogleFonts.archivo(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      onLogout();
+                    },
+                    child: const Text('Cerrar sesión'),
+                  ),
+                ),
               ),
             ],
           ),

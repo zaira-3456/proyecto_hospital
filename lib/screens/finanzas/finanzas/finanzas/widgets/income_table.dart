@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
 import '../models/financial_models.dart';
 
 class IncomeTable extends StatelessWidget {
@@ -59,7 +60,7 @@ class IncomeTable extends StatelessWidget {
                                 icon: const Icon(Icons.add, size: 16),
                                 label: const Text('Agregar'),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF00BCD4),
+                                  backgroundColor: kFPrimaryBlue,
                                   foregroundColor: Colors.white,
                                   padding: const EdgeInsets.symmetric(vertical: 12),
                                   textStyle: const TextStyle(fontSize: 13),
@@ -77,7 +78,7 @@ class IncomeTable extends StatelessWidget {
                                 icon: const Icon(Icons.download, size: 16),
                                 label: const Text('Exportar'),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF00BCD4),
+                                  backgroundColor: kFPrimaryBlue,
                                   foregroundColor: Colors.white,
                                   padding: const EdgeInsets.symmetric(vertical: 12),
                                   textStyle: const TextStyle(fontSize: 13),
@@ -113,7 +114,7 @@ class IncomeTable extends StatelessWidget {
                               icon: const Icon(Icons.add, size: 16),
                               label: const Text('Agregar ingresos'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF00BCD4),
+                                backgroundColor: kFPrimaryBlue,
                                 foregroundColor: Colors.white,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16,
@@ -132,7 +133,7 @@ class IncomeTable extends StatelessWidget {
                               icon: const Icon(Icons.download, size: 16),
                               label: const Text('Exportar'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF00BCD4),
+                                backgroundColor: kFPrimaryBlue,
                                 foregroundColor: Colors.white,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16,
@@ -159,7 +160,7 @@ class IncomeTable extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: DataTable(
               headingRowColor: WidgetStateProperty.all(
-                const Color(0xFF00BCD4).withValues(alpha: 0.1),
+                kFPrimaryBlue.withValues(alpha: 0.1),
               ),
               columns: const [
                 DataColumn(
@@ -219,3 +220,5 @@ class IncomeTable extends StatelessWidget {
     );
   }
 }
+
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../models/financial_models.dart';
 
@@ -173,3 +174,5 @@ class _AreaChartWidgetState extends State<AreaChartWidget> with SingleTickerProv
     }).toList();
   }
 }
+
+

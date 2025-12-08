@@ -14,6 +14,23 @@ class DoctorStudiesScreen extends StatefulWidget {
 class _DoctorStudiesScreenState extends State<DoctorStudiesScreen> {
   int _tabIndex = 0; // 0 pendientes, 1 proceso, 2 completados
   DoctorStudy? _selected;
+  String _searchQuery = '';
+  final _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<DoctorStudy> _filterStudies(List<DoctorStudy> list) {
+    if (_searchQuery.isEmpty) return list;
+    final query = _searchQuery.toLowerCase();
+    return list.where((s) =>
+      s.nombre.toLowerCase().contains(query) ||
+      s.paciente.toLowerCase().contains(query)
+    ).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +48,12 @@ class _DoctorStudiesScreenState extends State<DoctorStudiesScreen> {
         filtered = all.where((s) => s.estado == StudyEstado.pendiente).toList();
         break;
     }
+    // Apply search filter
+    filtered = _filterStudies(filtered);
 
-    return DoctorLayout(
-      selectedIndex: 2,
-      child: LayoutBuilder(
+    return Scaffold(
+      backgroundColor: kMWhite,
+      body: LayoutBuilder(
         builder: (context, constraints) {
           final wide = constraints.maxWidth > 980;
 
@@ -83,14 +102,36 @@ class _DoctorStudiesScreenState extends State<DoctorStudiesScreen> {
                           const Icon(Icons.search, size: 20),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: Text(
-                              'Buscar estudios por paciente o tipo...',
-                              style: GoogleFonts.archivoNarrow(
-                                fontSize: 14,
-                                color: kMGreyText,
+                            child: TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: 'Buscar estudios por paciente o tipo...',
+                                hintStyle: GoogleFonts.archivoNarrow(
+                                  fontSize: 14,
+                                  color: kMGreyText,
+                                ),
+                                border: InputBorder.none,
+                                isDense: true,
+                                contentPadding: EdgeInsets.zero,
                               ),
+                              style: GoogleFonts.archivoNarrow(fontSize: 14),
+                              onChanged: (value) {
+                                setState(() => _searchQuery = value);
+                              },
                             ),
                           ),
+                          if (_searchQuery.isNotEmpty)
+                            IconButton(
+                              icon: const Icon(Icons.clear, size: 18),
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                              onPressed: () {
+                                setState(() {
+                                  _searchController.clear();
+                                  _searchQuery = '';
+                                });
+                              },
+                            ),
                         ],
                       ),
                     ),
@@ -447,13 +488,44 @@ class _StudyDetail extends StatelessWidget {
           alignment: Alignment.bottomRight,
           child: ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: kMPrimaryBlue,
+              backgroundColor: study.estado == StudyEstado.completado 
+                  ? kMPrimaryBlue 
+                  : kMGreyText,
               foregroundColor: kMWhite,
             ),
-            onPressed: () {},
+            onPressed: study.estado == StudyEstado.completado
+                ? () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Descargando resultados de ${study.nombre}...',
+                          style: GoogleFonts.archivoNarrow(),
+                        ),
+                        backgroundColor: kMPrimaryBlue,
+                        action: SnackBarAction(
+                          label: 'OK',
+                          textColor: kMWhite,
+                          onPressed: () {},
+                        ),
+                      ),
+                    );
+                  }
+                : () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'El estudio aún no está completado',
+                          style: GoogleFonts.archivoNarrow(),
+                        ),
+                        backgroundColor: kMOrange,
+                      ),
+                    );
+                  },
             icon: const Icon(Icons.file_download_outlined, size: 18),
             label: Text(
-              'Descargar resultados',
+              study.estado == StudyEstado.completado 
+                  ? 'Descargar resultados' 
+                  : 'Pendiente de resultados',
               style: GoogleFonts.archivoNarrow(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,

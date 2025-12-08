@@ -5,14 +5,35 @@ import 'package:cloud_firestore/cloud_firestore.dart'; // 👈 NUEVO
 import 'widgets/diseno_farmacia.dart';
 import 'widgets/agregar_medicamento.dart';
 
-class InventoryScreen extends StatelessWidget {
+class InventoryScreen extends StatefulWidget {
   const InventoryScreen({super.key});
 
   @override
+  State<InventoryScreen> createState() => _InventoryScreenState();
+}
+
+class _InventoryScreenState extends State<InventoryScreen> {
+  String _searchQuery = '';
+  final _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<Medicine> _filterMedicines(List<Medicine> medicines) {
+    if (_searchQuery.isEmpty) return medicines;
+    final query = _searchQuery.toLowerCase();
+    return medicines.where((m) =>
+      m.nombre.toLowerCase().contains(query) ||
+      m.tipo.toLowerCase().contains(query)
+    ).toList();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return PharmacyLayout(
-      selectedIndex: 1,
-      child: Padding(
+    return Padding(
         padding: const EdgeInsets.all(24),
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -60,7 +81,7 @@ class InventoryScreen extends StatelessWidget {
                       if (!isNarrow)
                         SizedBox(
                           width: 260,
-                          child: _SearchField(),
+                          child: _buildSearchField(),
                         ),
                     ],
                   ),
@@ -70,7 +91,7 @@ class InventoryScreen extends StatelessWidget {
                 if (isNarrow)
                   Padding(
                     padding: const EdgeInsets.only(top: 4, bottom: 10),
-                    child: _SearchField(),
+                    child: _buildSearchField(),
                   ),
 
                 // ====== CONTENEDOR DE TABLA (máx 960 x 560) ======
@@ -156,15 +177,29 @@ class InventoryScreen extends StatelessWidget {
                                             );
                                           }
 
-                                          final medicines = docs
+                                          final allMedicines = docs
                                               .map((d) =>
                                                   Medicine.fromFirestore(d))
                                               .toList();
+                                          
+                                          final medicines = _filterMedicines(allMedicines);
+
+                                          if (medicines.isEmpty && _searchQuery.isNotEmpty) {
+                                            return Padding(
+                                              padding: const EdgeInsets.all(16),
+                                              child: Text(
+                                                'No se encontraron medicamentos para "$_searchQuery"',
+                                                style: GoogleFonts.archivoNarrow(
+                                                  color: Colors.grey[600],
+                                                ),
+                                              ),
+                                            );
+                                          }
 
                                           return DataTableTheme(
                                             data: DataTableThemeData(
                                               headingRowColor:
-                                                  MaterialStateProperty.all(
+                                                  WidgetStateProperty.all(
                                                 kPrimaryBlue,
                                               ),
                                               headingTextStyle:
@@ -271,17 +306,28 @@ class InventoryScreen extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
+      );
   }
-}
 
-class _SearchField extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildSearchField() {
     return TextField(
+      controller: _searchController,
+      onChanged: (value) {
+        setState(() => _searchQuery = value);
+      },
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.search, size: 20),
+        suffixIcon: _searchQuery.isNotEmpty
+            ? IconButton(
+                icon: const Icon(Icons.clear, size: 18),
+                onPressed: () {
+                  setState(() {
+                    _searchController.clear();
+                    _searchQuery = '';
+                  });
+                },
+              )
+            : null,
         hintText: 'Buscar medicamento',
         hintStyle: GoogleFonts.archivoNarrow(
           fontSize: 14,

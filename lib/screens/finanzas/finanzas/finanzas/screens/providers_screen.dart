@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/finance_colors.dart';
 import '../models/provider_models.dart';
 import '../widgets/provider_dialog.dart';
 import '../widgets/purchase_order_dialog.dart';
@@ -99,9 +100,9 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
                 height: 40,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color(0xFFB3E5FC),
+                  color: kFLightBlue,
                 ),
-                child: const Icon(Icons.person, color: Color(0xFF00BCD4)),
+                child: const Icon(Icons.person, color: kFPrimaryBlue),
               ),
             ],
           ),
@@ -184,7 +185,7 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
         ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF0288D1), // Darker blue
+            backgroundColor: kFPrimaryBlue, // Darker blue
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             shape: RoundedRectangleBorder(
@@ -215,7 +216,7 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               decoration: const BoxDecoration(
-                color: Color(0xFFB3E5FC), // Light blue header
+                color: kFLightBlue, // Light blue header
                 borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
               ),
               child: Row(
@@ -294,7 +295,7 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               decoration: const BoxDecoration(
-                color: Color(0xFFB3E5FC), // Light blue header
+                color: kFLightBlue, // Light blue header
                 borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
               ),
               child: Row(
@@ -358,7 +359,7 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 8),
-            color: const Color(0xFFB3E5FC),
+            color: kFLightBlue,
             child: const Text(
               'Filtros',
               textAlign: TextAlign.center,
@@ -394,3 +395,5 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
     );
   }
 }
+
+

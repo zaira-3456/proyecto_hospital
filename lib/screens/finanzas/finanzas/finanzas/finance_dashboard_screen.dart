@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'models/financial_models.dart';
 import '../../../login/services/database_service.dart';
 import 'widgets/finance_sidebar.dart';
+import 'widgets/finance_colors.dart';
 import 'widgets/metric_card.dart';
 import 'widgets/area_chart_widget.dart';
 import 'widgets/urgent_tasks_panel.dart';
@@ -166,7 +167,7 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
                 onPressed: () {
                   // TODO: Implementar configuración
                 },
-                color: const Color(0xFF00BCD4),
+                color: kFPrimaryBlue,
               ),
             ],
           ),
@@ -197,19 +198,19 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
                               title: 'Ingresos del día',
                               amount: _metrics!.dailyIncome,
                               percentageChange: _metrics!.incomePercentageChange,
-                              backgroundColor: const Color(0xFFE3F2FD),
+                              backgroundColor: kFBgLight,
                             ),
                             MetricCard(
                               title: 'Gastos del día',
                               amount: _metrics!.dailyExpenses,
                               percentageChange: _metrics!.expensesPercentageChange,
-                              backgroundColor: const Color(0xFFFCE4EC),
+                              backgroundColor: kFBgLight,
                             ),
                             MetricCard(
                               title: 'Flujo de caja',
                               amount: _metrics!.cashFlow,
                               percentageChange: _metrics!.cashFlowPercentageChange,
-                              backgroundColor: const Color(0xFFF3E5F5),
+                              backgroundColor: kFBgLight,
                             ),
                           ],
                         ),
@@ -269,13 +270,13 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
                 AreaChartWidget(
                   title: 'Ingresos por Área',
                   data: _incomeData,
-                  barColor: Colors.blue.shade600,
+                  barColor: kFPrimaryBlue,
                 ),
                 const SizedBox(height: 16),
                 AreaChartWidget(
                   title: 'Gastos por Área',
                   data: _expensesData,
-                  barColor: Colors.red.shade600,
+                  barColor: kFRed,
                 ),
               ],
             )
@@ -287,7 +288,7 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
                   child: AreaChartWidget(
                     title: 'Ingresos por Área',
                     data: _incomeData,
-                    barColor: Colors.blue.shade600,
+                    barColor: kFPrimaryBlue,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -295,7 +296,7 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
                   child: AreaChartWidget(
                     title: 'Gastos por Área',
                     data: _expensesData,
-                    barColor: Colors.red.shade600,
+                    barColor: kFRed,
                   ),
                 ),
               ],
@@ -315,7 +316,7 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
       appBar: isSmallScreen
           ? AppBar(
               title: const Text('Panel Financiero'),
-              backgroundColor: const Color(0xFF00BCD4),
+              backgroundColor: kFPrimaryBlue,
               foregroundColor: Colors.white,
             )
           : null,
@@ -358,3 +359,4 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
     );
   }
 }
+

@@ -152,3 +152,4 @@ class IncomeBarChart extends StatelessWidget {
     }).toList();
   }
 }
+

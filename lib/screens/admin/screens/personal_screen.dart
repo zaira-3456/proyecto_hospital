@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/dashboard_personal/agregar_personal_screen.dart';
+import '../widgets/dashboard_personal/edit_personal_dialog.dart';
+import '../widgets/dashboard_personal/create_user_dialog.dart';
 
 // Database Service
 import '../../login/services/database_service.dart';
@@ -31,26 +33,80 @@ class PersonalStats {
   }
 }
 
+
 class PersonalEmpleado {
+  final String id;
   final String nombre;
   final String puesto;
   final String turno;
   final String estado;
+  final String area;
+  final String tipo;
+  final String? curp;
+  final String? rfc;
+  final String? genero;
+  final String? telefono;
+  final String? correo;
+  final String? direccion;
+  final DateTime? fechaNacimiento;
 
   PersonalEmpleado({
+    required this.id,
     required this.nombre,
     required this.puesto,
     required this.turno,
     required this.estado,
+    required this.area,
+    required this.tipo,
+    this.curp,
+    this.rfc,
+    this.genero,
+    this.telefono,
+    this.correo,
+    this.direccion,
+    this.fechaNacimiento,
   });
 
   factory PersonalEmpleado.fromMap(Map<String, dynamic> map) {
     return PersonalEmpleado(
+      id: map['id'] ?? '',
       nombre: map['nombre'] ?? '',
       puesto: map['puesto'] ?? '',
       turno: map['turno'] ?? '',
       estado: map['estado'] ?? '',
+      area: map['area'] ?? '',
+      tipo: map['tipo'] ?? '',
+      curp: map['curp'],
+      rfc: map['rfc'],
+      genero: map['genero'],
+      telefono: map['telefono'],
+      correo: map['correo'],
+      direccion: map['direccion'],
+      fechaNacimiento: map['fechaNacimiento'] != null
+          ? (map['fechaNacimiento'] is DateTime
+              ? map['fechaNacimiento']
+              : DateTime.tryParse(map['fechaNacimiento'].toString()))
+          : null,
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'nombre': nombre,
+      'puesto': puesto,
+      'turno': turno,
+      'estado': estado,
+      'area': area,
+      'tipo': tipo,
+      'curp': curp,
+      'rfc': rfc,
+      'genero': genero,
+      'telefono': telefono,
+      'correo': correo,
+      'direccion': direccion,
+      'fechaNacimiento': fechaNacimiento,
+    };
   }
 }
 
@@ -161,32 +217,67 @@ class _PersonalScreenState extends State<PersonalScreen> {
               const SizedBox(height: 30),
 
               /// ==================================================
-              ///     BOTÓN AGREGAR PERSONAL
+              ///     BOTONES AGREGAR PERSONAL Y USUARIOS
               /// ==================================================
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const AgregarPersonalScreen()),
-                  ).then((_) {
-                    // Refresh data after returning from add screen
-                    setState(() {});
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: const Color.fromARGB(255, 0, 0, 0), 
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                ),
-                child: const Text(
-                  "+ Agregar Personal",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                ),
+              Wrap(
+                spacing: 15,
+                runSpacing: 15,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const AgregarPersonalScreen()),
+                      ).then((_) {
+                        // Refresh data after returning from add screen
+                        setState(() {});
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: const Color.fromARGB(255, 0, 0, 0), 
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                    child: const Text(
+                      "+ Agregar Personal",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CreateUserDialog(),
+                        ),
+                      ).then((result) {
+                        // Refresh if user was created successfully
+                        if (result == true) {
+                          setState(() {});
+                        }
+                      });
+                    },
+                    icon: const Icon(Icons.person_add),
+                    label: const Text(
+                      "Crear Usuario del Sistema",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                      foregroundColor: Colors.white,
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                  ),
+                ],
               ),
+
 
               const SizedBox(height: 30),
 
@@ -303,6 +394,7 @@ final iconBg = {
           Expanded(flex: 2, child: Text("Puesto", style: _headerStyle)),
           Expanded(flex: 2, child: Text("Turno", style: _headerStyle)),
           Expanded(flex: 2, child: Text("Estado", style: _headerStyle)),
+          SizedBox(width: 100, child: Text("Acciones", style: _headerStyle)),
         ],
       ),
     );
@@ -344,9 +436,144 @@ final iconBg = {
           Expanded(flex: 2, child: Text(emp.puesto)),
           Expanded(flex: 2, child: Text(emp.turno)),
           Expanded(flex: 2, child: _estadoBadge(emp.estado)),
+          SizedBox(
+            width: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.edit, color: Colors.blue),
+                  tooltip: 'Editar',
+                  onPressed: () => _showEditDialog(emp),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  tooltip: 'Eliminar',
+                  onPressed: () => _confirmDelete(emp),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  /// ================================================================
+  ///                     CONFIRMAR ELIMINACIÓN
+  /// ================================================================
+  void _confirmDelete(PersonalEmpleado emp) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmar eliminación'),
+          content: Text(
+            '¿Estás seguro de eliminar a ${emp.nombre}?\n\nEsta acción también eliminará sus credenciales de acceso si existen.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancelar'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () async {
+                Navigator.pop(context);
+                await _deletePersonnel(emp);
+              },
+              child: const Text('Eliminar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /// ================================================================
+  ///                     ELIMINAR PERSONAL
+  /// ================================================================
+  Future<void> _deletePersonnel(PersonalEmpleado emp) async {
+    try {
+      // Mostrar loading
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+
+      // Eliminar personal
+      final success = await _dbService.deletePersonnel(emp.id);
+
+      // Intentar eliminar credenciales usando el nombre completo
+      await _dbService.deleteUserCredentialsByName(emp.nombre);
+
+      // Cerrar loading
+      if (mounted) Navigator.pop(context);
+
+      if (success) {
+        // Mostrar éxito
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('${emp.nombre} eliminado correctamente'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          // Refresh UI
+          setState(() {});
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Error al eliminar'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // Cerrar loading si está abierto
+      if (mounted) Navigator.pop(context);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  void _showEditDialog(PersonalEmpleado emp) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return EditPersonalDialog(
+          personnel: {
+            'id': emp.id,
+            'nombre': emp.nombre,
+            'puesto': emp.puesto,
+            'area': emp.area,
+            'turno': emp.turno,
+            'estado': emp.estado,
+          },
+        );
+      },
+    ).then((result) {
+      // Refresh data if the edit was successful
+      if (result == true) {
+        setState(() {});
+      }
+    });
   }
 
   Widget _estadoBadge(String estado) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MetricCard extends StatelessWidget {
   final String title;
@@ -11,7 +13,7 @@ class MetricCard extends StatelessWidget {
     required this.title,
     required this.amount,
     required this.percentageChange,
-    this.backgroundColor = const Color(0xFFE3F2FD),
+    this.backgroundColor = kFBgLight,
   });
 
   @override
@@ -42,7 +44,7 @@ class MetricCard extends StatelessWidget {
           Flexible(
             child: Text(
               title,
-              style: TextStyle(
+              style: GoogleFonts.archivo(
                 color: Colors.grey.shade700,
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
@@ -58,7 +60,7 @@ class MetricCard extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 formattedAmount,
-                style: const TextStyle(
+                style: GoogleFonts.archivo(
                   color: Colors.black87,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -78,7 +80,7 @@ class MetricCard extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 '${percentageChange.abs().toStringAsFixed(1)}%',
-                style: TextStyle(
+                style: GoogleFonts.archivoNarrow(
                   color: isPositive ? Colors.green : Colors.red,
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -91,3 +93,5 @@ class MetricCard extends StatelessWidget {
     );
   }
 }
+
+

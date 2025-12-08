@@ -42,6 +42,14 @@ dependencies:
   file_picker: ^8.0.0
   cloud_firestore: 6.1.0
   url_launcher: ^6.3.2
+  mailer: ^6.0.1
+  shared_preferences: ^2.5.3
+  pdf: ^3.11.3
+  path_provider: ^2.1.5
+  open_file: ^3.5.10
+  printing: ^5.14.2
+  intl: ^0.20.2
+  universal_html: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +80,7 @@ flutter:
     # - images/a_dot_ham.jpeg
      - assets/images/logo_hospital.png
      - assets/images/logo_empresa.png
+     - assets/images/empresa.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

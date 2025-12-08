@@ -1,313 +1,205 @@
 // archivo: receptionist_dashboard.dart
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'widgets/actions_recepcionist.dart';
 import 'widgets/side_menu_recepcionist.dart';
 import 'registrar_paciente.dart';
 import 'agendar_cita.dart';
+import 'gestion_citas.dart';
+import '../../../widgets/welcome_message_widget.dart';
 
-class ReceptionistDashboard extends StatelessWidget {
+class ReceptionistDashboard extends StatefulWidget {
   const ReceptionistDashboard({super.key});
 
   @override
+  State<ReceptionistDashboard> createState() => _ReceptionistDashboardState();
+}
+
+class _ReceptionistDashboardState extends State<ReceptionistDashboard> {
+  String _selectedMenu = 'inicio';
+
+  void _handleLogout() {
+    Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 900;
+
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          double width = constraints.maxWidth;
-
-          // BREAKPOINTS RESPONSIVOS
-          bool isMobile = width < 900;
-          bool isTablet = width >= 900 && width < 1280;
-          bool isDesktop = width >= 1280;
-          return Row(
-            children: [
-              if (!isMobile) const SideMenuReception(),
-
-              // ÁREA DE CONTENIDO PRINCIPAL
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // ===== HEADER DESKTOP/TABLET =====
-                    if (!isMobile)
-                      Container(
-                        padding: const EdgeInsets.only(
-                          left: 10,
-                          right: 20,
-                          top: 20,
-                          bottom: 0,
-                        ),
-                        child: Row(
-                          children: [
-                            const Text(
-                              "Panel Recepcionista",
-                              style: TextStyle(
-                                fontFamily: 'Archivo',
-                                fontSize: 40,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-
-                            const Spacer(), // Empuja el logo a la derecha
-                            // LOGO 50x50
-                            SizedBox(
-                              width: 70,
-                              height: 70,
-                              child: Image.asset(
-                                "assets/images/logo_hospital.png",
-                                fit: BoxFit.contain,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: const Icon(Icons.image, size: 30),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                    // ===== HEADER MÓVIL =====
-                    if (isMobile)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20, // 20px a los lados
-                          vertical: 15, // 15px arriba y abajo
-                        ),
-                        child: Row(
-                          children: [
-                            Builder(
-                              builder: (context) => IconButton(
-                                icon: const Icon(Icons.menu, size: 28),
-                                onPressed: () {
-                                  Scaffold.of(context).openDrawer();
-                                },
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ), // Espacio entre ícono y texto
-                            const Expanded(
-                              child: Text(
-                                "Panel Recepcionista",
-                                style: TextStyle(
-                                  fontFamily: 'Archivo',
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                    // ===== TEXTO "BIENVENIDO" =====
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 10,
-                        right: isMobile ? 20 : 40,
-                        top: 10,
-                      ),
-                      child: Text(
-                        "Bienvenido de nuevo, Wendy",
-                        style: TextStyle(
-                          fontFamily: 'Archivo',
-                          fontSize: isMobile
-                              ? 20
-                              : 32, // MÓVIL: 20px, DESKTOP/TABLET: 32px
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ),
-
-                    // ===== CONTENEDOR PARA TARJETAS (ESPACIO RESTANTE) =====
-                    Expanded(
-                      child: Center(
-                        child: SingleChildScrollView(
-                          padding: EdgeInsets.all(isMobile ? 20 : 30),
-                          child: _buildActionCards(
-                            context,
-                            isMobile,
-                            isTablet,
-                            isDesktop,
-                            width,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+      backgroundColor: Colors.grey.shade50,
+      appBar: isSmallScreen
+          ? AppBar(
+              title: Text(
+                'Panel Recepcionista',
+                style: GoogleFonts.archivo(),
               ),
-            ],
-          );
-        },
-      ),
+              backgroundColor: const Color(0xff1991DB),
+              foregroundColor: Colors.white,
+            )
+          : null,
+      drawer: isSmallScreen
+          ? Drawer(
+              child: SideMenuReception(
+                selectedMenu: _selectedMenu,
+                onMenuSelected: (menu) {
+                  setState(() {
+                    _selectedMenu = menu;
+                  });
+                  Navigator.of(context).pop(); // Close drawer
+                },
+                onLogout: _handleLogout,
+              ),
+            )
+          : null,
+      body: Row(
+        children: [
+          // Sidebar for desktop
+          if (!isSmallScreen)
+            SideMenuReception(
+              selectedMenu: _selectedMenu,
+              onMenuSelected: (menu) {
+                setState(() {
+                  _selectedMenu = menu;
+                });
+              },
+              onLogout: _handleLogout,
+            ),
 
-      // DRAWER para móvil
-      drawer: const Drawer(child: SideMenuReception(isDrawer: true)),
+          // Main content
+          Expanded(
+            child: _selectedMenu == 'citas'
+                ? const GestionCitasPage()
+                : _selectedMenu == 'registrar'
+                    ? RegistroPacientePage(
+                        returnRoute: const ReceptionistDashboard(),
+                      )
+                    : _selectedMenu == 'agendar'
+                        ? AgendarCitaPage(
+                            returnRoute: const ReceptionistDashboard(),
+                          )
+                        : SingleChildScrollView(
+                            padding: EdgeInsets.all(isSmallScreen ? 16 : 24),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Header
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Panel Recepcionista',
+                                          style: GoogleFonts.archivo(
+                                            fontSize: isSmallScreen ? 20 : 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        WelcomeMessageWidget(
+                                          prefix: 'Bienvenido de nuevo,',
+                                          style: GoogleFonts.archivoNarrow(
+                                            fontSize: 14,
+                                            color: Colors.grey.shade600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 24),
+
+                                // Action Cards
+                                _buildActionCards(context, isSmallScreen),
+                              ],
+                            ),
+                          ),
+          ),
+        ],
+      ),
     );
   }
 
   // ===== CONSTRUCCIÓN DE TARJETAS =====
-  Widget _buildActionCards(
-    BuildContext context,
-    bool isMobile,
-    bool isTablet,
-    bool isDesktop,
-    double width,
-  ) {
-    // CALCULAR ANCHO DISPONIBLE PARA LAS TARJETAS
-    double availableWidth = isMobile ? width - 40 : width - 360 - 60;
+  Widget _buildActionCards(BuildContext context, bool isSmallScreen) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isWide = constraints.maxWidth >= 900;
 
-    // CALCULAR TAMAÑO DE TARJETAS
-    double cardWidth;
-    double cardHeight = 200;
-
-    if (isMobile) {
-      // ===== MÓVIL: TARJETAS APILADAS VERTICALMENTE =====
-      cardWidth = availableWidth;
-      if (cardWidth > 500) cardWidth = 500;
-
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ActionCard(
-            // Primera tarjeta
-            icon: Icons.person_add_alt_1,
-            text: "Registrar\npaciente",
-            width: cardWidth,
-            height: cardHeight,
-            onTap: () {
-              Navigator.push(
-                context, // Navega a la pantalla de registro
-                MaterialPageRoute(
-                  builder: (_) => RegistroPacientePage(
-                    returnRoute: const ReceptionistDashboard(),
-                  ),
+        if (isWide) {
+          // DESKTOP: TARJETAS EN FILA HORIZONTAL
+          return Wrap(
+            spacing: 24,
+            runSpacing: 24,
+            children: [
+              SizedBox(
+                width: (constraints.maxWidth - 24) / 2,
+                child: ActionCard(
+                  icon: Icons.person_add_alt_1,
+                  text: "Registrar\npaciente",
+                  width: (constraints.maxWidth - 24) / 2,
+                  height: 180,
+                  onTap: () {
+                    setState(() {
+                      _selectedMenu = 'registrar';
+                    });
+                  },
                 ),
-              );
-            },
-          ),
-          const SizedBox(height: 25),
-          ActionCard(
-            // Segunda tarjeta
-            icon: Icons.medical_information_outlined,
-            text: "Agendar\ncita",
-            width: cardWidth,
-            height: cardHeight,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => AgendarCitaPage(
-                    returnRoute: const ReceptionistDashboard(),
-                  ),
+              ),
+              SizedBox(
+                width: (constraints.maxWidth - 24) / 2,
+                child: ActionCard(
+                  icon: Icons.medical_information_outlined,
+                  text: "Agendar\ncita",
+                  width: (constraints.maxWidth - 24) / 2,
+                  height: 180,
+                  onTap: () {
+                    setState(() {
+                      _selectedMenu = 'agendar';
+                    });
+                  },
                 ),
-              );
-            },
-          ),
-        ],
-      );
-    } else if (isTablet) {
-      // ===== TABLET: TARJETAS APILADAS VERTICALMENTE =====
-      cardWidth = availableWidth;
-      if (cardWidth > 600) cardWidth = 600;
-
-      return Column(
-        mainAxisSize: MainAxisSize.min, // Solo ocupa el espacio necesario
-        children: [
-          ActionCard(
-            icon: Icons.person_add_alt_1,
-            text: "Registrar\npaciente",
-            width: cardWidth,
-            height: cardHeight,
-            onTap: () {
-              Navigator.push(
-                context, // Navega a la pantalla de registro
-                MaterialPageRoute(
-                  builder: (_) => RegistroPacientePage(
-                    returnRoute: const ReceptionistDashboard(),
-                  ),
-                ),
-              );
-            },
-          ),
-          const SizedBox(
-            height: 25,
-          ), // Espacio de 25px entre tarjetas verticales
-          ActionCard(
-            // Segunda tarjeta
-            icon: Icons.medical_information_outlined,
-            text: "Agendar\ncita",
-            width: cardWidth,
-            height: cardHeight,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => AgendarCitaPage(
-                    returnRoute: const ReceptionistDashboard(),
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      );
-    } else {
-      // ===== DESKTOP: TARJETAS EN FILA HORIZONTAL =====
-      cardWidth = (availableWidth - 60) / 2;
-      if (cardWidth > 400) cardWidth = 400;
-
-      return Wrap(
-        spacing: 60,
-        runSpacing: 10,
-        alignment: WrapAlignment.center, // Centra las tarjetas
-        children: [
-          ActionCard(
-            // Primera tarjeta
-            icon: Icons.person_add_alt_1,
-            text: "Registrar\npaciente",
-            width: cardWidth, // Ancho calculado
-            height: 200, // Alto fijo
-            onTap: () {
-              Navigator.push(
-                context, // Navega a la pantalla de registro
-                MaterialPageRoute(
-                  builder: (_) => RegistroPacientePage(
-                    returnRoute: const ReceptionistDashboard(),
-                  ),
-                ),
-              );
-            },
-          ),
-          ActionCard(
-            // Segunda tarjeta
-            icon: Icons.medical_information_outlined,
-            text: "Agendar\ncita",
-            width: cardWidth,
-            height: 200,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => AgendarCitaPage(
-                    returnRoute: const ReceptionistDashboard(),
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      );
-    }
+              ),
+            ],
+          );
+        } else {
+          // MÓVIL: TARJETAS APILADAS VERTICALMENTE
+          return Column(
+            children: [
+              ActionCard(
+                icon: Icons.person_add_alt_1,
+                text: "Registrar\npaciente",
+                width: double.infinity,
+                height: 180,
+                onTap: () {
+                  setState(() {
+                    _selectedMenu = 'registrar';
+                  });
+                },
+              ),
+              const SizedBox(height: 16),
+              ActionCard(
+                icon: Icons.medical_information_outlined,
+                text: "Agendar\ncita",
+                width: double.infinity,
+                height: 180,
+                onTap: () {
+                  setState(() {
+                    _selectedMenu = 'agendar';
+                  });
+                },
+              ),
+            ],
+          );
+        }
+      },
+    );
   }
 }

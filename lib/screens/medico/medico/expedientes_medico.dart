@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'widgets/diseno_medico.dart';
 import '../../login/services/database_service.dart';
+import 'nueva_visita_medico.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DoctorRecordsScreen extends StatefulWidget {
   const DoctorRecordsScreen({super.key});
@@ -15,7 +17,10 @@ class _DoctorRecordsScreenState extends State<DoctorRecordsScreen> {
   int _tab = 0;
   RecordPatient? _selected;
   List<RecordPatient> _patients = [];
+  List<RecordPatient> _allPatients = [];
   bool _isLoading = true;
+  String _searchQuery = '';
+  final _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -23,39 +28,307 @@ class _DoctorRecordsScreenState extends State<DoctorRecordsScreen> {
     _loadPatients();
   }
 
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterPatients(String query) {
+    setState(() {
+      _searchQuery = query;
+      if (query.isEmpty) {
+        _patients = List.from(_allPatients);
+      } else {
+        final lowerQuery = query.toLowerCase();
+        _patients = _allPatients.where((p) =>
+          p.nombre.toLowerCase().contains(lowerQuery) ||
+          p.visitas.any((v) => v.diagnostico.toLowerCase().contains(lowerQuery)) ||
+          p.visitas.any((v) => v.motivo.toLowerCase().contains(lowerQuery))
+        ).toList();
+      }
+    });
+  }
+
   Future<void> _loadPatients() async {
+    try {
+      // Cargar todas las visitas desde Firestore
+      final visitsSnapshot = await FirebaseFirestore.instance
+          .collection('visits')
+          .orderBy('fecha', descending: true)
+          .get();
+      
+      // Agrupar visitas por paciente
+      final Map<String, List<Map<String, dynamic>>> visitsByPatient = {};
+      
+      for (var doc in visitsSnapshot.docs) {
+        final data = doc.data();
+        final pacienteId = data['pacienteId'] as String;
+        
+        if (!visitsByPatient.containsKey(pacienteId)) {
+          visitsByPatient[pacienteId] = [];
+        }
+        
+        visitsByPatient[pacienteId]!.add({
+          'id': doc.id,
+          ...data,
+        });
+      }
+      
+      // Crear RecordPatient para cada paciente con visitas
+      final List<RecordPatient> loadedPatients = [];
+      
+      for (var entry in visitsByPatient.entries) {
+        final visits = entry.value;
+        if (visits.isEmpty) continue;
+        
+        final firstVisit = visits.first;
+        final patientName = firstVisit['pacienteNombre'] ?? 'Sin nombre';
+        
+        // Convertir visitas a RecordVisit
+        final recordVisits = visits.map((v) {
+          final fecha = v['fecha'] as Timestamp?;
+          final proximaVisita = v['proximaVisita'] as Timestamp?;
+          final signosVitales = v['signosVitales'] as Map<String, dynamic>?;
+          final medicamentos = v['medicamentos'] as List<dynamic>?;
+          
+          return RecordVisit(
+            fecha: fecha != null 
+                ? '${fecha.toDate().day}/${fecha.toDate().month}/${fecha.toDate().year}'
+                : 'Sin fecha',
+            motivo: v['motivo'] ?? 'Sin motivo',
+            diagnostico: v['diagnostico'] ?? 'Sin diagnóstico',
+            notas: v['notas'] as String?,
+            signosVitales: signosVitales != null
+                ? Map<String, String>.from(signosVitales.map(
+                    (key, value) => MapEntry(key, value.toString())))
+                : null,
+            medicamentos: medicamentos != null
+                ? medicamentos.map((m) {
+                    final med = m as Map<String, dynamic>;
+                    return Map<String, String>.from(med.map(
+                        (key, value) => MapEntry(key, value.toString())));
+                  }).toList()
+                : null,
+            planTratamiento: v['planTratamiento'] as String?,
+            proximaVisita: proximaVisita != null
+                ? '${proximaVisita.toDate().day}/${proximaVisita.toDate().month}/${proximaVisita.toDate().year}'
+                : null,
+          );
+        }).toList();
+        
+        // Extraer medicamentos de la visita más reciente
+        final recentMeds = visits.first['medicamentos'] as List<dynamic>? ?? [];
+        final recordMeds = recentMeds.map((m) {
+          final med = m as Map<String, dynamic>;
+          return RecordMed(
+            nombre: med['nombre'] ?? 'Sin nombre',
+            detalle: '${med['dosis'] ?? ''} - ${med['frecuencia'] ?? ''}',
+          );
+        }).toList();
+        
+        final lastUpdate = visits.first['fecha'] as Timestamp?;
+        final createdDate = visits.last['creadoEn'] as Timestamp?;
+        
+        loadedPatients.add(RecordPatient(
+          nombre: patientName,
+          actualizado: lastUpdate != null
+              ? _formatDate(lastUpdate.toDate())
+              : 'Desconocido',
+          creado: createdDate != null
+              ? _formatDate(createdDate.toDate())
+              : 'Desconocido',
+          medicamentos: recordMeds,
+          visitas: recordVisits,
+        ));
+      }
+      
+      if (mounted) {
+        setState(() {
+          _allPatients = loadedPatients;
+          _patients = List.from(loadedPatients);
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error cargando visitas: $e');
+      if (mounted) {
+        setState(() {
+          _allPatients = [];
+          _patients = [];
+          _isLoading = false;
+        });
+      }
+    }
+  }
+  
+  String _formatDate(DateTime date) {
+    final now = DateTime.now();
+    final difference = now.difference(date);
+    
+    if (difference.inDays == 0) {
+      return 'Hoy';
+    } else if (difference.inDays == 1) {
+      return 'Ayer';
+    } else if (difference.inDays < 7) {
+      return 'Hace ${difference.inDays} días';
+    } else {
+      return '${date.day}/${date.month}/${date.year}';
+    }
+  }
+
+  Future<void> _showNewVisitDialog(BuildContext context) async {
     final db = DatabaseService();
     final patientsData = await db.getPatients();
 
-    final List<RecordPatient> loadedPatients = [];
+    if (!context.mounted) return;
 
-    for (var p in patientsData) {
-      loadedPatients.add(RecordPatient(
-        nombre: p['nombreCompleto'] ?? 'Sin nombre',
-        actualizado: 'Hoy', // Placeholder
-        creado: (p['creadoEn'] != null) ? 'Reciente' : 'Desconocido', // Placeholder
-        medicamentos: [], // Placeholder
-        visitas: [], // Placeholder
-      ));
-    }
+    String? selectedPatientId;
+    Map<String, dynamic>? selectedPatientData;
 
-    if (mounted) {
-      setState(() {
-        _patients = loadedPatients;
-        _isLoading = false;
-      });
-    }
+    await showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              backgroundColor: Colors.transparent,
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 400),
+                decoration: BoxDecoration(
+                  color: kMSidebarBlue.withValues(alpha: 1.0),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Nueva Entrada de Visita',
+                      style: GoogleFonts.archivo(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Selecciona un paciente para crear un nuevo registro de visita',
+                      style: GoogleFonts.archivoNarrow(
+                        fontSize: 13,
+                        color: kMGreyText,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      'Paciente',
+                      style: GoogleFonts.archivoNarrow(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        hintText: 'Seleccionar paciente',
+                        hintStyle: GoogleFonts.archivoNarrow(fontSize: 13),
+                        filled: true,
+                        fillColor: kMLightBlue,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide.none,
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 10,
+                        ),
+                      ),
+                      initialValue: selectedPatientId,
+                      items: patientsData.map((patient) {
+                        return DropdownMenuItem<String>(
+                          value: patient['id'],
+                          child: Text(
+                            patient['nombreCompleto'] ?? 'Sin nombre',
+                            style: GoogleFonts.archivoNarrow(fontSize: 13),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedPatientId = value;
+                          selectedPatientData = patientsData.firstWhere(
+                            (p) => p['id'] == value,
+                          );
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(dialogContext),
+                          child: Text(
+                            'Cancelar',
+                            style: GoogleFonts.archivoNarrow(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: kMPrimaryBlue,
+                            foregroundColor: kMWhite,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 12,
+                            ),
+                          ),
+                          onPressed: selectedPatientId == null
+                              ? null
+                              : () async {
+                                  Navigator.pop(dialogContext);
+                                  final result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => NuevaVisitaMedicoScreen(
+                                        patientData: selectedPatientData!,
+                                      ),
+                                    ),
+                                  );
+                                  
+                                  // Reload if visit was created successfully
+                                  if (result == true) {
+                                    _loadPatients();
+                                  }
+                                },
+                          child: Text(
+                            'Crear Visita',
+                            style: GoogleFonts.archivoNarrow(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return DoctorLayout(
-      selectedIndex: 3,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final wide = constraints.maxWidth > 1020;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final wide = constraints.maxWidth > 1020;
 
-          Widget leftList = Column(
+        Widget leftList = Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -75,28 +348,73 @@ class _DoctorRecordsScreenState extends State<DoctorRecordsScreen> {
                 ),
               ),
               const SizedBox(height: 18),
-              Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: kMLightBlue,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    const Icon(Icons.search, size: 18),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Buscar paciente',
-                        style: GoogleFonts.archivoNarrow(
-                          fontSize: 13,
-                          color: kMGreyText,
-                        ),
+              // Search bar + New Visit button
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: kMLightBlue,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.search, size: 18),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: TextField(
+                              controller: _searchController,
+                              onChanged: _filterPatients,
+                              decoration: InputDecoration(
+                                hintText: 'Buscar paciente por nombre o condición...',
+                                hintStyle: GoogleFonts.archivoNarrow(
+                                  fontSize: 13,
+                                  color: kMGreyText,
+                                ),
+                                border: InputBorder.none,
+                                isDense: true,
+                                contentPadding: EdgeInsets.zero,
+                              ),
+                              style: GoogleFonts.archivoNarrow(fontSize: 13),
+                            ),
+                          ),
+                          if (_searchQuery.isNotEmpty)
+                            IconButton(
+                              icon: const Icon(Icons.clear, size: 16),
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                              onPressed: () {
+                                _searchController.clear();
+                                _filterPatients('');
+                              },
+                            ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 12),
+                  SizedBox(
+                    height: 40,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kMPrimaryBlue,
+                        foregroundColor: kMWhite,
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        textStyle: GoogleFonts.archivoNarrow(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: () {
+                        _showNewVisitDialog(context);
+                      },
+                      icon: const Icon(Icons.add, size: 18),
+                      label: const Text('Nueva Visita'),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
               if (_isLoading)
@@ -206,10 +524,10 @@ class _DoctorRecordsScreenState extends State<DoctorRecordsScreen> {
             ),
           );
         },
-      ),
-    );
+      );
+    }
   }
-}
+
 
 class _RecordPatientTile extends StatelessWidget {
   final RecordPatient patient;
@@ -315,11 +633,7 @@ class _RecordDetailState extends State<_RecordDetail> {
   // VISITAS
   late List<RecordVisit> _visits;
 
-  // SIGNOS VITALES
-  String _bp = '130/85';
-  String _hr = '72';
-  String _weight = '68 kg';
-  String _height = '160 cm';
+  // Las variables de signos vitales ya no se necesitan - se leen de las visitas
 
   @override
   void initState() {
@@ -339,11 +653,11 @@ class _RecordDetailState extends State<_RecordDetail> {
   void _initFromPatient() {
     _tab = widget.initialTab;
 
-    // General (ejemplo: valores por defecto)
-    _bloodType = 'A+';
-    _allergyText = 'Penicilina';
-    _chronicText = 'Hipertensión arterial';
-    _notesText = 'No hay notas adicionales';
+    // General - Campos vacíos para que el médico los complete
+    _bloodType = '';
+    _allergyText = '';
+    _chronicText = '';
+    _notesText = '';
 
     // Listas a partir del modelo
     _meds = List<RecordMed>.from(widget.patient.medicamentos);
@@ -532,11 +846,37 @@ class _RecordDetailState extends State<_RecordDetail> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Mensaje informativo si no hay datos
+          if (!_isEditing && _bloodType.isEmpty && _allergyText.isEmpty && _chronicText.isEmpty && _notesText.isEmpty)
+            Container(
+              padding: const EdgeInsets.all(12),
+              margin: const EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: kMLightBlue,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.info_outline, size: 16, color: kMPrimaryBlue),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Click en "Editar" para agregar información general del paciente',
+                      style: GoogleFonts.archivoNarrow(
+                        fontSize: 12,
+                        color: kMBlack,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          
           labelValue(
             'Tipo de sangre',
             _isEditing
                 ? TextField(
-                    decoration: _smallDecoration('Tipo de sangre'),
+                    decoration: _smallDecoration('Tipo de sangre (ej: A+, O-, AB+)'),
                     controller: TextEditingController(text: _bloodType)
                       ..selection = TextSelection.fromPosition(
                         TextPosition(offset: _bloodType.length),
@@ -544,8 +884,12 @@ class _RecordDetailState extends State<_RecordDetail> {
                     onChanged: (v) => _bloodType = v,
                   )
                 : Text(
-                    _bloodType,
-                    style: GoogleFonts.archivoNarrow(fontSize: 13),
+                    _bloodType.isEmpty ? 'No especificado' : _bloodType,
+                    style: GoogleFonts.archivoNarrow(
+                      fontSize: 13,
+                      color: _bloodType.isEmpty ? kMGreyText : kMBlack,
+                      fontStyle: _bloodType.isEmpty ? FontStyle.italic : FontStyle.normal,
+                    ),
                   ),
           ),
           const SizedBox(height: 4),
@@ -559,7 +903,7 @@ class _RecordDetailState extends State<_RecordDetail> {
           const SizedBox(height: 4),
           if (_isEditing)
             TextField(
-              decoration: _smallDecoration('Alergias'),
+              decoration: _smallDecoration('Alergias conocidas'),
               controller: TextEditingController(text: _allergyText)
                 ..selection = TextSelection.fromPosition(
                   TextPosition(offset: _allergyText.length),
@@ -567,11 +911,20 @@ class _RecordDetailState extends State<_RecordDetail> {
               onChanged: (v) => _allergyText = v,
             )
           else
-            Row(
-              children: [
-                chip(_allergyText, kMRedSoft),
-              ],
-            ),
+            _allergyText.isEmpty
+                ? Text(
+                    'Sin alergias registradas',
+                    style: GoogleFonts.archivoNarrow(
+                      fontSize: 13,
+                      color: kMGreyText,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  )
+                : Row(
+                    children: [
+                      chip(_allergyText, kMRedSoft),
+                    ],
+                  ),
           const SizedBox(height: 10),
           Text(
             'Condiciones Crónicas',
@@ -591,11 +944,20 @@ class _RecordDetailState extends State<_RecordDetail> {
               onChanged: (v) => _chronicText = v,
             )
           else
-            Row(
-              children: [
-                chip(_chronicText, kMBlue15),
-              ],
-            ),
+            _chronicText.isEmpty
+                ? Text(
+                    'Sin condiciones crónicas registradas',
+                    style: GoogleFonts.archivoNarrow(
+                      fontSize: 13,
+                      color: kMGreyText,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  )
+                : Row(
+                    children: [
+                      chip(_chronicText, kMBlue15),
+                    ],
+                  ),
           const SizedBox(height: 10),
           Text(
             'Notas Adicionales',
@@ -608,7 +970,7 @@ class _RecordDetailState extends State<_RecordDetail> {
           if (_isEditing)
             TextField(
               maxLines: 3,
-              decoration: _smallDecoration('Notas adicionales'),
+              decoration: _smallDecoration('Notas adicionales del expediente'),
               controller: TextEditingController(text: _notesText)
                 ..selection = TextSelection.fromPosition(
                   TextPosition(offset: _notesText.length),
@@ -617,8 +979,12 @@ class _RecordDetailState extends State<_RecordDetail> {
             )
           else
             Text(
-              _notesText,
-              style: GoogleFonts.archivoNarrow(fontSize: 13),
+              _notesText.isEmpty ? 'Sin notas adicionales' : _notesText,
+              style: GoogleFonts.archivoNarrow(
+                fontSize: 13,
+                color: _notesText.isEmpty ? kMGreyText : kMBlack,
+                fontStyle: _notesText.isEmpty ? FontStyle.italic : FontStyle.normal,
+              ),
             ),
         ],
       ),
@@ -882,8 +1248,18 @@ class _RecordDetailState extends State<_RecordDetail> {
   // =============== SIGNOS VITALES ===============
 
   Widget _buildVitals() {
+    // Obtener signos vitales de la visita más reciente
+    final latestVisit = _visits.isNotEmpty ? _visits.first : null;
+    final vitals = latestVisit?.signosVitales;
+    
+    final bp = vitals?['presion'] ?? 'N/A';
+    final hr = vitals?['frecuenciaCardiaca'] ?? 'N/A';
+    final temp = vitals?['temperatura'] ?? 'N/A';
+    final weight = vitals?['peso'] ?? 'N/A';
+    final height = vitals?['altura'] ?? 'N/A';
+    
     Widget vitalCard(String label, String value, IconData icon,
-        Color color, Function(String) onChanged) {
+        Color color) {
       return Container(
         width: 140,
         padding: const EdgeInsets.all(12),
@@ -892,7 +1268,7 @@ class _RecordDetailState extends State<_RecordDetail> {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),
@@ -910,62 +1286,175 @@ class _RecordDetailState extends State<_RecordDetail> {
               ),
             ),
             const SizedBox(height: 4),
-            _isEditing
-                ? TextField(
-                    textAlign: TextAlign.center,
-                    decoration: _smallDecoration('Valor'),
-                    controller: TextEditingController(text: value)
-                      ..selection = TextSelection.fromPosition(
-                        TextPosition(offset: value.length),
-                      ),
-                    onChanged: onChanged,
-                  )
-                : Text(
-                    value,
-                    style: GoogleFonts.archivo(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+            Text(
+              value,
+              style: GoogleFonts.archivo(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       );
     }
 
-    return Center(
-      child: Wrap(
-        spacing: 20,
-        runSpacing: 20,
-        alignment: WrapAlignment.center,
+    if (latestVisit == null || vitals == null) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.monitor_heart_outlined, size: 48, color: kMGreyText),
+            const SizedBox(height: 12),
+            Text(
+              'No hay signos vitales registrados',
+              style: GoogleFonts.archivoNarrow(
+                fontSize: 14,
+                color: kMGreyText,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Crea una nueva visita para registrar signos vitales',
+              style: GoogleFonts.archivoNarrow(
+                fontSize: 12,
+                color: kMGreyText,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          vitalCard(
-            'Presión Arterial',
-            _bp,
-            Icons.favorite,
-            kMRed,
-            (v) => _bp = v,
+          // Mostrar de qué visita son estos datos
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: kMLightBlue,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.info_outline, size: 16, color: kMPrimaryBlue),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Signos vitales de la visita del ${latestVisit.fecha}',
+                    style: GoogleFonts.archivoNarrow(
+                      fontSize: 12,
+                      color: kMBlack,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          vitalCard(
-            'Frecuencia Cardíaca',
-            _hr,
-            Icons.monitor_heart,
-            kMPrimaryBlue,
-            (v) => _hr = v,
+          const SizedBox(height: 20),
+          // Tarjetas de signos vitales
+          Wrap(
+            spacing: 16,
+            runSpacing: 16,
+            alignment: WrapAlignment.center,
+            children: [
+              vitalCard(
+                'Presión Arterial',
+                bp,
+                Icons.favorite,
+                kMRed,
+              ),
+              vitalCard(
+                'Frecuencia Cardíaca',
+                hr,
+                Icons.monitor_heart,
+                kMPrimaryBlue,
+              ),
+              vitalCard(
+                'Temperatura',
+                temp,
+                Icons.thermostat,
+                kMYellow,
+              ),
+              vitalCard(
+                'Peso',
+                weight,
+                Icons.monitor_weight,
+                kMGreenBright,
+              ),
+              vitalCard(
+                'Altura',
+                height,
+                Icons.height,
+                Colors.purple,
+              ),
+            ],
           ),
-          vitalCard(
-            'Peso',
-            _weight,
-            Icons.monitor_weight,
-            kMYellow,
-            (v) => _weight = v,
-          ),
-          vitalCard(
-            'Altura',
-            _height,
-            Icons.height,
-            kMGreenBright,
-            (v) => _height = v,
-          ),
+          // Información adicional
+          if (latestVisit.notas != null && latestVisit.notas!.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            Text(
+              'Notas de la visita',
+              style: GoogleFonts.archivoNarrow(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: kMWhite,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                latestVisit.notas!,
+                style: GoogleFonts.archivoNarrow(fontSize: 13),
+              ),
+            ),
+          ],
+          if (latestVisit.planTratamiento != null && latestVisit.planTratamiento!.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Text(
+              'Plan de Tratamiento',
+              style: GoogleFonts.archivoNarrow(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: kMWhite,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                latestVisit.planTratamiento!,
+                style: GoogleFonts.archivoNarrow(fontSize: 13),
+              ),
+            ),
+          ],
+          if (latestVisit.proximaVisita != null) ...[
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                const Icon(Icons.calendar_today, size: 16, color: kMPrimaryBlue),
+                const SizedBox(width: 8),
+                Text(
+                  'Próxima visita programada: ${latestVisit.proximaVisita}',
+                  style: GoogleFonts.archivoNarrow(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: kMPrimaryBlue,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -1001,10 +1490,20 @@ class RecordVisit {
   final String fecha;
   final String motivo;
   final String diagnostico;
+  final String? notas;
+  final Map<String, String>? signosVitales;
+  final List<Map<String, String>>? medicamentos;
+  final String? planTratamiento;
+  final String? proximaVisita;
 
   const RecordVisit({
     required this.fecha,
     required this.motivo,
     required this.diagnostico,
+    this.notas,
+    this.signosVitales,
+    this.medicamentos,
+    this.planTratamiento,
+    this.proximaVisita,
   });
 }

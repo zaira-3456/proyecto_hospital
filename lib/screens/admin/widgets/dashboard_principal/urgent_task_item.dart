@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// ------------------------------------------------------
 ///  MODELO (PREPARADO PARA BASE DE DATOS)
@@ -57,12 +58,12 @@ class UrgentTaskItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title,
-                    style: const TextStyle(
+                    style: GoogleFonts.archivo(
                         fontWeight: FontWeight.w600,
                         fontSize: 15,
                         height: 1.2)),
                 Text(date,
-                    style: const TextStyle(
+                    style: GoogleFonts.archivoNarrow(
                         fontSize: 13, color: Colors.black54)),
               ],
             ),
@@ -118,9 +119,12 @@ class UrgentTaskList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Tareas Urgentes",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: GoogleFonts.archivo(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
           ),
           const SizedBox(height: 15),
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/finance_colors.dart';
 import '../models/financial_models.dart';
 import '../services/database_service.dart';
 import '../widgets/expense_table.dart';
@@ -118,7 +119,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Gasto registrado exitosamente'),
-          backgroundColor: Color(0xFF00BCD4),
+          backgroundColor: kFPrimaryBlue,
         ),
       );
       // Reload data after adding
@@ -137,7 +138,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Exportando gastos...'),
-          backgroundColor: Color(0xFF00BCD4),
+          backgroundColor: kFPrimaryBlue,
         ),
       );
     }
@@ -195,7 +196,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                              AreaChartWidget(
                               title: 'Reporte de gastos por Área',
                               data: _expenseChartData,
-                              barColor: const Color(0xFF448AFF), // Blue shade
+                              barColor: kFPrimaryBlue, // Blue shade
                             ),
                           ],
                         ),
@@ -212,7 +213,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                       AreaChartWidget(
                         title: 'Reporte de gastos por Área',
                         data: _expenseChartData,
-                        barColor: const Color(0xFF448AFF),
+                        barColor: kFPrimaryBlue,
                       ),
                     ],
                   ),
@@ -239,7 +240,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
               ElevatedButton(
                 onPressed: _showAddExpenseDialog,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00BCD4),
+                  backgroundColor: kFPrimaryBlue,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   shape: RoundedRectangleBorder(
@@ -251,7 +252,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
               ElevatedButton(
                 onPressed: _showExportDialog,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00BCD4),
+                  backgroundColor: kFPrimaryBlue,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   shape: RoundedRectangleBorder(
@@ -267,3 +268,5 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
     );
   }
 }
+
+

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../widgets/user_name_widget.dart';
 import '../dashboard_enfermeria.dart';
 import '../pacientes.dart';
 import '../medicamentos.dart';
@@ -24,15 +25,52 @@ const Color kNBgLight          = Color(0xFFF5F8FB);
 
 const String kNHospitalLogoPath = 'assets/images/logo_hospital.png';
 
-class NurseLayout extends StatelessWidget {
-  final Widget child;
-  final int selectedIndex; // 0: inicio, 1: pacientes, 2: medicamentos
+class NurseLayout extends StatefulWidget {
+  final int initialIndex;
 
   const NurseLayout({
     super.key,
-    required this.child,
-    required this.selectedIndex,
+    this.initialIndex = 0,
   });
+
+  @override
+  State<NurseLayout> createState() => _NurseLayoutState();
+}
+
+class _NurseLayoutState extends State<NurseLayout> {
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
+
+  void _handleMenuSelected(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  void _handleLogout() async {
+    await FirebaseAuth.instance.signOut();
+    if (mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+    }
+  }
+
+  Widget _getCurrentPage() {
+    switch (_selectedIndex) {
+      case 0:
+        return const NurseDashboardScreen();
+      case 1:
+        return const NursePatientsScreen();
+      case 2:
+        return const NurseMedicationsScreen();
+      default:
+        return const NurseDashboardScreen();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +91,12 @@ class NurseLayout extends StatelessWidget {
                 ),
               ),
             ),
-            drawer: _NurseDrawer(selectedIndex: selectedIndex),
-            body: child,
+            drawer: _NurseDrawer(
+              selectedIndex: _selectedIndex,
+              onMenuSelected: _handleMenuSelected,
+              onLogout: _handleLogout,
+            ),
+            body: _getCurrentPage(),
           );
         }
 
@@ -62,11 +104,15 @@ class NurseLayout extends StatelessWidget {
           backgroundColor: kNBgLight,
           body: Row(
             children: [
-              _NurseSideMenu(selectedIndex: selectedIndex),
+              _NurseSideMenu(
+                selectedIndex: _selectedIndex,
+                onMenuSelected: _handleMenuSelected,
+                onLogout: _handleLogout,
+              ),
               Expanded(
                 child: Container(
                   color: kNWhite,
-                  child: child,
+                  child: _getCurrentPage(),
                 ),
               ),
             ],
@@ -81,30 +127,14 @@ class NurseLayout extends StatelessWidget {
 
 class _NurseSideMenu extends StatelessWidget {
   final int selectedIndex;
+  final Function(int) onMenuSelected;
+  final VoidCallback onLogout;
 
-  const _NurseSideMenu({required this.selectedIndex});
-
-  void _goTo(BuildContext context, int index) {
-    Widget page;
-
-    switch (index) {
-      case 0:
-        page = const NurseDashboardScreen();
-        break;
-      case 1:
-        page = const NursePatientsScreen();
-        break;
-      case 2:
-      default:
-        page = const NurseMedicationsScreen();
-        break;
-    }
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => page),
-    );
-  }
+  const _NurseSideMenu({
+    required this.selectedIndex,
+    required this.onMenuSelected,
+    required this.onLogout,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -117,16 +147,28 @@ class _NurseSideMenu extends StatelessWidget {
             height: 80,
             width: double.infinity,
             color: kNSidebarBlue,
-            alignment: Alignment.centerLeft,
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              'Enfermería',
-              style: GoogleFonts.archivo(
-                color: kNWhite,
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.5,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Enfermería',
+                  style: GoogleFonts.archivo(
+                    color: kNWhite.withOpacity(0.8),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                UserNameWidget(
+                  style: GoogleFonts.archivo(
+                    color: kNWhite,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 32),
@@ -139,21 +181,21 @@ class _NurseSideMenu extends StatelessWidget {
                   icon: Icons.home,
                   text: 'Inicio',
                   selected: selectedIndex == 0,
-                  onTap: () => _goTo(context, 0),
+                  onTap: () => onMenuSelected(0),
                 ),
                 const SizedBox(height: 18),
                 _SideItem(
                   icon: Icons.people_alt_outlined,
                   text: 'Pacientes',
                   selected: selectedIndex == 1,
-                  onTap: () => _goTo(context, 1),
+                  onTap: () => onMenuSelected(1),
                 ),
                 const SizedBox(height: 18),
                 _SideItem(
                   icon: Icons.medication_outlined,
                   text: 'Medicamentos',
                   selected: selectedIndex == 2,
-                  onTap: () => _goTo(context, 2),
+                  onTap: () => onMenuSelected(2),
                 ),
               ],
             ),
@@ -174,12 +216,7 @@ class _NurseSideMenu extends StatelessWidget {
                     fontSize: 15,
                   ),
                 ),
-                onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
-                  if (context.mounted) {
-                    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-                  }
-                },
+                onPressed: onLogout,
                 child: const Text('Cerrar sesión'),
               ),
             ),
@@ -231,30 +268,20 @@ class _SideItem extends StatelessWidget {
 
 class _NurseDrawer extends StatelessWidget {
   final int selectedIndex;
+  final Function(int) onMenuSelected;
+  final VoidCallback onLogout;
 
-  const _NurseDrawer({required this.selectedIndex});
+  const _NurseDrawer({
+    required this.selectedIndex,
+    required this.onMenuSelected,
+    required this.onLogout,
+  });
 
   @override
   Widget build(BuildContext context) {
-    void go(int index) {
+    void handleSelect(int index) {
       Navigator.pop(context);
-      Widget page;
-      switch (index) {
-        case 0:
-          page = const NurseDashboardScreen();
-          break;
-        case 1:
-          page = const NursePatientsScreen();
-          break;
-        case 2:
-        default:
-          page = const NurseMedicationsScreen();
-          break;
-      }
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => page),
-      );
+      onMenuSelected(index);
     }
 
     return Drawer(
@@ -267,16 +294,26 @@ class _NurseDrawer extends StatelessWidget {
                 height: 70,
                 width: double.infinity,
                 color: kNSidebarBlue,
-                alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Enfermería',
-                  style: GoogleFonts.archivo(
-                    color: kNWhite,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.3,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Enfermería',
+                      style: GoogleFonts.archivo(
+                        color: kNWhite.withOpacity(0.8),
+                        fontSize: 14,
+                      ),
+                    ),
+                    UserNameWidget(
+                      style: GoogleFonts.archivo(
+                        color: kNWhite,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 24),
@@ -284,21 +321,21 @@ class _NurseDrawer extends StatelessWidget {
                 icon: Icons.home,
                 text: 'Inicio',
                 selected: selectedIndex == 0,
-                onTap: () => go(0),
+                onTap: () => handleSelect(0),
               ),
               const SizedBox(height: 16),
               _SideItem(
                 icon: Icons.people_alt_outlined,
                 text: 'Pacientes',
                 selected: selectedIndex == 1,
-                onTap: () => go(1),
+                onTap: () => handleSelect(1),
               ),
               const SizedBox(height: 16),
               _SideItem(
                 icon: Icons.medication_outlined,
                 text: 'Medicamentos',
                 selected: selectedIndex == 2,
-                onTap: () => go(2),
+                onTap: () => handleSelect(2),
               ),
             ],
           ),

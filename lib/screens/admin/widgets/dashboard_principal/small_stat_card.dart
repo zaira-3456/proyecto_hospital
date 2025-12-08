@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SmallStatCard extends StatelessWidget {
   final String label;
@@ -17,9 +18,9 @@ class SmallStatCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontSize: 16)),
+          Text(label, style: GoogleFonts.archivo(fontSize: 16)),
           Text(value,
-              style: const TextStyle(
+              style: GoogleFonts.archivo(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               )),

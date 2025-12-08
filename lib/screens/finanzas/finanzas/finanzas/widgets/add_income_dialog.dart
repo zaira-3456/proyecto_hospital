@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
 import '../models/financial_models.dart';
 
 class AddIncomeDialog extends StatefulWidget {
@@ -164,7 +165,7 @@ class _AddIncomeDialogState extends State<AddIncomeDialog> {
                       child: ElevatedButton(
                         onPressed: _submit,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF00BCD4), // Cyan color
+                          backgroundColor: kFPrimaryBlue, // Cyan color
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
@@ -220,10 +221,12 @@ class _AddIncomeDialogState extends State<AddIncomeDialog> {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Color(0xFF00BCD4)),
+        borderSide: const BorderSide(color: kFPrimaryBlue),
       ),
       filled: true,
       fillColor: Colors.white,
     );
   }
 }
+
+

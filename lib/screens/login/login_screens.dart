@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'forgot_password_dialog.dart';
+import 'change_password_screen.dart';
 import 'services/database_service.dart';
 import '../finanzas/finanzas/finanzas/models/financial_models.dart';
 import '../finanzas/finanzas/finanzas/finance_dashboard_screen.dart';
+import '../laboratorio/widgets/diseno_laboratorio.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -47,7 +50,30 @@ class _LoginScreenState extends State<LoginScreen> {
             role: userData['role']!,
           );
 
+          // ✅ GUARDAR username en SharedPreferences para UserNameWidget
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('current_username', user.username);
+
+          // ✅ VERIFICAR SI ES PRIMER LOGIN
+          final isFirstLogin = userData['isFirstLogin'] ?? false;
+          
+          if (isFirstLogin) {
+            // Redirigir a pantalla de cambio de contraseña
+            if (!mounted) return;
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChangePasswordScreen(
+                  user: user,  // ✅ Pasar objeto User completo
+                ),
+              ),
+            );
+            return; // Salir sin navegar al dashboard
+          }
+
           // ===== NAVEGACIÓN SEGÚN ROL =====
+          if (!mounted) return;
+          
           switch (user.role) {
             case 'admin':
               Navigator.pushReplacementNamed(context, '/admin');
@@ -73,6 +99,15 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => FinanceDashboardScreen(user: user),
+                ),
+              );
+              break;
+
+            case 'laboratorio':
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const LaboratoryLayout(),
                 ),
               );
               break;
@@ -104,7 +139,9 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
 
-      setState(() => _isLoading = false);
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 

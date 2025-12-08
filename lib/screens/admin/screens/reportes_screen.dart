@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../services/pdf_service.dart';
+import '../../../utils/pdf_download_helper.dart';
 
 /// =============================================================
 ///   MODELOS — Preparados para BD/API
@@ -18,18 +20,63 @@ class ReporteItem {
 }
 
 /// =============================================================
-///   SERVICIO — Futura conexión real a backend
+///   SERVICIO — Generación de PDFs reales
 /// =============================================================
 class ReportesService {
   static Future<void> descargarPDF(String tipo) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    print("PDF descargado: $tipo");
+    try {
+      print('📄 Generando PDF: $tipo');
+      
+      switch (tipo) {
+        case 'Reporte de Personal':
+          await PdfService.generatePersonnelReport('Último mes');
+          break;
+        case 'Reporte Financiero':
+          await PdfService.generateFinancialReport('Último mes');
+          break;
+        case 'Reporte de Citas':
+          await PdfService.generateAppointmentsReport('Último mes');
+          break;
+        case 'Inventario':
+          await PdfService.generateInventoryReport('Último mes');
+          break;
+        default:
+          print('⚠️ Tipo de reporte desconocido: $tipo');
+      }
+      
+      print('✅ PDF generado exitosamente');
+    } catch (e) {
+      print('❌ Error generando PDF: $e');
+      rethrow;
+    }
   }
 
-  static Future<void> generarReporte(
-      String tipo, String periodo) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    print("Reporte generado: $tipo - $periodo");
+  static Future<void> generarReporte(String tipo, String periodo) async {
+    try {
+      print('📄 Generando reporte personalizado: $tipo - $periodo');
+      
+      switch (tipo) {
+        case 'Personal':
+          await PdfService.generatePersonnelReport(periodo);
+          break;
+        case 'Financiero':
+          await PdfService.generateFinancialReport(periodo);
+          break;
+        case 'Citas':
+          await PdfService.generateAppointmentsReport(periodo);
+          break;
+        case 'Inventario':
+          await PdfService.generateInventoryReport(periodo);
+          break;
+        default:
+          print('⚠️ Tipo de reporte desconocido: $tipo');
+      }
+      
+      print('✅ Reporte generado exitosamente');
+    } catch (e) {
+      print('❌ Error generando reporte: $e');
+      rethrow;
+    }
   }
 }
 
@@ -206,8 +253,13 @@ Widget _buildListaReportes() {
                     const SizedBox(height: 10),
 
                     /// Botón DESCARGAR PDF
-                    InkWell(
-                      onTap: () => ReportesService.descargarPDF(r.titulo),
+                    Builder(
+                      builder: (BuildContext ctx) => InkWell(
+                        onTap: () => PdfDownloadHelper.downloadWithFeedback(
+                          context: ctx,
+                          reportTitle: r.titulo,
+                          downloadFunction: () => ReportesService.descargarPDF(r.titulo),
+                        ),
                       child: Row(
                         children: [
                           Icon(Icons.picture_as_pdf,
@@ -222,6 +274,7 @@ Widget _buildListaReportes() {
                             ),
                           )
                         ],
+                        ),
                       ),
                     ),
                   ],
@@ -291,9 +344,13 @@ Widget _buildListaReportes() {
           /// Botón Generar
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () =>
-                  ReportesService.generarReporte(tipoReporte, periodo),
+            child: Builder(
+              builder: (BuildContext ctx) => ElevatedButton(
+                onPressed: () => PdfDownloadHelper.downloadWithFeedback(
+                  context: ctx,
+                  reportTitle: 'Reporte $tipoReporte - $periodo',
+                  downloadFunction: () => ReportesService.generarReporte(tipoReporte, periodo),
+                ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue.shade600,
                 padding:
@@ -308,6 +365,7 @@ Widget _buildListaReportes() {
                     fontSize: 16,
                     fontWeight: FontWeight.bold),
               ),
+              ),  // Cierre ElevatedButton
             ),
           ),
         ],

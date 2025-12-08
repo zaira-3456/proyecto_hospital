@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
 import '../models/financial_models.dart';
 import 'expense_request_details_dialog.dart';
 
@@ -39,7 +40,7 @@ class ExpenseRequestsTable extends StatelessWidget {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
-              headingRowColor: WidgetStateProperty.all(const Color(0xFF81D4FA)), // Light Blue
+              headingRowColor: WidgetStateProperty.all(kFLightBlue), // Light Blue
               columns: const [
                 DataColumn(label: Text('Fecha', style: TextStyle(fontWeight: FontWeight.bold))),
                 DataColumn(label: Text('Montos', style: TextStyle(fontWeight: FontWeight.bold))),
@@ -89,3 +90,5 @@ class ExpenseRequestsTable extends StatelessWidget {
     );
   }
 }
+
+

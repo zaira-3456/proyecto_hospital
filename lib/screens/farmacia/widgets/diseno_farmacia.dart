@@ -8,12 +8,11 @@ import '../inventario.dart';
 import '../solicitudes.dart';
 
 /// ========= PALETA DE COLORES =========
-/// (basado en tu captura)
 const Color kBlack        = Color(0xFF000000);
 const Color kDarkGray     = Color(0xFF363637);
 const Color kPrimaryBlue  = Color(0xFF1991DB);
-const Color kCardBlue15   = Color(0x261991DB); // 15% opacidad
-const Color kCardBlue12   = Color(0x1F1991DB); // 12% opacidad (si quieres sombra)
+const Color kCardBlue15   = Color(0x261991DB);
+const Color kCardBlue12   = Color(0x1F1991DB);
 const Color kPureRed      = Color(0xFFFF0000);
 const Color kDarkRed      = Color(0xFFDD0000);
 const Color kWhite        = Color(0xFFFFFFFF);
@@ -21,21 +20,57 @@ const Color kGreen        = Color(0xFF259528);
 const Color kOrange       = Color(0xFFFF7900);
 
 const Color kSidebarBlue      = kPrimaryBlue;
-const Color kSidebarLightBlue = Color(0xFFC4E7FF); // azul claro lateral
-const Color kBgLightBlue      = Color(0xFFF5F8FB); // fondo general
+const Color kSidebarLightBlue = Color(0xFFC4E7FF);
+const Color kBgLightBlue      = Color(0xFFF5F8FB);
 
-/// ruta del logo que pusiste
 const String kHospitalLogoPath = 'assets/images/logo_hospital.png';
 
-class PharmacyLayout extends StatelessWidget {
-  final Widget child;
-  final int selectedIndex; // 0: inicio, 1: inventario, 2: solicitudes
+class PharmacyLayout extends StatefulWidget {
+  final int initialIndex;
 
   const PharmacyLayout({
     super.key,
-    required this.child,
-    required this.selectedIndex,
+    this.initialIndex = 0,
   });
+
+  @override
+  State<PharmacyLayout> createState() => _PharmacyLayoutState();
+}
+
+class _PharmacyLayoutState extends State<PharmacyLayout> {
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
+
+  void _handleMenuSelected(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  void _handleLogout() async {
+    await FirebaseAuth.instance.signOut();
+    if (mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+    }
+  }
+
+  Widget _getCurrentPage() {
+    switch (_selectedIndex) {
+      case 0:
+        return const DashboardScreen();
+      case 1:
+        return const InventoryScreen();
+      case 2:
+        return const RequestsScreen();
+      default:
+        return const DashboardScreen();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +79,6 @@ class PharmacyLayout extends StatelessWidget {
         final bool isMobile = constraints.maxWidth < 800;
 
         if (isMobile) {
-          // App móvil / tablet
           return Scaffold(
             backgroundColor: kBgLightBlue,
             appBar: AppBar(
@@ -57,21 +91,28 @@ class PharmacyLayout extends StatelessWidget {
                 ),
               ),
             ),
-            drawer: _SideDrawer(selectedIndex: selectedIndex),
-            body: child,
+            drawer: _SideDrawer(
+              selectedIndex: _selectedIndex,
+              onMenuSelected: _handleMenuSelected,
+              onLogout: _handleLogout,
+            ),
+            body: _getCurrentPage(),
           );
         }
 
-        // Escritorio
         return Scaffold(
           backgroundColor: kBgLightBlue,
           body: Row(
             children: [
-              _SideMenu(selectedIndex: selectedIndex),
+              _SideMenu(
+                selectedIndex: _selectedIndex,
+                onMenuSelected: _handleMenuSelected,
+                onLogout: _handleLogout,
+              ),
               Expanded(
                 child: Container(
                   color: kWhite,
-                  child: child,
+                  child: _getCurrentPage(),
                 ),
               ),
             ],
@@ -82,53 +123,16 @@ class PharmacyLayout extends StatelessWidget {
   }
 }
 
-/// ========== FUNCIÓN DE NAVEGACIÓN COMÚN ==========
-
-void _navigateToIndex(BuildContext context, int index) {
-  Widget page;
-
-  switch (index) {
-    case 0:
-      page = const DashboardScreen();
-      break;
-    case 1:
-      page = const InventoryScreen();
-      break;
-    case 2:
-    default:
-      page = const RequestsScreen();
-      break;
-  }
-
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (_) => page),
-  );
-}
-
-/// ========== MENÚ LATERAL ESCRITORIO ==========
-
 class _SideMenu extends StatelessWidget {
   final int selectedIndex;
+  final Function(int) onMenuSelected;
+  final VoidCallback onLogout;
 
-  const _SideMenu({required this.selectedIndex});
-
-  Future<void> _logout(BuildContext context) async {
-    try {
-      await FirebaseAuth.instance.signOut();
-    } catch (_) {
-      // podrías mostrar un SnackBar si quieres
-    }
-
-    // Ir al login y limpiar el stack
-    if (context.mounted) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        '/login',
-        (route) => false,
-      );
-    }
-  }
+  const _SideMenu({
+    required this.selectedIndex,
+    required this.onMenuSelected,
+    required this.onLogout,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +141,6 @@ class _SideMenu extends StatelessWidget {
       color: kSidebarLightBlue,
       child: Column(
         children: [
-          // Franja superior
           Container(
             height: 80,
             width: double.infinity,
@@ -155,8 +158,6 @@ class _SideMenu extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 32),
-
-          // Opciones
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
@@ -166,32 +167,28 @@ class _SideMenu extends StatelessWidget {
                   icon: Icons.home,
                   text: 'Inicio',
                   selected: selectedIndex == 0,
-                  onTap: () => _navigateToIndex(context, 0),
+                  onTap: () => onMenuSelected(0),
                 ),
                 const SizedBox(height: 18),
                 _SideItem(
                   icon: Icons.inventory_2_outlined,
                   text: 'Inventario',
                   selected: selectedIndex == 1,
-                  onTap: () => _navigateToIndex(context, 1),
+                  onTap: () => onMenuSelected(1),
                 ),
                 const SizedBox(height: 18),
                 _SideItem(
                   icon: Icons.shopping_cart_outlined,
                   text: 'Solicitudes',
                   selected: selectedIndex == 2,
-                  onTap: () => _navigateToIndex(context, 2),
+                  onTap: () => onMenuSelected(2),
                 ),
               ],
             ),
           ),
-
           const Spacer(),
-
-          // Cerrar sesión
           Padding(
-            padding:
-                const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+            padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -204,7 +201,7 @@ class _SideMenu extends StatelessWidget {
                     fontSize: 15,
                   ),
                 ),
-                onPressed: () => _logout(context),
+                onPressed: onLogout,
                 child: const Text('Cerrar sesión'),
               ),
             ),
@@ -252,32 +249,22 @@ class _SideItem extends StatelessWidget {
   }
 }
 
-/// ========== DRAWER MÓVIL ==========
-
 class _SideDrawer extends StatelessWidget {
   final int selectedIndex;
+  final Function(int) onMenuSelected;
+  final VoidCallback onLogout;
 
-  const _SideDrawer({required this.selectedIndex});
-
-  Future<void> _logout(BuildContext context) async {
-    try {
-      await FirebaseAuth.instance.signOut();
-    } catch (_) {}
-
-    if (context.mounted) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        '/login',
-        (route) => false,
-      );
-    }
-  }
+  const _SideDrawer({
+    required this.selectedIndex,
+    required this.onMenuSelected,
+    required this.onLogout,
+  });
 
   @override
   Widget build(BuildContext context) {
-    void go(int index) {
-      Navigator.pop(context); // cerrar drawer
-      _navigateToIndex(context, index);
+    void handleSelect(int index) {
+      Navigator.pop(context);
+      onMenuSelected(index);
     }
 
     return Drawer(
@@ -307,40 +294,38 @@ class _SideDrawer extends StatelessWidget {
                 icon: Icons.home,
                 text: 'Inicio',
                 selected: selectedIndex == 0,
-                onTap: () => go(0),
+                onTap: () => handleSelect(0),
               ),
               const SizedBox(height: 16),
               _SideItem(
                 icon: Icons.inventory_2_outlined,
                 text: 'Inventario',
                 selected: selectedIndex == 1,
-                onTap: () => go(1),
+                onTap: () => handleSelect(1),
               ),
               const SizedBox(height: 16),
               _SideItem(
                 icon: Icons.shopping_cart_outlined,
                 text: 'Solicitudes',
                 selected: selectedIndex == 2,
-                onTap: () => go(2),
+                onTap: () => handleSelect(2),
               ),
               const Spacer(),
               Padding(
-                padding:
-                    const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+                padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: kPrimaryBlue,
                       foregroundColor: kWhite,
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 14),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                       textStyle: GoogleFonts.archivo(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                       ),
                     ),
-                    onPressed: () => _logout(context),
+                    onPressed: onLogout,
                     child: const Text('Cerrar sesión'),
                   ),
                 ),
@@ -353,7 +338,6 @@ class _SideDrawer extends StatelessWidget {
   }
 }
 
-/// Widget reutilizable para el logo circular
 class HospitalLogoCircle extends StatelessWidget {
   const HospitalLogoCircle({super.key});
 

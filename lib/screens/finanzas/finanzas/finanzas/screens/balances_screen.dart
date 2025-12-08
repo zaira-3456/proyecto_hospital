@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/finance_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../widgets/export_dialog.dart';
 import '../models/financial_models.dart';
@@ -112,7 +113,7 @@ class _BalancesScreenState extends State<BalancesScreen> with SingleTickerProvid
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF0288D1),
+                  backgroundColor: kFPrimaryBlue,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   shape: RoundedRectangleBorder(
@@ -215,7 +216,7 @@ class _BalancesScreenState extends State<BalancesScreen> with SingleTickerProvid
               borderRadius: BorderRadius.circular(8),
             ),
             child: DataTable(
-              headingRowColor: MaterialStateProperty.all(const Color(0xFFB3E5FC)),
+              headingRowColor: MaterialStateProperty.all(kFLightBlue),
               columns: const [
                 DataColumn(label: Text('Área', style: TextStyle(fontWeight: FontWeight.bold))),
                 DataColumn(label: Text('Presupuesto', style: TextStyle(fontWeight: FontWeight.bold))),
@@ -328,12 +329,12 @@ class _BalancesScreenState extends State<BalancesScreen> with SingleTickerProvid
                                     return FlSpot(spot.x, spot.y * _animation.value);
                                   }).toList(),
                                   isCurved: true,
-                                  color: const Color(0xFF0288D1),
+                                  color: kFPrimaryBlue,
                                   barWidth: 3,
                                   dotData: const FlDotData(show: false),
                                   belowBarData: BarAreaData(
                                     show: true,
-                                    color: const Color(0xFF0288D1).withOpacity(0.2),
+                                    color: kFPrimaryBlue.withOpacity(0.2),
                                   ),
                                 ),
                               ],
@@ -405,3 +406,5 @@ class _BalancesScreenState extends State<BalancesScreen> with SingleTickerProvid
     );
   }
 }
+
+

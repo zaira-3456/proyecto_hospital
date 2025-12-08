@@ -1,0 +1,278 @@
+Analyzing proyecto_hospital...                                  
+
+warning - Unused import: 'package:cloud_firestore/cloud_firestore.dart' - lib\main.dart:3:8 - unused_import
+   info - The imported package 'flutter_localizations' isn't a dependency of the importing package - lib\main.dart:4:8 - depend_on_referenced_packages
+   info - Don't invoke 'print' in production code - lib\main.dart:39:3 - avoid_print
+warning - The value of the local variable 'isDesktop' isn't used - lib\screens\admin\admin_layout.dart:39:10 - unused_local_variable
+   info - Statements in an if should be enclosed in a block - lib\screens\admin\screens\configuracion_screen.dart:272:48 - curly_braces_in_flow_control_structures
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\configuracion_screen.dart:306:56 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\configuracion_screen.dart:386:35 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\infraestructura_screen.dart:183:71 - deprecated_member_use
+   info - Unnecessary use of 'toList' in a spread - lib\screens\admin\screens\infraestructura_screen.dart:215:32 - unnecessary_to_list_in_spreads
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\infraestructura_screen.dart:252:31 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\infraestructura_screen.dart:258:29 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\infraestructura_screen.dart:297:30 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\infraestructura_screen.dart:300:34 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\infraestructura_screen.dart:359:20 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\infraestructura_screen.dart:366:21 - deprecated_member_use
+   info - Unnecessary use of 'toList' in a spread - lib\screens\admin\screens\inicio_screen.dart:299:14 - unnecessary_to_list_in_spreads
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\inicio_screen.dart:311:31 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\personal_screen.dart:225:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\personal_screen.dart:228:31 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\personal_screen.dart:268:27 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\personal_screen.dart:271:31 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\personal_screen.dart:322:35 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\screens\admin\screens\reportes_screen.dart:26:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\admin\screens\reportes_screen.dart:32:5 - avoid_print
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\reportes_screen.dart:150:52 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\reportes_screen.dart:153:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\reportes_screen.dart:168:34 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\reportes_screen.dart:171:38 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\screens\reportes_screen.dart:250:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\side_menu.dart:105:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_finanzas\chart_line_finanzas.dart:70:38 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_finanzas\chart_line_finanzas.dart:116:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_finanzas\chart_line_finanzas.dart:146:36 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_finanzas\finance_stat_card.dart:33:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_finanzas\finance_stat_card.dart:41:31 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\screens\admin\widgets\dashboard_personal\agregar_personal_screen.dart:96:7 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\screens\admin\widgets\dashboard_personal\agregar_personal_screen.dart:217:21 - use_build_context_synchronously
+warning - The value of the local variable 'isMedium' isn't used - lib\screens\admin\widgets\dashboard_principal\chart_finanzas.dart:54:16 - unused_local_variable
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_principal\chart_finanzas.dart:68:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_principal\chart_finanzas.dart:162:47 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_principal\chart_finanzas.dart:180:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_principal\stat_card.dart:37:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_principal\stat_card.dart:45:31 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_principal\stat_card.dart:106:40 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_principal\stat_card.dart:111:44 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\admin\widgets\dashboard_principal\urgent_task_item.dart:112:33 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\screens\enfermeria\dashboard_enfermeria.dart:421:28 - use_build_context_synchronously
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\screens\enfermeria\medicamentos.dart:120:47 - deprecated_member_use
+   info - 'dataRowHeight' is deprecated and shouldn't be used. Migrate to use dataRowMinHeight and dataRowMaxHeight instead. This feature was deprecated after v3.7.0-5.0.pre - lib\screens\enfermeria\medicamentos.dart:134:43 - deprecated_member_use
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\screens\enfermeria\pacientes.dart:150:47 - deprecated_member_use
+   info - 'dataRowHeight' is deprecated and shouldn't be used. Migrate to use dataRowMinHeight and dataRowMaxHeight instead. This feature was deprecated after v3.7.0-5.0.pre - lib\screens\enfermeria\pacientes.dart:165:43 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\screens\enfermeria\pacientes.dart:236:86 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\screens\enfermeria\pacientes.dart:248:86 - use_build_context_synchronously
+   info - Unnecessary braces in a string interpolation - lib\screens\enfermeria\widgets\dialogos_enfermeria.dart:76:38 - unnecessary_brace_in_string_interps
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\enfermeria\widgets\dialogos_enfermeria.dart:155:25 - deprecated_member_use
+   info - The file name 'diseño_enfermeria.dart' isn't a lower_case_with_underscores identifier - lib\screens\enfermeria\widgets\diseño_enfermeria.dart:1:1 - file_names
+warning - Unnecessary cast - lib\screens\farmacia\dashboard.dart:227:18 - unnecessary_cast
+warning - Unnecessary cast - lib\screens\farmacia\dashboard.dart:349:20 - unnecessary_cast
+warning - The value of the local variable 'endOfDay' isn't used - lib\screens\farmacia\solicitudes.dart:23:19 - unused_local_variable
+   info - Don't use 'BuildContext's across async gaps - lib\screens\farmacia\solicitudes.dart:123:56 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\screens\farmacia\solicitudes.dart:130:56 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\screens\farmacia\solicitudes.dart:146:56 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\screens\farmacia\solicitudes.dart:153:56 - use_build_context_synchronously
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\screens\farmacia\solicitudes.dart:263:51 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\farmacia\widgets\agregar_medicamento.dart:176:25 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\farmacia\widgets\agregar_medicamento.dart:226:25 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\screens\finanzas\finanzas\finanzas\screens\balances_screen.dart:109:42 - use_build_context_synchronously
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\screens\finanzas\finanzas\finanzas\screens\balances_screen.dart:218:32 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\finanzas\finanzas\finanzas\screens\balances_screen.dart:336:68 - deprecated_member_use
+warning - Unnecessary cast - lib\screens\finanzas\finanzas\finanzas\screens\expenses_screen.dart:48:27 - unnecessary_cast
+warning - Unnecessary cast - lib\screens\finanzas\finanzas\finanzas\screens\expenses_screen.dart:49:28 - unnecessary_cast
+warning - Unnecessary cast - lib\screens\finanzas\finanzas\finanzas\screens\expenses_screen.dart:50:25 - unnecessary_cast
+   info - Don't use 'BuildContext's across async gaps - lib\screens\finanzas\finanzas\finanzas\screens\expenses_screen.dart:118:28 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\screens\finanzas\finanzas\finanzas\screens\expenses_screen.dart:137:28 - use_build_context_synchronously
+warning - The value of the local variable 'isTablet' isn't used - lib\screens\finanzas\finanzas\finanzas\screens\expenses_screen.dart:150:11 - unused_local_variable
+   info - The type of the right operand ('String') isn't a subtype or a supertype of the left operand ('DateTime') - lib\screens\finanzas\finanzas\finanzas\screens\income_screen.dart:104:28 - unrelated_type_equality_checks
+   info - The type of the right operand ('String') isn't a subtype or a supertype of the left operand ('DateTime') - lib\screens\finanzas\finanzas\finanzas\screens\income_screen.dart:104:55 - unrelated_type_equality_checks
+   info - Don't use 'BuildContext's across async gaps - lib\screens\finanzas\finanzas\finanzas\screens\income_screen.dart:109:28 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\screens\finanzas\finanzas\finanzas\screens\income_screen.dart:138:28 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\finanzas\finanzas\finanzas\screens\reports_screen.dart:507:58 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\screens\finanzas\finanzas\finanzas\services\database_service.dart:33:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\finanzas\finanzas\finanzas\services\database_service.dart:34:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\finanzas\finanzas\finanzas\services\database_service.dart:63:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\finanzas\finanzas\finanzas\services\database_service.dart:64:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\finanzas\finanzas\finanzas\services\database_service.dart:96:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\finanzas\finanzas\finanzas\services\database_service.dart:97:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\finanzas\finanzas\finanzas\services\database_service.dart:130:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\finanzas\finanzas\finanzas\services\database_service.dart:138:5 - avoid_print
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\finanzas\finanzas\finanzas\widgets copy\add_expense_dialog.dart:410:25 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\finanzas\finanzas\finanzas\widgets copy\add_income_dialog.dart:122:23 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\finanzas\finanzas\finanzas\widgets copy\add_income_dialog.dart:143:23 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\finanzas\finanzas\finanzas\widgets copy\area_chart_widget.dart:54:33 - deprecated_member_use
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\screens\finanzas\finanzas\finanzas\widgets copy\expense_request_details_dialog.dart:176:42 - deprecated_member_use
+   info - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\finanzas\finanzas\finanzas\widgets copy\export_dialog.dart:107:15 - deprecated_member_use
+   info - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\finanzas\finanzas\finanzas\widgets copy\export_dialog.dart:108:15 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\finanzas\finanzas\finanzas\widgets copy\income_bar_chart.dart:25:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\finanzas\finanzas\finanzas\widgets copy\income_table.dart:25:33 - deprecated_member_use
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\screens\finanzas\finanzas\finanzas\widgets copy\income_table.dart:161:32 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\finanzas\finanzas\finanzas\widgets copy\income_table.dart:162:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\finanzas\finanzas\finanzas\widgets copy\metric_card.dart:32:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\finanzas\finanzas\finanzas\widgets copy\urgent_tasks_panel.dart:21:33 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\finanzas\finanzas\finanzas\widgets\add_expense_dialog.dart:410:25 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\finanzas\finanzas\finanzas\widgets\add_income_dialog.dart:122:23 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\finanzas\finanzas\finanzas\widgets\add_income_dialog.dart:143:23 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\finanzas\finanzas\finanzas\widgets\area_chart_widget.dart:54:33 - deprecated_member_use
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\screens\finanzas\finanzas\finanzas\widgets\expense_request_details_dialog.dart:176:42 - deprecated_member_use
+   info - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\finanzas\finanzas\finanzas\widgets\export_dialog.dart:107:15 - deprecated_member_use
+   info - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\finanzas\finanzas\finanzas\widgets\export_dialog.dart:108:15 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\finanzas\finanzas\finanzas\widgets\income_bar_chart.dart:25:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\finanzas\finanzas\finanzas\widgets\metric_card.dart:33:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\login\change_password_screen.dart:146:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\login\forgot_password_dialog.dart:187:36 - deprecated_member_use
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\login\login_screens.dart:156:15 - sized_box_for_whitespace
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\login\login_screens.dart:201:44 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:31:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:36:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:45:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:65:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:74:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:77:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:98:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:110:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:118:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:121:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:146:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:161:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:164:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:174:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:175:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:182:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:188:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:235:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:238:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:262:7 - avoid_print
+warning - The value of the local variable 'acumulado' isn't used - lib\screens\login\services\database_service.dart:308:37 - unused_local_variable
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:397:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:414:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:428:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:821:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:834:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:855:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:869:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:901:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:928:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:950:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:990:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:993:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1025:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1028:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1061:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1064:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1087:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1129:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1132:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1166:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1169:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1193:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1215:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1245:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\database_service.dart:1248:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:9:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:10:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:11:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:31:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:32:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:33:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:40:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:41:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:44:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:46:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:49:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:53:13 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:55:13 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:57:13 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:59:13 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:61:13 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:63:13 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:67:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:69:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:75:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:76:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:77:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:88:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:89:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:90:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:94:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:104:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:107:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:109:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:114:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:136:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:137:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:140:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:142:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:147:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:157:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:160:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:162:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:168:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:169:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:170:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:173:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:177:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:181:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:185:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:189:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:192:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:193:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:194:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:204:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:205:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:206:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:213:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:214:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:220:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:227:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:228:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:237:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:238:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:239:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\login\services\firestore_diagnostic.dart:240:5 - avoid_print
+   info - Unnecessary use of 'toList' in a spread - lib\screens\medico\medico\dashboard_medico.dart:340:20 - unnecessary_to_list_in_spreads
+   info - Use the null-aware operator '?.' rather than an explicit 'null' comparison - lib\screens\medico\medico\expedientes_medico.dart:106:27 - prefer_null_aware_operators
+   info - Don't invoke 'print' in production code - lib\screens\medico\medico\expedientes_medico.dart:154:7 - avoid_print
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\medico\medico\nueva_visita_medico.dart:324:35 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\screens\medico\medico\pacientes_medico.dart:66:11 - avoid_print
+warning - Unused import: '../../login/services/database_service.dart' - lib\screens\medico\medico\recetas_medico.dart:6:8 - unused_import
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\medico\medico\widgets\dialogos_medico.dart:158:29 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\medico\medico\widgets\dialogos_medico.dart:192:23 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\screens\medico\medico\widgets\dialogos_medico.dart:523:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\medico\medico\widgets\dialogos_medico.dart:524:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\medico\medico\widgets\dialogos_medico.dart:525:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\medico\medico\widgets\dialogos_medico.dart:526:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\medico\medico\widgets\dialogos_medico.dart:527:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\medico\medico\widgets\dialogos_medico.dart:531:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\medico\medico\widgets\dialogos_medico.dart:532:7 - avoid_print
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\medico\medico\widgets\dialogos_medico.dart:850:31 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\agendar_cita.dart:171:5 - avoid_print
+   info - Statements in an if should be enclosed in a block - lib\screens\recepcionista\recepcionista\agendar_cita.dart:190:9 - curly_braces_in_flow_control_structures
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\agendar_cita.dart:217:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\agendar_cita.dart:221:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\agendar_cita.dart:223:7 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\screens\recepcionista\recepcionista\agendar_cita.dart:224:28 - use_build_context_synchronously
+   info - Unnecessary escape in string literal - lib\screens\recepcionista\recepcionista\agendar_cita.dart:470:33 - unnecessary_string_escapes
+   info - Unnecessary escape in string literal - lib\screens\recepcionista\recepcionista\agendar_cita.dart:472:30 - unnecessary_string_escapes
+   info - Unnecessary escape in string literal - lib\screens\recepcionista\recepcionista\agendar_cita.dart:478:31 - unnecessary_string_escapes
+   info - Unnecessary escape in string literal - lib\screens\recepcionista\recepcionista\agendar_cita.dart:498:31 - unnecessary_string_escapes
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\recepcionista\recepcionista\agendar_cita.dart:943:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\recepcionista\recepcionista\agendar_cita.dart:982:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\recepcionista\recepcionista\agendar_cita.dart:1154:34 - deprecated_member_use
+   info - The file name 'agendar_cita_BACKUP.dart' isn't a lower_case_with_underscores identifier - lib\screens\recepcionista\recepcionista\agendar_cita_BACKUP.dart:1:1 - file_names
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\gestion_citas.dart:36:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\gestion_citas.dart:41:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\gestion_citas.dart:44:5 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\screens\recepcionista\recepcionista\gestion_citas.dart:261:25 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\screens\recepcionista\recepcionista\gestion_citas.dart:273:38 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\screens\recepcionista\recepcionista\gestion_citas.dart:299:42 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\recepcionista\recepcionista\gestion_citas.dart:1027:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\recepcionista\recepcionista\gestion_citas.dart:1064:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\recepcionista\recepcionista\gestion_citas.dart:1223:34 - deprecated_member_use
+   info - Statements in an if should be enclosed in a block - lib\screens\recepcionista\recepcionista\models\cita_models.dart:135:7 - curly_braces_in_flow_control_structures
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\recepcionista\recepcionista\registrar_paciente.dart:571:37 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\services\appointments_service.dart:56:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\services\appointments_service.dart:85:7 - avoid_print
+   info - Use 'rethrow' to rethrow a caught exception - lib\screens\recepcionista\recepcionista\services\appointments_service.dart:86:7 - use_rethrow_when_possible
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\services\appointments_service.dart:102:7 - avoid_print
+   info - Use 'rethrow' to rethrow a caught exception - lib\screens\recepcionista\recepcionista\services\appointments_service.dart:103:7 - use_rethrow_when_possible
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\services\appointments_service.dart:115:7 - avoid_print
+   info - Use 'rethrow' to rethrow a caught exception - lib\screens\recepcionista\recepcionista\services\appointments_service.dart:116:7 - use_rethrow_when_possible
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\services\appointments_service.dart:126:7 - avoid_print
+   info - Use 'rethrow' to rethrow a caught exception - lib\screens\recepcionista\recepcionista\services\appointments_service.dart:127:7 - use_rethrow_when_possible
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\services\cita_data_service.dart:24:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\services\cita_data_service.dart:52:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\screens\recepcionista\recepcionista\services\cita_data_service.dart:107:9 - avoid_print
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\recepcionista\recepcionista\widgets\actions_recepcionist.dart:46:37 - deprecated_member_use
+

@@ -16,6 +16,8 @@ class _DoctorResultsScreenState extends State<DoctorResultsScreen> {
   ResultItem? _selected;
   List<ResultItem> _results = [];
   bool _isLoading = true;
+  String _searchQuery = '';
+  final _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -23,19 +25,41 @@ class _DoctorResultsScreenState extends State<DoctorResultsScreen> {
     _loadResults();
   }
 
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   Future<void> _loadResults() async {
+    setState(() => _isLoading = true);
+    
     final db = DatabaseService();
-    final patients = await db.getPatients();
+    // Cargar estudios completados desde Firestore
+    final studyRequests = await db.getStudyRequests(estado: 'completado');
 
     final List<ResultItem> loadedResults = [];
 
-    // Simular resultados para cada paciente real
-    for (var p in patients) {
+    for (var study in studyRequests) {
+      // Formatear fecha
+      String fechaStr = 'N/A';
+      if (study['fechaCompletado'] != null) {
+        final date = (study['fechaCompletado'] as dynamic).toDate();
+        fechaStr = '${date.day}/${date.month}/${date.year}';
+      } else if (study['fechaSolicitud'] != null) {
+        final date = (study['fechaSolicitud'] as dynamic).toDate();
+        fechaStr = '${date.day}/${date.month}/${date.year}';
+      }
+
       loadedResults.add(ResultItem(
-        titulo: 'Chequeo General', // Placeholder
-        paciente: p['nombreCompleto'] ?? 'Sin nombre',
-        fecha: 'Hoy', // Placeholder
-        estado: 'Disponible',
+        id: study['id'] ?? '',
+        titulo: study['tipoEstudio'] ?? 'Estudio',
+        paciente: study['pacienteNombre'] ?? 'Sin nombre',
+        fecha: fechaStr,
+        estado: 'Completado',
+        observaciones: study['observaciones'] ?? '',
+        prioridad: study['prioridad'] ?? 'normal',
+        medicoNombre: study['medicoNombre'] ?? '',
       ));
     }
 
@@ -50,11 +74,18 @@ class _DoctorResultsScreenState extends State<DoctorResultsScreen> {
     }
   }
 
+  List<ResultItem> get _filteredResults {
+    if (_searchQuery.isEmpty) return _results;
+    final query = _searchQuery.toLowerCase();
+    return _results.where((item) =>
+      item.paciente.toLowerCase().contains(query) ||
+      item.titulo.toLowerCase().contains(query)
+    ).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DoctorLayout(
-      selectedIndex: 4,
-      child: LayoutBuilder(
+    return LayoutBuilder(
         builder: (context, constraints) {
           final wide = constraints.maxWidth > 1100;
 
@@ -91,24 +122,53 @@ class _DoctorResultsScreenState extends State<DoctorResultsScreen> {
                     const Icon(Icons.search, size: 18),
                     const SizedBox(width: 8),
                     Expanded(
-                      child: Text(
-                        'Buscar resultados',
-                        style: GoogleFonts.archivoNarrow(
-                          fontSize: 13,
-                          color: kMGreyText,
+                      child: TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          hintText: 'Buscar por paciente o tipo de estudio...',
+                          hintStyle: GoogleFonts.archivoNarrow(
+                            fontSize: 13,
+                            color: kMGreyText,
+                          ),
+                          border: InputBorder.none,
+                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
                         ),
+                        style: GoogleFonts.archivoNarrow(fontSize: 13),
+                        onChanged: (value) {
+                          setState(() => _searchQuery = value);
+                        },
                       ),
                     ),
+                    if (_searchQuery.isNotEmpty)
+                      IconButton(
+                        icon: const Icon(Icons.clear, size: 16),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        onPressed: () {
+                          setState(() {
+                            _searchController.clear();
+                            _searchQuery = '';
+                          });
+                        },
+                      ),
                   ],
                 ),
               ),
               const SizedBox(height: 16),
               if (_isLoading)
                 const Center(child: CircularProgressIndicator())
-              else if (_results.isEmpty)
-                const Center(child: Text('No hay resultados disponibles'))
+              else if (_filteredResults.isEmpty)
+                Center(
+                  child: Text(
+                    _searchQuery.isNotEmpty 
+                      ? 'No se encontraron resultados para "$_searchQuery"'
+                      : 'No hay resultados disponibles',
+                    style: GoogleFonts.archivoNarrow(color: kMGreyText),
+                  ),
+                )
               else
-                ..._results.map(
+                ..._filteredResults.map(
                   (r) => Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: _ResultCard(
@@ -211,8 +271,7 @@ class _DoctorResultsScreenState extends State<DoctorResultsScreen> {
             ),
           );
         },
-      ),
-    );
+      );
   }
 }
 
@@ -323,28 +382,6 @@ class _ResultDetail extends StatelessWidget {
 
   const _ResultDetail({required this.item});
 
-  Widget _row(String label, String value, {Color? color}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: GoogleFonts.archivoNarrow(
-            fontSize: 13,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          value,
-          style: GoogleFonts.archivoNarrow(
-            fontSize: 13,
-            color: color ?? kMBlack,
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -373,9 +410,33 @@ class _ResultDetail extends StatelessWidget {
             ),
           ],
         ),
+        if (item.medicoNombre.isNotEmpty) ...[
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              const Icon(Icons.person_outline, size: 16),
+              const SizedBox(width: 4),
+              Text(
+                'Médico solicitante: ${item.medicoNombre}',
+                style: GoogleFonts.archivoNarrow(fontSize: 13),
+              ),
+            ],
+          ),
+        ],
+        const SizedBox(height: 6),
+        Row(
+          children: [
+            const Icon(Icons.flag_outlined, size: 16),
+            const SizedBox(width: 4),
+            Text(
+              'Prioridad: ${item.prioridad}',
+              style: GoogleFonts.archivoNarrow(fontSize: 13),
+            ),
+          ],
+        ),
         const SizedBox(height: 16),
         Text(
-          'Resultados de Laboratorio',
+          'Observaciones del Laboratorio',
           style: GoogleFonts.archivo(
             fontSize: 15,
             fontWeight: FontWeight.bold,
@@ -383,24 +444,21 @@ class _ResultDetail extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Container(
+          width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: kMWhite,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Column(
-            children: [
-              _row('Hemoglobina', '13.5 g/dL · Normal',
-                  color: kMPrimaryBlue),
-              const SizedBox(height: 4),
-              _row('Leucocitos', '7200 /µL · Normal',
-                  color: kMPrimaryBlue),
-              const SizedBox(height: 4),
-              _row('Plaquetas', '250000 /µL · Normal',
-                  color: kMPrimaryBlue),
-              const SizedBox(height: 4),
-              _row('Glucosa', '110 mg/dL · Alto', color: kMRed),
-            ],
+          child: Text(
+            item.observaciones.isNotEmpty 
+                ? item.observaciones 
+                : 'Sin observaciones del laboratorio',
+            style: GoogleFonts.archivoNarrow(
+              fontSize: 14,
+              color: item.observaciones.isNotEmpty ? kMBlack : kMGreyText,
+              fontStyle: item.observaciones.isEmpty ? FontStyle.italic : FontStyle.normal,
+            ),
           ),
         ),
         const Spacer(),
@@ -412,7 +470,22 @@ class _ResultDetail extends StatelessWidget {
                 backgroundColor: kMBlue15,
                 foregroundColor: kMBlack,
               ),
-              onPressed: () {},
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Compartiendo resultado de ${item.paciente}...',
+                      style: GoogleFonts.archivoNarrow(),
+                    ),
+                    backgroundColor: kMPrimaryBlue,
+                    action: SnackBarAction(
+                      label: 'OK',
+                      textColor: kMWhite,
+                      onPressed: () {},
+                    ),
+                  ),
+                );
+              },
               child: Text(
                 'Compartir',
                 style: GoogleFonts.archivoNarrow(
@@ -446,16 +519,24 @@ class _ResultDetail extends StatelessWidget {
 /// ======= MODELO DE DATOS =======
 
 class ResultItem {
+  final String id;
   final String titulo;
   final String paciente;
   final String fecha;
   final String estado;
+  final String observaciones;
+  final String prioridad;
+  final String medicoNombre;
 
   const ResultItem({
+    required this.id,
     required this.titulo,
     required this.paciente,
     required this.fecha,
     required this.estado,
+    this.observaciones = '',
+    this.prioridad = 'normal',
+    this.medicoNombre = '',
   });
 }
 

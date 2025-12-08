@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
 import '../models/financial_models.dart';
 
 
@@ -66,7 +67,7 @@ class _ExportDialogState extends State<ExportDialog> {
                     child: ElevatedButton(
                       onPressed: _selectedOption != null ? _submit : null,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF00BCD4), // Cyan color
+                        backgroundColor: kFPrimaryBlue, // Cyan color
                         foregroundColor: Colors.white,
                         disabledBackgroundColor: Colors.grey.shade300,
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -126,3 +127,5 @@ class _ExportDialogState extends State<ExportDialog> {
     );
   }
 }
+
+

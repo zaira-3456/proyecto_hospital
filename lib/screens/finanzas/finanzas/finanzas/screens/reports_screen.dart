@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/finance_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../widgets/export_dialog.dart';
 import '../models/financial_models.dart';
@@ -227,7 +228,7 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
         }
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF0288D1),
+        backgroundColor: kFPrimaryBlue,
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(
@@ -415,7 +416,7 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
                         barRods: [
                           BarChartRodData(
                             toY: entry.value.value * _animation.value,
-                            color: const Color(0xFF0288D1),
+                            color: kFPrimaryBlue,
                             width: 40,
                             borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
                           ),
@@ -499,12 +500,12 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
                           return FlSpot(spot.x, spot.y * _animation.value);
                         }).toList(),
                         isCurved: true,
-                        color: const Color(0xFF0288D1),
+                        color: kFPrimaryBlue,
                         barWidth: 3,
                         dotData: const FlDotData(show: false),
                         belowBarData: BarAreaData(
                           show: true,
-                          color: const Color(0xFF0288D1).withOpacity(0.3),
+                          color: kFPrimaryBlue.withOpacity(0.3),
                         ),
                       ),
                     ],
@@ -607,3 +608,5 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
     );
   }
 }
+
+

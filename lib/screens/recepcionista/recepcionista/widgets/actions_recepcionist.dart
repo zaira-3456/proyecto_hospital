@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ActionCard extends StatefulWidget {
   final IconData icon;
@@ -60,8 +61,7 @@ class _ActionCardState extends State<ActionCard> {
                   Flexible(
                     child: Text(
                       widget.text,
-                      style: const TextStyle(
-                        fontFamily: 'Archivo',
+                      style: GoogleFonts.archivo(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'finance_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class IncomeBarChart extends StatelessWidget {
@@ -10,7 +11,7 @@ class IncomeBarChart extends StatelessWidget {
     super.key,
     required this.title,
     required this.data,
-    this.barColor = const Color(0xFF2196F3),
+    this.barColor = kFPrimaryBlue,
   });
 
   @override
@@ -152,3 +153,5 @@ class IncomeBarChart extends StatelessWidget {
     }).toList();
   }
 }
+
+

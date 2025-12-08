@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Tus widgets del dashboard
 import '../widgets/dashboard_principal/stat_card.dart';
@@ -8,6 +9,7 @@ import '../widgets/dashboard_principal/chart_finanzas.dart';
 
 // Database Service
 import '../../login/services/database_service.dart';
+import '../../../widgets/welcome_message_widget.dart';
 
 class InicioScreen extends StatefulWidget {
   const InicioScreen({super.key});
@@ -110,9 +112,12 @@ class _InicioScreenState extends State<InicioScreen> {
 
         const SizedBox(height: 6),
 
-        const Text(
-          "Bienvenido, Dr. Carlos Pérez",
-          style: TextStyle(fontSize: 20, color: Colors.black54),
+        WelcomeMessageWidget(
+          prefix: 'Bienvenido,',
+          style: GoogleFonts.archivoNarrow(
+            fontSize: 20,
+            color: Colors.black54,
+          ),
         ),
 
         const SizedBox(height: 35),
@@ -241,9 +246,12 @@ class _InicioScreenState extends State<InicioScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "Estadísticas Personal",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                style: GoogleFonts.archivo(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
               const SizedBox(height: 12),
               SmallStatCard(label: "Médicos", value: medicosCount.toString()),
@@ -262,8 +270,13 @@ class _InicioScreenState extends State<InicioScreen> {
       decoration: _cardDecoration(),
       child: Column(
         children: [
-          const Text("Tareas Urgentes",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+          Text(
+            "Tareas Urgentes",
+            style: GoogleFonts.archivo(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
           const SizedBox(height: 15),
           if (tasks.isEmpty)
             const Text("No hay tareas urgentes",

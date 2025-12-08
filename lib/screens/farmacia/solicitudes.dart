@@ -9,9 +9,7 @@ class RequestsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PharmacyLayout(
-      selectedIndex: 2,
-      child: Padding(
+    return Padding(
         padding: const EdgeInsets.all(24),
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -24,22 +22,11 @@ class RequestsScreen extends StatelessWidget {
 
             final pendientesQuery = FirebaseFirestore.instance
                 .collection('solicitudes_medicamentos')
-                .where('estado', isEqualTo: 'pendiente')
-                .orderBy('creadaEn', descending: false);
+                .where('estado', isEqualTo: 'pendiente');
 
             final completadasQuery = FirebaseFirestore.instance
                 .collection('solicitudes_medicamentos')
-                .where('estado', isEqualTo: 'completada')
-                // si manejas fecha de atención, filtramos por hoy
-                .where(
-                  'fechaAtendida',
-                  isGreaterThanOrEqualTo:
-                      Timestamp.fromDate(startOfDay),
-                )
-                .where(
-                  'fechaAtendida',
-                  isLessThan: Timestamp.fromDate(endOfDay),
-                );
+                .where('estado', isEqualTo: 'completada');
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -339,8 +326,7 @@ class RequestsScreen extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
+      );
   }
 }
 

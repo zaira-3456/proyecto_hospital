@@ -227,3 +227,4 @@ class _AddIncomeDialogState extends State<AddIncomeDialog> {
     );
   }
 }
+
