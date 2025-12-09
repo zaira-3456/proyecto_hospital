@@ -1,0 +1,10 @@
+Analyzing proyecto_hospital...                                  
+
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\farmacia\widgets\agregar_medicamento.dart:104:25 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\farmacia\widgets\agregar_medicamento.dart:154:25 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\medico\widgets\dialogos_medico.dart:71:40 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\medico\widgets\dialogos_medico.dart:306:34 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\medico\widgets\dialogos_medico.dart:332:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\medico\widgets\dialogos_medico.dart:481:34 - deprecated_member_use
+
+6 issues found. (ran in 4.6s)
