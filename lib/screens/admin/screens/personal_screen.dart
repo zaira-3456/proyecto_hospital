@@ -382,29 +382,53 @@ final iconBg = {
   ///                     HEADER TABLA
   /// ================================================================
   Widget _headerTable() {
-    return Container(
+    final screenWidth = MediaQuery.of(context).size.width;
+    final useScroll = screenWidth < 800;
+    
+    Widget headerRow = Container(
+      width: useScroll ? 800 : null,
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
       decoration: BoxDecoration(
         color: const Color(0xffc0e6ff),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
-        children: const [
-          Expanded(flex: 3, child: Text("Nombre", style: _headerStyle)),
-          Expanded(flex: 2, child: Text("Puesto", style: _headerStyle)),
-          Expanded(flex: 2, child: Text("Turno", style: _headerStyle)),
-          Expanded(flex: 2, child: Text("Estado", style: _headerStyle)),
-          SizedBox(width: 100, child: Text("Acciones", style: _headerStyle)),
+        children: [
+          if (useScroll) ...[
+            const SizedBox(width: 200, child: Text("Nombre", style: _headerStyle)),
+            const SizedBox(width: 150, child: Text("Puesto", style: _headerStyle)),
+            const SizedBox(width: 150, child: Text("Turno", style: _headerStyle)),
+            const SizedBox(width: 150, child: Text("Estado", style: _headerStyle)),
+            const SizedBox(width: 100, child: Text("Acciones", style: _headerStyle)),
+          ] else ...[
+            const Expanded(flex: 3, child: Text("Nombre", style: _headerStyle)),
+            const Expanded(flex: 2, child: Text("Puesto", style: _headerStyle)),
+            const Expanded(flex: 2, child: Text("Turno", style: _headerStyle)),
+            const Expanded(flex: 2, child: Text("Estado", style: _headerStyle)),
+            const SizedBox(width: 100, child: Text("Acciones", style: _headerStyle)),
+          ],
         ],
       ),
     );
+    
+    if (useScroll) {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: headerRow,
+      );
+    }
+    return headerRow;
   }
 
   /// ================================================================
   ///                     TABLA COMPLETA
   /// ================================================================
   Widget _dataTable(List<PersonalEmpleado> empleados) {
-    return Container(
+    final screenWidth = MediaQuery.of(context).size.width;
+    final useScroll = screenWidth < 800;
+    
+    Widget tableContent = Container(
+      width: useScroll ? 800 : null,
       margin: const EdgeInsets.only(top: 8),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -417,25 +441,40 @@ final iconBg = {
         ],
       ),
       child: Column(
-        children: empleados.map((e) => _rowItem(e)).toList(),
+        children: empleados.map((e) => _rowItem(e, useScroll)).toList(),
       ),
     );
+    
+    if (useScroll) {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: tableContent,
+      );
+    }
+    return tableContent;
   }
 
   /// ================================================================
   ///                     FILA DE LA TABLA
   /// ================================================================
-  Widget _rowItem(PersonalEmpleado emp) {
+  Widget _rowItem(PersonalEmpleado emp, bool useFixedWidth) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
       decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(color: Color(0xffe6e6e6)))),
       child: Row(
         children: [
-          Expanded(flex: 3, child: Text(emp.nombre)),
-          Expanded(flex: 2, child: Text(emp.puesto)),
-          Expanded(flex: 2, child: Text(emp.turno)),
-          Expanded(flex: 2, child: _estadoBadge(emp.estado)),
+          if (useFixedWidth) ...[
+            SizedBox(width: 200, child: Text(emp.nombre)),
+            SizedBox(width: 150, child: Text(emp.puesto)),
+            SizedBox(width: 150, child: Text(emp.turno)),
+            SizedBox(width: 150, child: _estadoBadge(emp.estado)),
+          ] else ...[
+            Expanded(flex: 3, child: Text(emp.nombre)),
+            Expanded(flex: 2, child: Text(emp.puesto)),
+            Expanded(flex: 2, child: Text(emp.turno)),
+            Expanded(flex: 2, child: _estadoBadge(emp.estado)),
+          ],
           SizedBox(
             width: 100,
             child: Row(

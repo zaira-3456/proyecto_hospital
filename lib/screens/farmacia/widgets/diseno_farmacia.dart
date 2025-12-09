@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../dashboard.dart';
 import '../inventario.dart';
 import '../solicitudes.dart';
+import '../recetas_farmacia.dart';
 
 /// ========= PALETA DE COLORES =========
 const Color kBlack        = Color(0xFF000000);
@@ -62,13 +63,15 @@ class _PharmacyLayoutState extends State<PharmacyLayout> {
   Widget _getCurrentPage() {
     switch (_selectedIndex) {
       case 0:
-        return const DashboardScreen();
+        return DashboardScreen(onMenuSelected: _handleMenuSelected);
       case 1:
         return const InventoryScreen();
       case 2:
         return const RequestsScreen();
+      case 3:
+        return const RecetasFarmaciaScreen();
       default:
-        return const DashboardScreen();
+        return DashboardScreen(onMenuSelected: _handleMenuSelected);
     }
   }
 
@@ -182,6 +185,13 @@ class _SideMenu extends StatelessWidget {
                   text: 'Solicitudes',
                   selected: selectedIndex == 2,
                   onTap: () => onMenuSelected(2),
+                ),
+                const SizedBox(height: 18),
+                _SideItem(
+                  icon: Icons.medication,
+                  text: 'Recetas',
+                  selected: selectedIndex == 3,
+                  onTap: () => onMenuSelected(3),
                 ),
               ],
             ),
@@ -309,6 +319,13 @@ class _SideDrawer extends StatelessWidget {
                 text: 'Solicitudes',
                 selected: selectedIndex == 2,
                 onTap: () => handleSelect(2),
+              ),
+              const SizedBox(height: 16),
+              _SideItem(
+                icon: Icons.medication,
+                text: 'Recetas',
+                selected: selectedIndex == 3,
+                onTap: () => handleSelect(3),
               ),
               const Spacer(),
               Padding(

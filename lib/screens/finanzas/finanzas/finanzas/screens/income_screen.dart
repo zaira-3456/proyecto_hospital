@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../widgets/finance_colors.dart';
 import '../models/financial_models.dart';
 import '../services/database_service.dart';
+import '../services/report_generator_service.dart';
 import '../widgets/income_table.dart';
 import '../widgets/income_bar_chart.dart';
 import '../widgets/metric_card.dart';
@@ -107,12 +109,14 @@ class _IncomeScreenState extends State<IncomeScreen> {
         }
       });
       
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Ingreso agregado exitosamente'),
-          backgroundColor: Colors.green,
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Ingreso agregado exitosamente'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
     }
   }
 
@@ -122,26 +126,111 @@ class _IncomeScreenState extends State<IncomeScreen> {
       builder: (context) => const ExportDialog(),
     );
 
-    if (selectedOption != null) {
-      String message = '';
-      switch (selectedOption) {
+    if (selectedOption != null && mounted) {
+      await _handleExportReport(selectedOption);
+    }
+  }
+
+  Future<void> _handleExportReport(ExportOption option) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final reportService = ReportGeneratorService();
+      final now = DateTime.now();
+      final formatter = DateFormat('dd/MM/yyyy');
+
+      // Calculate totals
+      final totalIncome = _incomeRecords.fold<double>(
+        0.0,
+        (sum, record) => sum + record.amount,
+      );
+
+      // Group by area
+      final Map<String, double> incomeByArea = {};
+      for (var record in _incomeRecords) {
+        incomeByArea[record.area] = (incomeByArea[record.area] ?? 0) + record.amount;
+      }
+
+      final incomeByAreaList = incomeByArea.entries
+          .map((e) => {'areaName': e.key, 'amount': e.value})
+          .toList();
+
+      // Prepare filter info
+      final filterInfo = {
+        'period': 'Todos los registros',
+        'area': 'Todas las áreas',
+        'paymentMethod': 'Todos los métodos',
+        'amountRange': 'Sin filtro',
+      };
+
+      bool success = false;
+
+      switch (option) {
         case ExportOption.excel:
-          message = 'Exportando a Excel...';
+          success = await reportService.generateIncomeExcelReport(
+            totalIncome: totalIncome,
+            totalExpenses: 0.0,
+            incomeByArea: incomeByAreaList,
+            expensesByArea: [],
+            filterInfo: filterInfo,
+            generatedDate: formatter.format(now),
+          );
           break;
+
         case ExportOption.pdf:
-          message = 'Generando PDF...';
+          success = await reportService.generateIncomePdfReport(
+            totalIncome: totalIncome,
+            totalExpenses: 0.0,
+            incomeByArea: incomeByAreaList,
+            expensesByArea: [],
+            filterInfo: filterInfo,
+            generatedDate: formatter.format(now),
+          );
           break;
+
         case ExportOption.print:
-          message = 'Enviando a imprimir...';
+          success = await reportService.printIncomeReport(
+            totalIncome: totalIncome,
+            totalExpenses: 0.0,
+            incomeByArea: incomeByAreaList,
+            expensesByArea: [],
+            filterInfo: filterInfo,
+            generatedDate: formatter.format(now),
+          );
           break;
       }
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: kFPrimaryBlue,
-        ),
-      );
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              success
+                  ? 'Reporte generado exitosamente'
+                  : 'Error al generar el reporte',
+            ),
+            backgroundColor: success ? Colors.green : Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
@@ -170,6 +259,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                         color: Colors.black87,
                       ),
                     ),
+                    const FinanceLogoCircle(),
                     IconButton(
                       icon: const Icon(Icons.filter_list),
                       onPressed: () {
@@ -293,5 +383,3 @@ class _IncomeScreenState extends State<IncomeScreen> {
           );
   }
 }
-
-

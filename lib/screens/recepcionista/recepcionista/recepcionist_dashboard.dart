@@ -8,6 +8,7 @@ import 'registrar_paciente.dart';
 import 'agendar_cita.dart';
 import 'gestion_citas.dart';
 import '../../../widgets/welcome_message_widget.dart';
+import 'widgets/reception_colors.dart';
 
 class ReceptionistDashboard extends StatefulWidget {
   const ReceptionistDashboard({super.key});
@@ -112,6 +113,7 @@ class _ReceptionistDashboardState extends State<ReceptionistDashboard> {
                                         ),
                                       ],
                                     ),
+                                    const ReceptionLogoCircle(),
                                   ],
                                 ),
                                 const SizedBox(height: 24),

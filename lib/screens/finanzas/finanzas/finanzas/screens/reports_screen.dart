@@ -3,6 +3,7 @@ import '../widgets/finance_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../widgets/export_dialog.dart';
 import '../models/financial_models.dart';
+import '../services/report_generator_service.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({super.key});
@@ -16,6 +17,7 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
   String _selectedArea = 'Todas';
   String _selectedPaymentMethod = 'Todos';
   String _selectedAmount = 'Todos';
+  bool _isGeneratingReport = false;
 
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -93,6 +95,120 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
     return _totalIncome - _totalExpenses;
   }
 
+  Future<void> _handleGenerateReport() async {
+    final result = await showDialog<ExportOption>(
+      context: context,
+      builder: (context) => const ExportDialog(),
+    );
+    
+    if (result != null && mounted) {
+      setState(() {
+        _isGeneratingReport = true;
+      });
+
+      try {
+        switch (result) {
+          case ExportOption.pdf:
+            await ReportGeneratorService.generatePdfReport(
+              period: _selectedPeriod,
+              area: _selectedArea,
+              paymentMethod: _selectedPaymentMethod,
+              amountRange: _selectedAmount,
+              totalIncome: _totalIncome,
+              totalExpenses: _totalExpenses,
+              cashFlow: _cashFlow,
+              incomeByArea: _filteredIncomeByArea.entries
+                  .map((e) => {'areaName': e.key, 'amount': e.value})
+                  .toList(),
+              expensesByArea: _filteredExpensesByArea.entries
+                  .map((e) => {'areaName': e.key, 'amount': e.value})
+                  .toList(),
+            );
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('✅ Reporte PDF generado y descargado exitosamente'),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            }
+            break;
+
+          case ExportOption.excel:
+            await ReportGeneratorService.generateExcelReport(
+              period: _selectedPeriod,
+              area: _selectedArea,
+              paymentMethod: _selectedPaymentMethod,
+              amountRange: _selectedAmount,
+              totalIncome: _totalIncome,
+              totalExpenses: _totalExpenses,
+              cashFlow: _cashFlow,
+              incomeByArea: _filteredIncomeByArea.entries
+                  .map((e) => {'areaName': e.key, 'amount': e.value})
+                  .toList(),
+              expensesByArea: _filteredExpensesByArea.entries
+                  .map((e) => {'areaName': e.key, 'amount': e.value})
+                  .toList(),
+            );
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('✅ Reporte Excel generado y descargado exitosamente'),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            }
+            break;
+
+          case ExportOption.print:
+            await ReportGeneratorService.printReport(
+              period: _selectedPeriod,
+              area: _selectedArea,
+              paymentMethod: _selectedPaymentMethod,
+              amountRange: _selectedAmount,
+              totalIncome: _totalIncome,
+              totalExpenses: _totalExpenses,
+              cashFlow: _cashFlow,
+              incomeByArea: _filteredIncomeByArea.entries
+                  .map((e) => {'areaName': e.key, 'amount': e.value})
+                  .toList(),
+              expensesByArea: _filteredExpensesByArea.entries
+                  .map((e) => {'areaName': e.key, 'amount': e.value})
+                  .toList(),
+            );
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('✅ Reporte enviado a impresión'),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            }
+            break;
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('❌ Error al generar reporte: $e'),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 4),
+            ),
+          );
+        }
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isGeneratingReport = false;
+          });
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -134,12 +250,18 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Reportes',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Reportes',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const FinanceLogoCircle(),
+                ],
               ),
               const SizedBox(height: 16),
               _buildFilters(isSmallScreen: true),
@@ -154,9 +276,19 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
 
         return Row(
           children: [
+            const Text(
+              'Reportes',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(width: 24),
             Expanded(
               child: _buildFilters(isSmallScreen: false),
             ),
+            const SizedBox(width: 16),
+            const FinanceLogoCircle(),
             const SizedBox(width: 16),
             _buildGenerateButton(),
           ],
@@ -212,33 +344,29 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
 
   Widget _buildGenerateButton() {
     return ElevatedButton(
-      onPressed: () async {
-        final result = await showDialog<ExportOption>(
-          context: context,
-          builder: (context) => const ExportDialog(),
-        );
-        
-        if (result != null) {
-          // Handle export
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Exportando en ${result.name}...')),
-            );
-          }
-        }
-      },
+      onPressed: _isGeneratingReport ? null : _handleGenerateReport,
       style: ElevatedButton.styleFrom(
         backgroundColor: kFPrimaryBlue,
         foregroundColor: Colors.white,
+        disabledBackgroundColor: Colors.grey.shade400,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      child: const Text(
-        'Generar reporte',
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
+      child: _isGeneratingReport
+          ? const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            )
+          : const Text(
+              'Generar reporte',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
     );
   }
 
@@ -608,5 +736,3 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
     );
   }
 }
-
-

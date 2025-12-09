@@ -3,10 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'widgets/diseno_laboratorio.dart';
 import 'solicitudes_laboratorio.dart';
 import 'resultados_laboratorio.dart';
+import '../login/services/database_service.dart';
+
 
 
 class LaboratoryDashboardScreen extends StatefulWidget {
-  const LaboratoryDashboardScreen({super.key});
+  final Function(int)? onNavigate;
+  
+  const LaboratoryDashboardScreen({super.key, this.onNavigate});
 
   @override
   State<LaboratoryDashboardScreen> createState() => _LaboratoryDashboardScreenState();
@@ -27,18 +31,24 @@ class _LaboratoryDashboardScreenState extends State<LaboratoryDashboardScreen> {
 
   Future<void> _loadStats() async {
     try {
-      // TODO: Load actual stats from Firebase when ready
-      // For now, just stop loading to show the UI
-      await Future.delayed(const Duration(milliseconds: 500));
+      setState(() => _isLoading = true);
+      
+      // Load actual stats from Firebase
+      final db = DatabaseService();
+      
+      // Get all requests
+      final allRequests = await db.getStudyRequests();
+      final pendingRequests = await db.getStudyRequests(estado: 'pendiente');
+      final inProgressRequests = await db.getStudyRequests(estado: 'en_proceso');
+      final completedRequests = await db.getStudyRequests(estado: 'completado');
       
       if (mounted) {
         setState(() {
+          _totalRequests = allRequests.length;
+          _pendingRequests = pendingRequests.length;
+          _inProgressRequests = inProgressRequests.length;
+          _completedRequests = completedRequests.length;
           _isLoading = false;
-          // Mock data for now
-          _totalRequests = 0;
-          _pendingRequests = 0;
-          _inProgressRequests = 0;
-          _completedRequests = 0;
         });
       }
     } catch (e) {
@@ -56,23 +66,33 @@ class _LaboratoryDashboardScreenState extends State<LaboratoryDashboardScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Panel de Control',
-            style: GoogleFonts.archivo(
-              fontSize: 26,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 1.5,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Gestión de solicitudes y resultados de estudios clínicos',
-            style: GoogleFonts.archivoNarrow(
-              fontSize: 15,
-              color: kLGreyText,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Panel de Control',
+                    style: GoogleFonts.archivo(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Gestión de solicitudes y resultados de estudios clínicos',
+                    style: GoogleFonts.archivoNarrow(
+                      fontSize: 15,
+                      color: kLGreyText,
+                    ),
+                  ),
+                ],
+              ),
+              const LaboratoryLogoCircle(),
+            ],
           ),
           const SizedBox(height: 32),
 
@@ -131,12 +151,16 @@ class _LaboratoryDashboardScreenState extends State<LaboratoryDashboardScreen> {
                 label: 'Ver Solicitudes',
                 color: kLPrimaryBlue,
                 onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const LaboratoryRequestsScreen(),
-                    ),
-                  );
+                  if (widget.onNavigate != null) {
+                    widget.onNavigate!(1); // Índice 1 = Solicitudes
+                  } else {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const LaboratoryRequestsScreen(),
+                      ),
+                    );
+                  }
                 },
               ),
               _QuickActionButton(
@@ -144,12 +168,16 @@ class _LaboratoryDashboardScreenState extends State<LaboratoryDashboardScreen> {
                 label: 'Cargar Resultados',
                 color: kLPrimaryBlue,
                 onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const LaboratoryResultsScreen(),
-                    ),
-                  );
+                  if (widget.onNavigate != null) {
+                    widget.onNavigate!(2); // Índice 2 = Resultados
+                  } else {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const LaboratoryResultsScreen(),
+                      ),
+                    );
+                  }
                 },
               ),
             ],

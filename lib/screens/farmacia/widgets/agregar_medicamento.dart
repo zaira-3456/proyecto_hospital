@@ -222,19 +222,61 @@ class _AddMedicineDialogState extends State<AddMedicineDialog> {
                       ),
                       const SizedBox(height: 8),
 
-                      DropdownButtonFormField<String>(
-                        value: _proveedor,
-                        decoration: _input('Proveedor'),
-                        items: const [
-                          DropdownMenuItem(
-                              value: 'Proveedor A',
-                              child: Text('Proveedor A')),
-                          DropdownMenuItem(
-                              value: 'Proveedor B',
-                              child: Text('Proveedor B')),
-                        ],
-                        onChanged: (v) =>
-                            setState(() => _proveedor = v),
+                      // Dropdown de proveedores desde Firestore
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('finanzas_proveedores')
+                            .orderBy('nombre')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text(
+                              'Error al cargar proveedores',
+                              style: GoogleFonts.archivoNarrow(
+                                  fontSize: 12, color: Colors.red),
+                            );
+                          }
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+
+                          final proveedores = snapshot.data?.docs ?? [];
+
+                          if (proveedores.isEmpty) {
+                            return Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.orange),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                'No hay proveedores registrados. Agrégalos en el módulo de Finanzas.',
+                                style: GoogleFonts.archivoNarrow(
+                                  fontSize: 12,
+                                  color: Colors.orange[800],
+                                ),
+                              ),
+                            );
+                          }
+
+                          return DropdownButtonFormField<String>(
+                            value: _proveedor,
+                            decoration: _input('Proveedor (opcional)'),
+                            items: proveedores.map((doc) {
+                              final data =
+                                  doc.data() as Map<String, dynamic>;
+                              final nombre = data['nombre'] ?? 'Sin nombre';
+                              return DropdownMenuItem(
+                                value: doc.id,
+                                child: Text(nombre),
+                              );
+                            }).toList(),
+                            onChanged: (v) => setState(() => _proveedor = v),
+                          );
+                        },
                       ),
                       const SizedBox(height: 16),
 

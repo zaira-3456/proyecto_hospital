@@ -158,7 +158,7 @@ class _InfraestructuraScreenState extends State<InfraestructuraScreen> {
                   const SizedBox(height: 55),
 
                   /// =============================================================
-                  ///    TABLA — IGUAL A FIGMA
+                  ///    TABLA — IGUAL A FIGMA (CON SCROLL HORIZONTAL EN MÓVIL)
                   /// =============================================================
                   Container(
                     width: double.infinity,
@@ -178,43 +178,86 @@ class _InfraestructuraScreenState extends State<InfraestructuraScreen> {
                         ),
                         const SizedBox(height: 20),
 
-                        /// TABLA COMPLETA
-                        Table(
-                          border: TableBorder.all(color: Colors.black.withOpacity(0.1)),
-                          columnWidths: const {
-                            0: FlexColumnWidth(3),
-                            1: FlexColumnWidth(2),
-                            2: FlexColumnWidth(2),
-                            3: FlexColumnWidth(2),
-                          },
-                          children: [
-                            /// ENCABEZADO
-                           TableRow(
-                            decoration: BoxDecoration(color: Colors.blue.shade100),
-                            children: [
-                              tablaHeader("Área"),
-                              tablaHeader("Total Camas"),
-                              tablaHeader("Disponibles"),
-                              tablaHeader("Estado"),
-                            ],
-                          ),
+                        /// TABLA COMPLETA CON SCROLL HORIZONTAL EN MÓVIL
+                        isMobile
+                            ? SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: ConstrainedBox(
+                                  constraints: const BoxConstraints(minWidth: 600),
+                                  child: Table(
+                                    border: TableBorder.all(color: Colors.black.withOpacity(0.1)),
+                                    columnWidths: const {
+                                      0: FixedColumnWidth(200),
+                                      1: FixedColumnWidth(150),
+                                      2: FixedColumnWidth(150),
+                                      3: FixedColumnWidth(150),
+                                    },
+                                    children: [
+                                      /// ENCABEZADO
+                                      TableRow(
+                                        decoration: BoxDecoration(color: Colors.blue.shade100),
+                                        children: [
+                                          tablaHeader("Área"),
+                                          tablaHeader("Total Camas"),
+                                          tablaHeader("Disponibles"),
+                                          tablaHeader("Estado"),
+                                        ],
+                                      ),
 
-                            /// FILAS DINÁMICAS
-                            ...datos.areas.map((a) {
-                              return TableRow(
-                                children: [
-                                  tablaCell(a.area),
-                                  tablaCell(a.total.toString()),
-                                  tablaCell(a.disponibles.toString()),
-                                  Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: estadoChip(a.estado),
+                                      /// FILAS DINÁMICAS
+                                      ...datos.areas.map((a) {
+                                        return TableRow(
+                                          children: [
+                                            tablaCell(a.area),
+                                            tablaCell(a.total.toString()),
+                                            tablaCell(a.disponibles.toString()),
+                                            Padding(
+                                              padding: const EdgeInsets.all(10),
+                                              child: estadoChip(a.estado),
+                                            ),
+                                          ],
+                                        );
+                                      }).toList()
+                                    ],
                                   ),
+                                ),
+                              )
+                            : Table(
+                                border: TableBorder.all(color: Colors.black.withOpacity(0.1)),
+                                columnWidths: const {
+                                  0: FlexColumnWidth(3),
+                                  1: FlexColumnWidth(2),
+                                  2: FlexColumnWidth(2),
+                                  3: FlexColumnWidth(2),
+                                },
+                                children: [
+                                  /// ENCABEZADO
+                                  TableRow(
+                                    decoration: BoxDecoration(color: Colors.blue.shade100),
+                                    children: [
+                                      tablaHeader("Área"),
+                                      tablaHeader("Total Camas"),
+                                      tablaHeader("Disponibles"),
+                                      tablaHeader("Estado"),
+                                    ],
+                                  ),
+
+                                  /// FILAS DINÁMICAS
+                                  ...datos.areas.map((a) {
+                                    return TableRow(
+                                      children: [
+                                        tablaCell(a.area),
+                                        tablaCell(a.total.toString()),
+                                        tablaCell(a.disponibles.toString()),
+                                        Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: estadoChip(a.estado),
+                                        ),
+                                      ],
+                                    );
+                                  }).toList()
                                 ],
-                              );
-                            }).toList()
-                          ],
-                        ),
+                              ),
                       ],
                     ),
                   ),

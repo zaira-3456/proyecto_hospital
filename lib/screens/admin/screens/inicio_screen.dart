@@ -10,6 +10,7 @@ import '../widgets/dashboard_principal/chart_finanzas.dart';
 // Database Service
 import '../../login/services/database_service.dart';
 import '../../../widgets/welcome_message_widget.dart';
+import '../widgets/admin_colors.dart';
 
 class InicioScreen extends StatefulWidget {
   const InicioScreen({super.key});
@@ -101,23 +102,32 @@ class _InicioScreenState extends State<InicioScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Panel Administrativo",
-          style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1,
-          ),
-        ),
-
-        const SizedBox(height: 6),
-
-        WelcomeMessageWidget(
-          prefix: 'Bienvenido,',
-          style: GoogleFonts.archivoNarrow(
-            fontSize: 20,
-            color: Colors.black54,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Panel Administrativo",
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                WelcomeMessageWidget(
+                  prefix: 'Bienvenido,',
+                  style: GoogleFonts.archivoNarrow(
+                    fontSize: 20,
+                    color: Colors.black54,
+                  ),
+                ),
+              ],
+            ),
+            const AdminLogoCircle(),
+          ],
         ),
 
         const SizedBox(height: 35),

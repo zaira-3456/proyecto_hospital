@@ -30,8 +30,41 @@ class _AgregarPersonalScreenState extends State<AgregarPersonalScreen> {
   String? selectedTurno;
   DateTime? _selectedDate;
 
-  final List<String> areas = ['Urgencias', 'Farmacia', 'Consulta Externa', 'Administración', 'Finanzas', 'Cardiología', 'Pediatría', 'Ginecología'];
-  final List<String> tipos = ['medico', 'enfermeria', 'administrativo', 'farmacia', 'recepcion', 'finance'];
+  // Áreas del hospital - completas
+  final List<String> areas = [
+    'Urgencias',
+    'Farmacia',
+    'Consulta Externa',
+    'Administración',
+    'Finanzas',
+    'Cardiología',
+    'Pediatría',
+    'Ginecología',
+    'Laboratorio',
+    'Recepción',
+    'Enfermería',
+    'Medicina General',
+    'Traumatología',
+    'Neurología',
+    'Dermatología',
+    'Oftalmología',
+    'Nutrición',
+    'Psicología',
+    'Radiología',
+    'Rehabilitación',
+  ];
+  
+  // Tipos de personal - correspondientes a módulos del sistema
+  final List<String> tipos = [
+    'medico',
+    'enfermeria',
+    'administrativo',
+    'farmacia',
+    'recepcion',
+    'finanzas',
+    'laboratorio',
+  ];
+  
   final List<String> turnos = ['Matutino', 'Vespertino', 'Nocturno'];
 
   // Archivos
@@ -314,44 +347,89 @@ class _AgregarPersonalScreenState extends State<AgregarPersonalScreen> {
 
                   const SizedBox(height: 40),
 
-                  // BOTONES FINALES
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // CANCELAR
-                      ElevatedButton(
-                        onPressed: _confirmCancelar,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                  // BOTONES FINALES - RESPONSIVOS
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final isMobile = constraints.maxWidth < 600;
+                      
+                      if (isMobile) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            ElevatedButton(
+                              onPressed: _confirmGuardar,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blueAccent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 40, vertical: 16),
+                              ),
+                              child: const Text(
+                                "Guardar",
+                                style: TextStyle(color: Colors.white, fontSize: 16),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            ElevatedButton(
+                              onPressed: _confirmCancelar,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.redAccent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 40, vertical: 16),
+                              ),
+                              child: const Text(
+                                "Cancelar registro",
+                                style: TextStyle(color: Colors.white, fontSize: 16),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                      
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // CANCELAR
+                          ElevatedButton(
+                            onPressed: _confirmCancelar,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.redAccent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 16),
+                            ),
+                            child: const Text(
+                              "Cancelar registro",
+                              style: TextStyle(color: Colors.white, fontSize: 16),
+                            ),
                           ),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 16),
-                        ),
-                        child: const Text(
-                          "Cancelar registro",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                      ),
 
-                      // GUARDAR
-                      ElevatedButton(
-                        onPressed: _confirmGuardar,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                          // GUARDAR
+                          ElevatedButton(
+                            onPressed: _confirmGuardar,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueAccent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 16),
+                            ),
+                            child: const Text(
+                              "Guardar",
+                              style: TextStyle(color: Colors.white, fontSize: 16),
+                            ),
                           ),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 16),
-                        ),
-                        child: const Text(
-                          "Guardar",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                      ),
-                    ],
+                        ],
+                      );
+                    },
                   )
                 ],
               ),

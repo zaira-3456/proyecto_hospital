@@ -22,15 +22,202 @@ InputDecoration kDoctorFieldDecoration(String label, {String? hint}) {
 
 /// ========== DIALOG: SOLICITAR NUEVO ESTUDIO ==========
 
-class RequestStudyDialog extends StatelessWidget {
+class RequestStudyDialog extends StatefulWidget {
   const RequestStudyDialog({super.key});
+
+  @override
+  State<RequestStudyDialog> createState() => _RequestStudyDialogState();
+}
+
+class _RequestStudyDialogState extends State<RequestStudyDialog> {
+  final _notesController = TextEditingController();
+  
+  String? _selectedPatientId;
+  String? _selectedPatientName;
+  String? _selectedStudyType;
+  String? _selectedPriority;
+  DateTime? _selectedDate;
+  
+  List<Map<String, dynamic>> _patients = [];
+  bool _isLoading = true;
+  bool _isSaving = false;
+
+  final List<String> _studyTypes = [
+    'Análisis de Sangre Completo',
+    'Radiografía de Tórax',
+    'Ultrasonido',
+    'Resonancia Magnética',
+    'Tomografía Computarizada',
+    'Electrocardiograma',
+    'Prueba de Esfuerzo',
+    'Examen de Orina',
+    'Cultivo',
+    'Biopsia',
+  ];
+
+  final Map<String, String> _priorities = {
+    'baja': 'Baja',
+    'normal': 'Normal',
+    'alta': 'Alta',
+    'urgente': 'Urgente',
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPatients();
+  }
+
+  @override
+  void dispose() {
+    _notesController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadPatients() async {
+    try {
+      final db = DatabaseService();
+      final patientsData = await db.getPatients();
+      
+      if (mounted) {
+        setState(() {
+          _patients = patientsData.map((p) {
+            return {
+              'id': p['id'] ?? '',
+              'nombreCompleto': p['nombreCompleto'] ?? 'Sin nombre',
+            };
+          }).toList();
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error al cargar pacientes: $e'),
+            backgroundColor: kMRed,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _selectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+      helpText: 'Seleccionar fecha programada',
+      cancelText: 'Cancelar',
+      confirmText: 'Aceptar',
+    );
+
+    if (picked != null) {
+      setState(() => _selectedDate = picked);
+    }
+  }
+
+  Future<void> _saveStudyRequest() async {
+    if (_selectedPatientId == null) {
+      _showError('Por favor selecciona un paciente');
+      return;
+    }
+
+    if (_selectedStudyType == null) {
+      _showError('Por favor selecciona el tipo de estudio');
+      return;
+    }
+
+    if (_selectedPriority == null) {
+      _showError('Por favor selecciona la prioridad');
+      return;
+    }
+
+    setState(() => _isSaving = true);
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final currentUsername = prefs.getString('current_username');
+      
+      if (currentUsername == null) {
+        throw Exception('No hay usuario autenticado');
+      }
+
+      final medicoDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .where('username', isEqualTo: currentUsername)
+          .limit(1)
+          .get();
+
+      String medicoNombre = currentUsername;
+      if (medicoDoc.docs.isNotEmpty) {
+        medicoNombre = medicoDoc.docs.first.data()['name'] ?? currentUsername;
+      }
+
+      await FirebaseFirestore.instance.collection('study_requests').add({
+        'pacienteId': _selectedPatientId,
+        'pacienteNombre': _selectedPatientName,
+        'medicoId': currentUsername,
+        'medicoNombre': medicoNombre,
+        'tipoEstudio': _selectedStudyType,
+        'prioridad': _selectedPriority,
+        'estado': 'pendiente',
+        'notas': _notesController.text.trim(),
+        'fechaSolicitud': FieldValue.serverTimestamp(),
+        'fechaProgramada': _selectedDate != null 
+            ? Timestamp.fromDate(_selectedDate!) 
+            : null,
+        'resultados': null,
+        'observaciones': null,
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Estudio solicitado exitosamente',
+              style: GoogleFonts.archivoNarrow(),
+            ),
+            backgroundColor: kMGreenBright,
+          ),
+        );
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Error al guardar solicitud: $e',
+              style: GoogleFonts.archivoNarrow(),
+            ),
+            backgroundColor: kMRed,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isSaving = false);
+      }
+    }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message, style: GoogleFonts.archivoNarrow()),
+        backgroundColor: kMOrange,
+      ),
+    );
+  }
 
   InputDecoration _rxDecoration({
     String? label,
     String? hint,
     bool filledLight = false,
   }) {
-    // MISMO ESTILO QUE NewPrescriptionScreen
     return InputDecoration(
       labelText: label,
       hintText: hint,
@@ -49,6 +236,25 @@ class RequestStudyDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Dialog(
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 16),
+              Text(
+                'Cargando pacientes...',
+                style: GoogleFonts.archivoNarrow(),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Dialog(
       backgroundColor: Colors.transparent,
       insetPadding: const EdgeInsets.all(24),
@@ -56,186 +262,232 @@ class RequestStudyDialog extends StatelessWidget {
         builder: (context, constraints) {
           final double maxWidth = constraints.maxWidth < 420
               ? constraints.maxWidth
-              : 360;
+              : 400;
 
           return Center(
             child: ConstrainedBox(
               constraints: BoxConstraints(maxWidth: maxWidth),
               child: Container(
-                // MISMO FONDO AZUL QUE NUEVA RECETA
                 decoration: BoxDecoration(
                   color: kMSidebarBlue.withValues(alpha: 1.0),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 padding: const EdgeInsets.fromLTRB(18, 18, 18, 16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Título
-                    Text(
-                      'Solicitar Nuevo Estudio',
-                      style: GoogleFonts.archivo(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: kMBlack,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      'Completa la información del estudio clínico',
-                      style: GoogleFonts.archivoNarrow(
-                        fontSize: 12,
-                        color: kMGreyText,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    // PACIENTE
-                    Text(
-                      'Paciente',
-                      style: GoogleFonts.archivoNarrow(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    DropdownButtonFormField<String>(
-                      decoration: _rxDecoration(
-                        hint: 'Seleccionar paciente',
-                        filledLight: true,
-                      ),
-                      items: const [
-                        DropdownMenuItem(
-                          value: '1',
-                          child: Text('María Gonzáles López'),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Solicitar Nuevo Estudio',
+                        style: GoogleFonts.archivo(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: kMBlack,
                         ),
-                        DropdownMenuItem(
-                          value: '2',
-                          child: Text('Juan Carlos Ruiz'),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Completa la información del estudio clínico',
+                        style: GoogleFonts.archivoNarrow(
+                          fontSize: 12,
+                          color: kMGreyText,
                         ),
-                      ],
-                      onChanged: (_) {},
-                    ),
-                    const SizedBox(height: 14),
-
-                    // TIPO DE ESTUDIO
-                    Text(
-                      'Tipo de Estudio',
-                      style: GoogleFonts.archivoNarrow(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    DropdownButtonFormField<String>(
-                      decoration: _rxDecoration(
-                        hint: 'Seleccionar tipo de estudio',
-                        filledLight: true,
+                      const SizedBox(height: 16),
+                      Text(
+                        'Paciente *',
+                        style: GoogleFonts.archivoNarrow(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      items: const [],
-                      onChanged: (_) {},
-                    ),
-                    const SizedBox(height: 14),
-
-                    // PRIORIDAD
-                    Text(
-                      'Prioridad',
-                      style: GoogleFonts.archivoNarrow(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    DropdownButtonFormField<String>(
-                      decoration: _rxDecoration(
-                        hint: 'Seleccionar Prioridad',
-                        filledLight: true,
-                      ),
-                      items: const [],
-                      onChanged: (_) {},
-                    ),
-                    const SizedBox(height: 14),
-
-                    // FECHA PROGRAMADA
-                    Text(
-                      'Fecha Programada',
-                      style: GoogleFonts.archivoNarrow(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    TextField(
-                      decoration: _rxDecoration(
-                        hint: 'dd / mm / aaaa',
-                        filledLight: true,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-
-                    // NOTAS ADICIONALES
-                    Text(
-                      'Notas Adicionales',
-                      style: GoogleFonts.archivoNarrow(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    TextField(
-                      maxLines: 3,
-                      decoration: _rxDecoration(
-                        hint: 'Notas adicionales...',
-                        filledLight: true,
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-
-                    // BOTONES (MISMOS COLORES QUE NUEVA RECETA)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: kMBlue12,
-                            foregroundColor: kMBlack,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 18,
-                              vertical: 8,
+                      const SizedBox(height: 4),
+                      DropdownButtonFormField<String>(
+                        decoration: _rxDecoration(
+                          hint: 'Seleccionar paciente',
+                          filledLight: true,
+                        ),
+                        initialValue: _selectedPatientId,
+                        items: _patients.map((patient) {
+                          return DropdownMenuItem<String>(
+                            value: patient['id'],
+                            child: Text(
+                              patient['nombreCompleto'],
+                              style: GoogleFonts.archivoNarrow(fontSize: 14),
                             ),
-                            textStyle: GoogleFonts.archivoNarrow(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.5,
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedPatientId = value;
+                            _selectedPatientName = _patients.firstWhere(
+                              (p) => p['id'] == value,
+                            )['nombreCompleto'];
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 14),
+                      Text(
+                        'Tipo de Estudio *',
+                        style: GoogleFonts.archivoNarrow(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      DropdownButtonFormField<String>(
+                        decoration: _rxDecoration(
+                          hint: 'Seleccionar tipo de estudio',
+                          filledLight: true,
+                        ),
+                        initialValue: _selectedStudyType,
+                        items: _studyTypes.map((type) {
+                          return DropdownMenuItem<String>(
+                            value: type,
+                            child: Text(
+                              type,
+                              style: GoogleFonts.archivoNarrow(fontSize: 14),
                             ),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() => _selectedStudyType = value);
+                        },
+                      ),
+                      const SizedBox(height: 14),
+                      Text(
+                        'Prioridad *',
+                        style: GoogleFonts.archivoNarrow(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      DropdownButtonFormField<String>(
+                        decoration: _rxDecoration(
+                          hint: 'Seleccionar prioridad',
+                          filledLight: true,
+                        ),
+                        initialValue: _selectedPriority,
+                        items: _priorities.entries.map((entry) {
+                          return DropdownMenuItem<String>(
+                            value: entry.key,
+                            child: Text(
+                              entry.value,
+                              style: GoogleFonts.archivoNarrow(fontSize: 14),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() => _selectedPriority = value);
+                        },
+                      ),
+                      const SizedBox(height: 14),
+                      Text(
+                        'Fecha Programada',
+                        style: GoogleFonts.archivoNarrow(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      InkWell(
+                        onTap: _selectDate,
+                        child: InputDecorator(
+                          decoration: _rxDecoration(
+                            hint: 'dd / mm / aaaa',
+                            filledLight: true,
                           ),
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('Cancelar'),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: kMPrimaryBlue,
-                            foregroundColor: kMWhite,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 18,
-                              vertical: 8,
-                            ),
-                            textStyle: GoogleFonts.archivoNarrow(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.5,
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                _selectedDate != null
+                                    ? '${_selectedDate!.day.toString().padLeft(2, '0')} / ${_selectedDate!.month.toString().padLeft(2, '0')} / ${_selectedDate!.year}'
+                                    : 'Seleccionar fecha (opcional)',
+                                style: GoogleFonts.archivoNarrow(
+                                  fontSize: 14,
+                                  color: _selectedDate != null 
+                                      ? kMBlack 
+                                      : kMGreyText,
+                                ),
+                              ),
+                              const Icon(Icons.calendar_today, size: 18),
+                            ],
                           ),
-                          onPressed: () {
-                            // TODO: guardar solicitud
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Solicitar Estudio'),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      const SizedBox(height: 14),
+                      Text(
+                        'Notas Adicionales',
+                        style: GoogleFonts.archivoNarrow(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      TextField(
+                        controller: _notesController,
+                        maxLines: 3,
+                        decoration: _rxDecoration(
+                          hint: 'Instrucciones especiales, observaciones...',
+                          filledLight: true,
+                        ),
+                      ),
+                      const SizedBox(height: 18),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: kMBlue12,
+                              foregroundColor: kMBlack,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                                vertical: 8,
+                              ),
+                              textStyle: GoogleFonts.archivoNarrow(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.5,
+                              ),
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancelar'),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: kMPrimaryBlue,
+                              foregroundColor: kMWhite,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                                vertical: 8,
+                              ),
+                              textStyle: GoogleFonts.archivoNarrow(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.5,
+                              ),
+                            ),
+                            onPressed: _isSaving ? null : _saveStudyRequest,
+                            child: _isSaving
+                                ? const SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        kMWhite,
+                                      ),
+                                    ),
+                                  )
+                                : const Text('Solicitar Estudio'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -245,6 +497,7 @@ class RequestStudyDialog extends StatelessWidget {
     );
   }
 }
+
 
 /// ========== DIALOG: PROGRAMAR SEGUIMIENTO ==========
 
@@ -551,9 +804,9 @@ class _ScheduleFollowUpDialogState extends State<ScheduleFollowUpDialog> {
 /// ========== PANTALLA: NUEVA RECETA ELECTRÓNICA ==========
 
 class NewPrescriptionScreen extends StatefulWidget {
-  final String? prescriptionId;  // Para modo edición
-  final Map<String, dynamic>? existingData;  // Datos existentes del borrador
-  
+  final String? prescriptionId; // Para modo edición
+  final Map<String, dynamic>? existingData; // Datos existentes del borrador
+
   const NewPrescriptionScreen({
     super.key,
     this.prescriptionId,
@@ -581,7 +834,7 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
   List<Map<String, dynamic>> _patients = [];
   bool _isLoading = true;
   bool _isSaving = false;
-  
+
   bool get _isEditMode => widget.prescriptionId != null;
 
   @override
@@ -590,17 +843,17 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
     _loadPatients();
     _loadExistingData();
   }
-  
+
   void _loadExistingData() {
     if (widget.existingData != null) {
       final data = widget.existingData!;
-      
+
       // Cargar datos existentes
       _selectedPatientId = data['pacienteId'];
       _selectedPatientName = data['pacienteNombre'];
       _diagnosisController.text = data['diagnostico'] ?? '';
       _instructionsController.text = data['instrucciones'] ?? '';
-      
+
       // Cargar medicamentos
       final medicamentos = data['medicamentos'] as List<dynamic>? ?? [];
       if (medicamentos.isNotEmpty) {
@@ -610,7 +863,7 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
         _med1FreqController.text = med1['frecuencia'] ?? '';
         _med1DurationController.text = med1['duracion'] ?? '';
       }
-      
+
       if (medicamentos.length > 1) {
         final med2 = medicamentos[1] as Map<String, dynamic>;
         _med2NameController.text = med2['nombre'] ?? '';
@@ -640,7 +893,7 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
     try {
       final db = DatabaseService();
       final patientsData = await db.getPatients();
-      
+
       if (mounted) {
         setState(() {
           _patients = patientsData.map((p) {
@@ -703,14 +956,14 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
       // Get current username from SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       final currentUsername = prefs.getString('current_username');
-      
+
       if (currentUsername == null) {
         throw Exception('No hay usuario autenticado');
       }
-      
+
       // Prepare medications list
       final medications = <Map<String, String>>[];
-      
+
       // Add medication 1
       if (_med1NameController.text.trim().isNotEmpty) {
         medications.add({
@@ -720,7 +973,7 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
           'duracion': _med1DurationController.text.trim(),
         });
       }
-      
+
       // Add medication 2 if provided
       if (_med2NameController.text.trim().isNotEmpty) {
         medications.add({
@@ -738,16 +991,16 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
             .collection('recetas')
             .doc(widget.prescriptionId)
             .update({
-          'pacienteId': _selectedPatientId,
-          'pacienteNombre': _selectedPatientName,
-          'medicoId': currentUsername,
-          'medicoNombre': currentUsername,
-          'diagnostico': _diagnosisController.text.trim(),
-          'medicamentos': medications,
-          'instrucciones': _instructionsController.text.trim(),
-          'fecha': FieldValue.serverTimestamp(),
-          'estado': 'borrador',  // Mantener como borrador al editar
-        });
+              'pacienteId': _selectedPatientId,
+              'pacienteNombre': _selectedPatientName,
+              'medicoId': currentUsername,
+              'medicoNombre': currentUsername,
+              'diagnostico': _diagnosisController.text.trim(),
+              'medicamentos': medications,
+              'instrucciones': _instructionsController.text.trim(),
+              'fecha': FieldValue.serverTimestamp(),
+              'estado': 'borrador', // Mantener como borrador al editar
+            });
       } else {
         // Modo nuevo: crear documento nuevo
         await FirebaseFirestore.instance.collection('recetas').add({
@@ -768,8 +1021,8 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              _isEditMode 
-                  ? 'Borrador actualizado exitosamente' 
+              _isEditMode
+                  ? 'Borrador actualizado exitosamente'
                   : 'Receta guardada exitosamente',
             ),
             backgroundColor: kMGreenBright,
@@ -905,8 +1158,9 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
                         onChanged: (value) {
                           setState(() {
                             _selectedPatientId = value;
-                            _selectedPatientName = _patients
-                                .firstWhere((p) => p['id'] == value)['nombreCompleto'];
+                            _selectedPatientName = _patients.firstWhere(
+                              (p) => p['id'] == value,
+                            )['nombreCompleto'];
                           });
                         },
                       ),
@@ -1102,7 +1356,9 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      onPressed: _isSaving ? null : () => Navigator.pop(context),
+                      onPressed: _isSaving
+                          ? null
+                          : () => Navigator.pop(context),
                       child: const Text('Cancelar'),
                     ),
                     const SizedBox(width: 12),
@@ -1158,13 +1414,15 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      icon: _isSaving 
+                      icon: _isSaving
                           ? const SizedBox(
                               width: 16,
                               height: 16,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(kMWhite),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  kMWhite,
+                                ),
                               ),
                             )
                           : const Icon(Icons.send, size: 18),
@@ -1199,14 +1457,14 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
       // Get current username from SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       final currentUsername = prefs.getString('current_username');
-      
+
       if (currentUsername == null) {
         throw Exception('No hay usuario autenticado');
       }
-      
+
       // Prepare medications list
       final medications = <Map<String, String>>[];
-      
+
       if (_med1NameController.text.trim().isNotEmpty) {
         medications.add({
           'nombre': _med1NameController.text.trim(),
@@ -1215,7 +1473,7 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
           'duracion': _med1DurationController.text.trim(),
         });
       }
-      
+
       if (_med2NameController.text.trim().isNotEmpty) {
         medications.add({
           'nombre': _med2NameController.text.trim(),
@@ -1229,8 +1487,8 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
       await FirebaseFirestore.instance.collection('recetas').add({
         'pacienteId': _selectedPatientId,
         'pacienteNombre': _selectedPatientName,
-        'medicoId': currentUsername,  // Use username instead of Firebase UID
-        'medicoNombre': currentUsername,  // Use username as name for now
+        'medicoId': currentUsername, // Use username instead of Firebase UID
+        'medicoNombre': currentUsername, // Use username as name for now
         'diagnostico': _diagnosisController.text.trim(),
         'medicamentos': medications,
         'instrucciones': _instructionsController.text.trim(),
@@ -1263,8 +1521,8 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
 
   Future<void> _downloadPrescription() async {
     // Validate required fields
-    if (_selectedPatientId == null || 
-        _diagnosisController.text.trim().isEmpty || 
+    if (_selectedPatientId == null ||
+        _diagnosisController.text.trim().isEmpty ||
         _med1NameController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -1287,4 +1545,3 @@ class _NewPrescriptionScreenState extends State<NewPrescriptionScreen> {
     );
   }
 }
-

@@ -4,12 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'widgets/diseno_farmacia.dart';
 import 'widgets/agregar_medicamento.dart';
-import 'inventario.dart';
-import 'solicitudes.dart';
 import '../../widgets/welcome_message_widget.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+  final Function(int)? onMenuSelected;
+  
+  const DashboardScreen({super.key, this.onMenuSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -56,22 +56,22 @@ class DashboardScreen extends StatelessWidget {
               // Tarjetas superiores
               if (narrow)
                 Column(
-                  children: const [
-                    _CardInventarioTotal(),
-                    SizedBox(height: 18),
-                    _CardStockBajo(),
-                    SizedBox(height: 18),
-                    _CardSolicitudes(),
+                  children: [
+                    const _CardInventarioTotal(),
+                    const SizedBox(height: 18),
+                    const _CardStockBajo(),
+                    const SizedBox(height: 18),
+                    _CardSolicitudes(onMenuSelected: onMenuSelected),
                   ],
                 )
               else
                 Row(
-                  children: const [
-                    Expanded(child: _CardInventarioTotal()),
-                    SizedBox(width: 18),
-                    Expanded(child: _CardStockBajo()),
-                    SizedBox(width: 18),
-                    Expanded(child: _CardSolicitudes()),
+                  children: [
+                    const Expanded(child: _CardInventarioTotal()),
+                    const SizedBox(width: 18),
+                    const Expanded(child: _CardStockBajo()),
+                    const SizedBox(width: 18),
+                    Expanded(child: _CardSolicitudes(onMenuSelected: onMenuSelected)),
                   ],
                 ),
 
@@ -85,12 +85,9 @@ class DashboardScreen extends StatelessWidget {
                       icon: Icons.list_alt,
                       text: 'Ver Inventario',
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const InventoryScreen(),
-                          ),
-                        );
+                        if (onMenuSelected != null) {
+                          onMenuSelected!(1);
+                        }
                       },
                     ),
                     const SizedBox(height: 16),
@@ -98,18 +95,20 @@ class DashboardScreen extends StatelessWidget {
                       icon: Icons.local_hospital,
                       text: 'Solicitudes de Enfermería',
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const RequestsScreen(),
-                          ),
-                        );
+                        if (onMenuSelected != null) {
+                          onMenuSelected!(2);
+                        }
                       },
                     ),
                     const SizedBox(height: 16),
-                    const _BigButton(
-                      icon: Icons.show_chart,
-                      text: 'Reportes y Estadísticas',
+                    _BigButton(
+                      icon: Icons.medication,
+                      text: 'Recetas Médicas',
+                      onTap: () {
+                        if (onMenuSelected != null) {
+                          onMenuSelected!(3);
+                        }
+                      },
                     ),
                   ],
                 )
@@ -121,12 +120,9 @@ class DashboardScreen extends StatelessWidget {
                         icon: Icons.list_alt,
                         text: 'Ver Inventario',
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const InventoryScreen(),
-                            ),
-                          );
+                          if (onMenuSelected != null) {
+                            onMenuSelected!(1);
+                          }
                         },
                       ),
                     ),
@@ -136,20 +132,22 @@ class DashboardScreen extends StatelessWidget {
                         icon: Icons.local_hospital,
                         text: 'Solicitudes de Enfermería',
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const RequestsScreen(),
-                            ),
-                          );
+                          if (onMenuSelected != null) {
+                            onMenuSelected!(2);
+                          }
                         },
                       ),
                     ),
                     const SizedBox(width: 20),
-                    const Expanded(
+                    Expanded(
                       child: _BigButton(
-                        icon: Icons.show_chart,
-                        text: 'Reportes y Estadísticas',
+                        icon: Icons.medication,
+                        text: 'Recetas Médicas',
+                        onTap: () {
+                          if (onMenuSelected != null) {
+                            onMenuSelected!(3);
+                          }
+                        },
                       ),
                     ),
                   ],
@@ -480,7 +478,9 @@ class _LowStockPill extends StatelessWidget {
 /// ----- Tarjeta Solicitudes Pendientes -----
 
 class _CardSolicitudes extends StatelessWidget {
-  const _CardSolicitudes();
+  final Function(int)? onMenuSelected;
+  
+  const _CardSolicitudes({this.onMenuSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -546,12 +546,9 @@ class _CardSolicitudes extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const RequestsScreen(),
-                      ),
-                    );
+                    if (onMenuSelected != null) {
+                      onMenuSelected!(2);
+                    }
                   },
                   child: const Text('Ver todos'),
                 ),

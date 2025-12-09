@@ -7,6 +7,7 @@ import '../widgets/expense_requests_table.dart';
 import '../widgets/area_chart_widget.dart';
 import '../widgets/add_expense_dialog.dart';
 import '../widgets/export_dialog.dart';
+import '../services/expense_export_service.dart';
 
 class ExpensesScreen extends StatefulWidget {
   final User user;
@@ -134,13 +135,82 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
       builder: (context) => const ExportDialog(),
     );
 
-    if (selectedOption != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Exportando gastos...'),
-          backgroundColor: kFPrimaryBlue,
-        ),
-      );
+    if (selectedOption != null && mounted) {
+      try {
+        // Calculate total expenses
+        final totalExpenses = _expenseRecords.fold<double>(
+          0.0,
+          (sum, record) => sum + record.amount,
+        );
+
+        // Show processing message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Generando ${selectedOption.name}...')),
+        );
+
+        // Convert expense records to maps
+        final expenseRecordsMap = _expenseRecords.map((e) => {
+          'id': e.id,
+          'date': e.date,
+          'amount': e.amount,
+          'area': e.area,
+          'type': e.type,
+          'status': e.status,
+        }).toList();
+
+        // Execute export
+        switch (selectedOption) {
+          case ExportOption.excel:
+            await ExpenseExportService.exportToExcel(
+              expenseRecords: expenseRecordsMap,
+              totalExpenses: totalExpenses,
+              expensesByArea: _expenseChartData.map((e) => {
+                'areaName': e.areaName,
+                'amount': e.amount,
+              }).toList(),
+            );
+            break;
+          case ExportOption.pdf:
+            await ExpenseExportService.exportToPdf(
+              expenseRecords: expenseRecordsMap,
+              totalExpenses: totalExpenses,
+              expensesByArea: _expenseChartData.map((e) => {
+                'areaName': e.areaName,
+                'amount': e.amount,
+              }).toList(),
+            );
+            break;
+          case ExportOption.print:
+            await ExpenseExportService.printExpenses(
+              expenseRecords: expenseRecordsMap,
+              totalExpenses: totalExpenses,
+              expensesByArea: _expenseChartData.map((e) => {
+                'areaName': e.areaName,
+                'amount': e.amount,
+              }).toList(),
+            );
+            break;
+        }
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Exportación completada'),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
     }
   }
 
@@ -158,15 +228,19 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Header Title
-                const Center(
-                  child: Text(
-                    'Registro de gastos',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Registro de gastos',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
                     ),
-                  ),
+                    const FinanceLogoCircle(),
+                  ],
                 ),
                 const SizedBox(height: 32),
 

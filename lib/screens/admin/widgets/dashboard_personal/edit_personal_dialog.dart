@@ -40,7 +40,15 @@ class _EditPersonalDialogState extends State<EditPersonalDialog> {
 
   final List<String> _turnos = ['Matutino', 'Vespertino', 'Nocturno'];
   final List<String> _estados = ['Activo', 'Inactivo', 'Licencia'];
-  final List<String> _tipos = ['medico', 'enfermeria', 'administrativo', 'farmacia', 'recepcion', 'finance'];
+  final List<String> _tipos = [
+    'medico',
+    'enfermeria',
+    'administrativo',
+    'farmacia',
+    'recepcion',
+    'finanzas',
+    'laboratorio',
+  ];
 
   @override
   void initState() {

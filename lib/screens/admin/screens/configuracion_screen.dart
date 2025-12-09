@@ -297,26 +297,50 @@ class _ConfiguracionScreenState extends State<ConfiguracionScreen> {
           const SizedBox(height: 25),
 
           /// ==========================
-          ///          TABLA
+          ///          TABLA (CON SCROLL EN MÓVIL)
           /// ==========================
-          Container(
-            decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
-            child: Table(
-              border: TableBorder.symmetric(
-                inside: BorderSide(color: Colors.black.withOpacity(0.1)),
-              ),
-              columnWidths: const {
-                0: FlexColumnWidth(3),
-                1: FlexColumnWidth(2),
-                2: FlexColumnWidth(2),
-                3: FlexColumnWidth(2),
-                4: FlexColumnWidth(2),
-              },
-              children: [
-                _headerRow(),
-                ...servicios.map((s) => _dataRow(s)),
-              ],
-            ),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final isMobile = constraints.maxWidth < 800;
+              
+              Widget tableWidget = Container(
+                decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
+                child: Table(
+                  border: TableBorder.symmetric(
+                    inside: BorderSide(color: Colors.black.withOpacity(0.1)),
+                  ),
+                  columnWidths: isMobile ? const {
+                    0: FixedColumnWidth(150),
+                    1: FixedColumnWidth(120),
+                    2: FixedColumnWidth(100),
+                    3: FixedColumnWidth(100),
+                    4: FixedColumnWidth(100),
+                  } : const {
+                    0: FlexColumnWidth(3),
+                    1: FlexColumnWidth(2),
+                    2: FlexColumnWidth(2),
+                    3: FlexColumnWidth(2),
+                    4: FlexColumnWidth(2),
+                  },
+                  children: [
+                    _headerRow(),
+                    ...servicios.map((s) => _dataRow(s)),
+                  ],
+                ),
+              );
+              
+              if (isMobile) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minWidth: 570),
+                    child: tableWidget,
+                  ),
+                );
+              }
+              
+              return tableWidget;
+            },
           )
         ],
       ),

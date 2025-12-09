@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'widgets/diseno_medico.dart';
 import 'widgets/dialogos_medico.dart';
+import '../../login/services/database_service.dart';
 
 class DoctorStudiesScreen extends StatefulWidget {
   const DoctorStudiesScreen({super.key});
@@ -16,6 +20,19 @@ class _DoctorStudiesScreenState extends State<DoctorStudiesScreen> {
   DoctorStudy? _selected;
   String _searchQuery = '';
   final _searchController = TextEditingController();
+  String? _currentMedicoId;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentDoctor();
+  }
+
+  Future<void> _loadCurrentDoctor() async {
+    final prefs = await SharedPreferences.getInstance();
+    _currentMedicoId = prefs.getString('current_username');
+    setState(() {});
+  }
 
   @override
   void dispose() {
@@ -32,24 +49,108 @@ class _DoctorStudiesScreenState extends State<DoctorStudiesScreen> {
     ).toList();
   }
 
+  List<DoctorStudy> _convertToStudies(List<Map<String, dynamic>> data) {
+    print('🔄 Convirtiendo ${data.length} estudios');
+    return data.map((doc) {
+      final estado = doc['estado'] as String?;
+      print('  - Estudio: ${doc['tipoEstudio']} | Estado: $estado');
+      
+      StudyEstado estudoEnum;
+      switch (estado) {
+        case 'en_proceso':
+          estudoEnum = StudyEstado.proceso;
+          break;
+        case 'completado':
+          estudoEnum = StudyEstado.completado;
+          break;
+        default:
+          estudoEnum = StudyEstado.pendiente;
+      }
+
+      return DoctorStudy(
+        nombre: doc['tipoEstudio'] ?? 'Estudio sin nombre',
+        paciente: doc['pacienteNombre'] ?? 'Paciente desconocido',
+        fecha: _formatTimestamp(doc['fechaSolicitud']),
+        estado: estudoEnum,
+        resultadoLabel: doc['resultados'] ?? 'Programado',
+      );
+    }).toList();
+  }
+
+  String _formatTimestamp(dynamic timestamp) {
+    if (timestamp == null) return 'Sin fecha';
+    try {
+      final DateTime date = (timestamp as Timestamp).toDate();
+      return '${date.day}/${date.month}/${date.year}';
+    } catch (e) {
+      return 'Sin fecha';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final all = _dummyStudies;
-    List<DoctorStudy> filtered;
-    switch (_tabIndex) {
-      case 1:
-        filtered = all.where((s) => s.estado == StudyEstado.proceso).toList();
-        break;
-      case 2:
-        filtered = all.where((s) => s.estado == StudyEstado.completado).toList();
-        break;
-      case 0:
-      default:
-        filtered = all.where((s) => s.estado == StudyEstado.pendiente).toList();
-        break;
+    if (_currentMedicoId == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
     }
-    // Apply search filter
-    filtered = _filterStudies(filtered);
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('study_requests')
+          .orderBy('fechaSolicitud', descending: true)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Scaffold(
+            body: Center(
+              child: Text('Error: ${snapshot.error}'),
+            ),
+          );
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        final docs = snapshot.data?.docs ?? [];
+        
+        // TEMPORAL: Mostrar todos los estudios sin filtrar por médico
+        // para verificar que hay datos
+        final allStudiesData = docs.map((doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          return {'id': doc.id, ...data};
+        }).toList();
+        
+        // Debug: imprimir cuántos estudios hay
+        print('📊 Total estudios en BD: ${docs.length}');
+        print('👨‍⚕️ Médico actual ID: $_currentMedicoId');
+
+        final all = _convertToStudies(allStudiesData);
+        List<DoctorStudy> filtered;
+        switch (_tabIndex) {
+          case 1:
+            filtered = all.where((s) => s.estado == StudyEstado.proceso).toList();
+            break;
+          case 2:
+            filtered = all.where((s) => s.estado == StudyEstado.completado).toList();
+            break;
+          case 0:
+          default:
+            filtered = all.where((s) => s.estado == StudyEstado.pendiente).toList();
+            break;
+        }
+        // Apply search filter
+        filtered = _filterStudies(filtered);
+
+        return _buildStudiesUI(context, filtered, all);
+      },
+    );
+  }
+
+  Widget _buildStudiesUI(BuildContext context, List<DoctorStudy> filtered, List<DoctorStudy> all) {
 
     return Scaffold(
       backgroundColor: kMWhite,
@@ -168,6 +269,7 @@ class _DoctorStudiesScreenState extends State<DoctorStudiesScreen> {
               _StudyTabs(
                 index: _tabIndex,
                 onChanged: (i) => setState(() => _tabIndex = i),
+                allStudies: all,
               ),
               const SizedBox(height: 14),
 
@@ -264,14 +366,21 @@ class _DoctorStudiesScreenState extends State<DoctorStudiesScreen> {
 class _StudyTabs extends StatelessWidget {
   final int index;
   final ValueChanged<int> onChanged;
+  final List<DoctorStudy> allStudies;
 
   const _StudyTabs({
     required this.index,
     required this.onChanged,
+    required this.allStudies,
   });
 
   @override
   Widget build(BuildContext context) {
+    // Calculate real counts
+    final pendientes = allStudies.where((s) => s.estado == StudyEstado.pendiente).length;
+    final enProceso = allStudies.where((s) => s.estado == StudyEstado.proceso).length;
+    final completados = allStudies.where((s) => s.estado == StudyEstado.completado).length;
+    
     Widget chip(String text, int i, Color color) {
       final selected = index == i;
       return Expanded(
@@ -299,11 +408,11 @@ class _StudyTabs extends StatelessWidget {
 
     return Row(
       children: [
-        chip('Pendientes (3)', 0, kMRedSoft),
+        chip('Pendientes ($pendientes)', 0, kMRedSoft),
         const SizedBox(width: 8),
-        chip('En Proceso (2)', 1, kMYellow),
+        chip('En Proceso ($enProceso)', 1, kMYellow),
         const SizedBox(width: 8),
-        chip('Completados (2)', 2, kMGreenBright),
+        chip('Completados ($completados)', 2, kMGreenBright),
       ],
     );
   }
@@ -566,48 +675,3 @@ class DoctorStudy {
     }
   }
 }
-
-const _dummyStudies = <DoctorStudy>[
-  DoctorStudy(
-    nombre: 'Análisis de Sangre Completo',
-    paciente: 'María Gonzáles López',
-    fecha: '15/11/2025',
-    estado: StudyEstado.pendiente,
-    resultadoLabel: 'Programado',
-  ),
-  DoctorStudy(
-    nombre: 'Radiografía de Tórax',
-    paciente: 'Juan Carlos Ruiz',
-    fecha: '20/11/2025',
-    estado: StudyEstado.pendiente,
-    resultadoLabel: 'Programado',
-  ),
-  DoctorStudy(
-    nombre: 'Resonancia Magnética',
-    paciente: 'Roberto Hernández',
-    fecha: '21/11/2025',
-    estado: StudyEstado.proceso,
-    resultadoLabel: 'En análisis',
-  ),
-  DoctorStudy(
-    nombre: 'Ultrasonido Prenatal',
-    paciente: 'Ana Sofía Martínez',
-    fecha: '19/11/2025',
-    estado: StudyEstado.proceso,
-    resultadoLabel: 'Programado',
-  ),
-  DoctorStudy(
-    nombre: 'Análisis de Sangre Completo',
-    paciente: 'María Gonzáles López',
-    fecha: '10/11/2025',
-    estado: StudyEstado.completado,
-    resultadoLabel: 'Normal',
-  ),
-  DoctorStudy(
-    nombre: 'Radiografía de Tórax',
-    paciente: 'Juan Carlos Ruiz',
-    fecha: '08/11/2025',
-    estado: StudyEstado.completado,
-    resultadoLabel: 'Normal',
-  ),
-];

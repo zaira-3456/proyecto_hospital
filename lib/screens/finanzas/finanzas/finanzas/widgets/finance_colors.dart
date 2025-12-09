@@ -35,3 +35,31 @@ const Color kFBgLight = Color(0xFFF7FAFF);
 const Color kFSidebarBlue = kFPrimaryBlue;
 const Color kFSidebarLightBlue = kFLightBlue;
 
+// Logo del hospital
+const String kFHospitalLogoPath = 'assets/images/logo_hospital.png';
+
+/// Logo circular reutilizable
+class FinanceLogoCircle extends StatelessWidget {
+  const FinanceLogoCircle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 52,
+      height: 52,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.grey.shade300),
+        color: kFWhite,
+      ),
+      padding: const EdgeInsets.all(4),
+      child: ClipOval(
+        child: Image.asset(
+          kFHospitalLogoPath,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+}
+

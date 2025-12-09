@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'finance_colors.dart';
 import '../models/provider_models.dart';
 
@@ -16,15 +17,47 @@ class PurchaseOrderDialog extends StatefulWidget {
 
 class _PurchaseOrderDialogState extends State<PurchaseOrderDialog> {
   final _formKey = GlobalKey<FormState>();
-  final _providerController = TextEditingController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final _detailsController = TextEditingController();
   final _budgetController = TextEditingController();
+  
+  String? _selectedProvider;
   String? _selectedStatus;
+  bool _isProviderDropdownOpen = false;
   bool _isStatusDropdownOpen = false;
+  List<String> _providers = [];
+  bool _isLoadingProviders = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProviders();
+  }
+
+  Future<void> _loadProviders() async {
+    try {
+      final snapshot = await _firestore.collection('finanzas_proveedores').get();
+      setState(() {
+        _providers = snapshot.docs
+            .map((doc) => (doc.data()['nombre'] ?? '') as String)
+            .where((name) => name.isNotEmpty)
+            .toList();
+        _isLoadingProviders = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoadingProviders = false;
+      });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al cargar proveedores: $e')),
+        );
+      }
+    }
+  }
 
   @override
   void dispose() {
-    _providerController.dispose();
     _detailsController.dispose();
     _budgetController.dispose();
     super.dispose();
@@ -67,9 +100,9 @@ class _PurchaseOrderDialogState extends State<PurchaseOrderDialog> {
                 ),
                 const SizedBox(height: 24),
 
-                // Fields
+                // Proveedor Dropdown
                 _buildLabel('Proveedor'),
-                _buildTextField(controller: _providerController, hint: 'Nombre del proveedor'),
+                _buildProviderDropdown(),
                 const SizedBox(height: 16),
 
                 _buildLabel('Detalles'),
@@ -81,72 +114,7 @@ class _PurchaseOrderDialogState extends State<PurchaseOrderDialog> {
                 const SizedBox(height: 16),
 
                 _buildLabel('Estado'),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isStatusDropdownOpen = !_isStatusDropdownOpen;
-                    });
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: _isStatusDropdownOpen 
-                          ? const BorderRadius.vertical(top: Radius.circular(8))
-                          : BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          _selectedStatus ?? 'Seleccionar Estado',
-                          style: TextStyle(
-                            color: _selectedStatus == null ? Colors.grey : Colors.black87,
-                            fontSize: 14,
-                          ),
-                        ),
-                        Icon(
-                          _isStatusDropdownOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                          color: Colors.grey,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                if (_isStatusDropdownOpen)
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        left: BorderSide(color: Colors.grey.shade300),
-                        right: BorderSide(color: Colors.grey.shade300),
-                        bottom: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(8)),
-                    ),
-                    child: Column(
-                      children: ['Solicitud', 'Aprovada', 'Recibida', 'Cancelada'].map((String value) {
-                        return InkWell(
-                          onTap: () {
-                            setState(() {
-                              _selectedStatus = value;
-                              _isStatusDropdownOpen = false;
-                            });
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            decoration: BoxDecoration(
-                              border: value != 'Cancelada' ? Border(bottom: BorderSide(color: Colors.grey.shade100)) : null,
-                            ),
-                            child: Text(
-                              value,
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                _buildStatusDropdown(),
                 const SizedBox(height: 32),
 
                 // Action Button
@@ -155,11 +123,18 @@ class _PurchaseOrderDialogState extends State<PurchaseOrderDialog> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        if (_selectedProvider == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Por favor selecciona un proveedor')),
+                          );
+                          return;
+                        }
+                        
                         final newOrder = PurchaseOrder(
-                          id: 'OC${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}', // Simple ID generation
-                          providerName: _providerController.text,
-                          type: _detailsController.text, // Using details as type/description
-                          area: 'General', // Default area
+                          id: 'OC${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}',
+                          providerName: _selectedProvider!,
+                          type: _detailsController.text,
+                          area: 'General',
                           budget: double.tryParse(_budgetController.text) ?? 0.0,
                           status: _selectedStatus ?? 'Solicitud',
                         );
@@ -168,7 +143,7 @@ class _PurchaseOrderDialogState extends State<PurchaseOrderDialog> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: kFPrimaryBlue, // Blue color
+                      backgroundColor: kFPrimaryBlue,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
@@ -191,6 +166,217 @@ class _PurchaseOrderDialogState extends State<PurchaseOrderDialog> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildProviderDropdown() {
+    if (_isLoadingProviders) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          children: const [
+            SizedBox(
+              width: 16,
+              height: 16,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
+            SizedBox(width: 12),
+            Text(
+              'Cargando proveedores...',
+              style: TextStyle(color: Colors.grey, fontSize: 14),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (_providers.isEmpty) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.orange.shade300),
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.orange.shade50,
+        ),
+        child: Row(
+          children: const [
+            Icon(Icons.warning_amber, color: Colors.orange, size: 20),
+            SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'No hay proveedores registrados',
+                style: TextStyle(color: Colors.orange, fontSize: 14),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _isProviderDropdownOpen = !_isProviderDropdownOpen;
+            });
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey.shade300),
+              borderRadius: _isProviderDropdownOpen 
+                  ? const BorderRadius.vertical(top: Radius.circular(8))
+                  : BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    _selectedProvider ?? 'Seleccionar Proveedor',
+                    style: TextStyle(
+                      color: _selectedProvider == null ? Colors.grey : Colors.black87,
+                      fontSize: 14,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Icon(
+                  _isProviderDropdownOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                  color: Colors.grey,
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (_isProviderDropdownOpen)
+          Container(
+            constraints: const BoxConstraints(maxHeight: 200),
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(color: Colors.grey.shade300),
+                right: BorderSide(color: Colors.grey.shade300),
+                bottom: BorderSide(color: Colors.grey.shade300),
+              ),
+              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(8)),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: _providers.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final provider = entry.value;
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        _selectedProvider = provider;
+                        _isProviderDropdownOpen = false;
+                      });
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: BoxDecoration(
+                        border: index != _providers.length - 1 
+                            ? Border(bottom: BorderSide(color: Colors.grey.shade100)) 
+                            : null,
+                        color: _selectedProvider == provider 
+                            ? kFLightBlue 
+                            : Colors.white,
+                      ),
+                      child: Text(
+                        provider,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: _selectedProvider == provider 
+                              ? FontWeight.w600 
+                              : FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildStatusDropdown() {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _isStatusDropdownOpen = !_isStatusDropdownOpen;
+            });
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey.shade300),
+              borderRadius: _isStatusDropdownOpen 
+                  ? const BorderRadius.vertical(top: Radius.circular(8))
+                  : BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  _selectedStatus ?? 'Seleccionar Estado',
+                  style: TextStyle(
+                    color: _selectedStatus == null ? Colors.grey : Colors.black87,
+                    fontSize: 14,
+                  ),
+                ),
+                Icon(
+                  _isStatusDropdownOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                  color: Colors.grey,
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (_isStatusDropdownOpen)
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(color: Colors.grey.shade300),
+                right: BorderSide(color: Colors.grey.shade300),
+                bottom: BorderSide(color: Colors.grey.shade300),
+              ),
+              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(8)),
+            ),
+            child: Column(
+              children: ['Solicitud', 'Aprobada', 'Recibida', 'Cancelada'].map((String value) {
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      _selectedStatus = value;
+                      _isStatusDropdownOpen = false;
+                    });
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      border: value != 'Cancelada' ? Border(bottom: BorderSide(color: Colors.grey.shade100)) : null,
+                    ),
+                    child: Text(
+                      value,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+      ],
     );
   }
 
@@ -238,5 +424,3 @@ class _PurchaseOrderDialogState extends State<PurchaseOrderDialog> {
     );
   }
 }
-
-

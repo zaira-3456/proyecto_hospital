@@ -201,13 +201,7 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
                               ),
                               ],
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.settings),
-                              onPressed: () {
-                                // TODO: Implementar configuración
-                              },
-                              color: const Color(0xFF00BCD4),
-                            ),
+                            const FinanceLogoCircle(),
                           ],
                         ),
                         const SizedBox(height: 24),
@@ -442,5 +436,6 @@ class _FinanceDashboardScreenState extends State<FinanceDashboardScreen> {
     );
   }
 }
+
 
 

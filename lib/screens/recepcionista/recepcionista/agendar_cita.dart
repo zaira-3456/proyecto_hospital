@@ -31,16 +31,55 @@ class _AgendarCitaPageState extends State<AgendarCitaPage> {
   DateTime? _fechaSeleccionada;
   DateTime _mesActual = DateTime.now();
 
-  // Datos cargados de servicio (simula Firebase)
+  // Datos cargados de servicio (Firestore)
   List<Area> _areas = [];
   List<Doctor> _doctoresDisponibles = [];
   Map<DateTime, DisponibilidadDia> _disponibilidadMes = {};
   List<String> _horasDisponibles = [];
 
+  // Variables para vinculación de pacientes existentes
+  String? _pacienteIdExistente;
+  List<Map<String, dynamic>> _pacientesSugeridos = [];
+  bool _buscandoPacientes = false;
+  bool _pacienteEncontrado = false;
+
   @override
   void initState() {
     super.initState();
     _cargarAreas();
+    // Agregar listener para buscar pacientes por teléfono
+    _telefonoController.addListener(_buscarPacientePorTelefono);
+  }
+
+  // Buscar paciente existente cuando se ingresa teléfono
+  Future<void> _buscarPacientePorTelefono() async {
+    final telefono = _telefonoController.text.trim();
+    if (telefono.length >= 10 && !_pacienteEncontrado) {
+      final paciente = await CitaDataService.getPacienteByTelefono(telefono);
+      if (paciente != null && mounted) {
+        _llenarDatosPaciente(paciente);
+      }
+    }
+  }
+
+  // Llenar campos con datos de paciente existente
+  void _llenarDatosPaciente(Map<String, dynamic> paciente) {
+    setState(() {
+      _pacienteIdExistente = paciente['id'];
+      _pacienteEncontrado = true;
+      _nombreController.text = paciente['nombreCompleto'] ?? paciente['nombre'] ?? '';
+      _correoController.text = paciente['correo'] ?? '';
+      _curpController.text = paciente['curp'] ?? '';
+      _nssController.text = paciente['nss'] ?? '';
+    });
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Paciente encontrado: ${_nombreController.text}'),
+        backgroundColor: Colors.green,
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 
   // Helper para formatear mes en español sin dependencias de locale
@@ -158,6 +197,7 @@ class _AgendarCitaPageState extends State<AgendarCitaPage> {
 
   @override
   void dispose() {
+    _telefonoController.removeListener(_buscarPacientePorTelefono);
     _nombreController.dispose();
     _nssController.dispose();
     _curpController.dispose();
@@ -175,9 +215,12 @@ class _AgendarCitaPageState extends State<AgendarCitaPage> {
       // Generar ID único para la cita
       final citaId = 'cita_${DateTime.now().millisecondsSinceEpoch}';
 
-      // Crear paciente basado en los datos del paso 1
+      // Usar ID de paciente existente si se encontró, o generar uno nuevo
+      final pacienteId = _pacienteIdExistente ?? 'pac_${DateTime.now().millisecondsSinceEpoch}';
+      
+      // Crear paciente con datos del formulario
       final paciente = Paciente(
-        id: 'pac_${DateTime.now().millisecondsSinceEpoch}',
+        id: pacienteId,
         nombre: _nombreController.text,
         telefono: _telefonoController.text,
         nss: _nssController.text,

@@ -1,17 +1,17 @@
 import '../models/cita_models.dart';
 import '../../../login/services/database_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// DATOS DE EJEMPLO - Calendario médico profesional con alta disponibilidad
-// Ahora integrado con Firestore para Áreas y Doctores
+/// Servicio de datos para citas - Integrado con Firestore
 class CitaDataService {
+  static final FirebaseFirestore _db = FirebaseFirestore.instance;
+
   // ============================================
-  // ÁREAS MÉDICAS
+  // ÁREAS MÉDICAS (desde Firestore)
   // ============================================
   static Future<List<Area>> getAreas() async {
     try {
       final db = DatabaseService();
-      // Usamos getHospitalAreas que ya existe en DatabaseService
-      // Retorna List<Map<String, dynamic>>
       final areasData = await db.getHospitalAreas();
       
       return areasData.map((data) {
@@ -27,12 +27,11 @@ class CitaDataService {
   }
 
   // ============================================
-  // DOCTORES CON ALTA DISPONIBILIDAD
+  // DOCTORES (desde Firestore)
   // ============================================
   static Future<List<Doctor>> getDoctores() async {
     try {
       final db = DatabaseService();
-      // Usamos getPersonnelList y filtramos por 'medico'
       final personal = await db.getPersonnelList();
       
       return personal
@@ -41,11 +40,8 @@ class CitaDataService {
             return Doctor(
               id: data['id'] ?? '',
               nombre: data['nombre'] ?? '',
-              areaId: data['area'] ?? '', // Asumiendo que 'area' en personal coincide con ID de area
-              disponibilidad: _generarDisponibilidadAnual(
-                esEspecialista: true, // Por defecto para demo
-                altaDemanda: false,
-              ),
+              areaId: data['area'] ?? '',
+              disponibilidad: {}, // Ahora se carga desde Firestore dinámicamente
             );
           }).toList();
     } catch (e) {
@@ -56,351 +52,275 @@ class CitaDataService {
 
   static Future<List<Doctor>> getDoctoresByArea(String areaId) async {
     final doctores = await getDoctores();
-    // Filtrar por nombre de área (ya que en personal guardamos el nombre del área, no el ID)
-    // O si guardamos el ID, comparar ID.
-    // En DatabaseService.addPersonnel guardamos 'area': area (que viene de un dropdown de nombres)
-    // Así que aquí comparamos con el nombre o ID.
-    // En AgendarCitaPage, areaId viene de getAreas().
-    // Si getAreas devuelve IDs que son nombres (ej 'Cardiología'), entonces funciona.
-    // Si devuelve IDs numéricos, necesitamos mapear.
-    // En DatabaseService.getHospitalAreas, el ID es el doc.id.
-    // En Firestore 'areas' collection, los docs suelen ser IDs auto-generados o nombres.
-    // Asumiremos que coinciden o haremos una comparación flexible.
+    
+    // Obtener el nombre del área para comparación flexible
+    final areas = await getAreas();
+    final area = areas.firstWhere(
+      (a) => a.id == areaId,
+      orElse: () => Area(id: areaId, nombre: areaId),
+    );
     
     return doctores.where((doc) => 
       doc.areaId.toLowerCase() == areaId.toLowerCase() || 
+      doc.areaId.toLowerCase() == area.nombre.toLowerCase() ||
       doc.areaId.toLowerCase().contains(areaId.toLowerCase())
     ).toList();
   }
 
-  // Obtener disponibilidad de un doctor para un mes específico
+  // ============================================
+  // DISPONIBILIDAD REAL DESDE FIRESTORE
+  // ============================================
+  
+  /// Obtener disponibilidad de un doctor para un mes específico
+  /// Consulta colección 'disponibilidad_medicos' en Firestore
   static Future<Map<DateTime, DisponibilidadDia>> getDisponibilidadMes(
     String doctorId,
     int year,
     int month,
   ) async {
-    // TODO: En Firebase, esto sería una query a /disponibilidad/{doctorId}/{year}/{month}
-
-    final doctores = await getDoctores();
-    final doctor = doctores.firstWhere((d) => d.id == doctorId);
-    final Map<DateTime, DisponibilidadDia> disponibilidad = {};
-
-    // Generar disponibilidad para TODOS los días que tienen horarios definidos
-    doctor.disponibilidad.forEach((fechaStr, horas) {
-      try {
-        final fecha = DateTime.parse(fechaStr);
-
-        // Solo incluir fechas del mes solicitado
-        if (fecha.year == year && fecha.month == month) {
-          final citasTotal = 8;
-          final citasDisponibles = horas.length;
-          final citasOcupadas = citasTotal - citasDisponibles;
-
-          disponibilidad[fecha] = DisponibilidadDia(
-            fecha: fecha,
-            citasDisponibles: citasDisponibles,
-            citasOcupadas: citasOcupadas,
-            citasTotal: citasTotal,
-          );
+    try {
+      // Intentar obtener disponibilidad desde Firestore
+      final snapshot = await _db
+          .collection('disponibilidad_medicos')
+          .doc(doctorId)
+          .collection('$year-${month.toString().padLeft(2, '0')}')
+          .get();
+      
+      if (snapshot.docs.isNotEmpty) {
+        // Usar datos de Firestore
+        final Map<DateTime, DisponibilidadDia> disponibilidad = {};
+        
+        for (var doc in snapshot.docs) {
+          final data = doc.data();
+          try {
+            final fecha = DateTime.parse(doc.id);
+            final horasDisponibles = List<String>.from(data['horas'] ?? []);
+            final citasOcupadas = (data['citasOcupadas'] ?? 0) as int;
+            final citasTotal = (data['citasTotal'] ?? 8) as int;
+            
+            disponibilidad[fecha] = DisponibilidadDia(
+              fecha: fecha,
+              citasDisponibles: horasDisponibles.length,
+              citasOcupadas: citasOcupadas,
+              citasTotal: citasTotal,
+            );
+          } catch (e) {
+            print('Error parsing date ${doc.id}: $e');
+          }
         }
-      } catch (e) {
-        print('Error parsing date $fechaStr: $e');
+        
+        if (disponibilidad.isNotEmpty) {
+          return disponibilidad;
+        }
       }
-    });
-
-    return disponibilidad;
-  }
-
-  // Obtener horas disponibles para un doctor en una fecha específica
-  static Future<List<String>> getHorasDisponibles(String doctorId, DateTime fecha) async {
-    // TODO: En Firebase: /disponibilidad/{doctorId}/{fecha}
-
-    final doctores = await getDoctores();
-    final doctor = doctores.firstWhere((d) => d.id == doctorId);
-    final fechaStr =
-        '${fecha.year}-${fecha.month.toString().padLeft(2, '0')}-${fecha.day.toString().padLeft(2, '0')}';
-
-    return doctor.disponibilidad[fechaStr] ?? [];
-  }
-
-  // ============================================
-  // FIREBASE INTEGRATION PLACEHOLDER
-  // ============================================
-  /*
-  static Future<List<Area>> getAreasFromFirebase() async {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('areas')
-        .get();
-    
-    return snapshot.docs
-        .map((doc) => Area.fromJson(doc.data()))
-        .toList();
-  }
-
-  static Future<List<Doctor>> getDoctoresByAreaFromFirebase(String areaId) async {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('doctores')
-        .where('areaId', isEqualTo: areaId)
-        .get();
-    
-    return snapshot.docs
-        .map((doc) => Doctor.fromJson(doc.data()))
-        .toList();
-  }
-
-  static Future<Map<DateTime, DisponibilidadDia>> getDisponibilidadMesFromFirebase(
-    String doctorId,
-    int year,
-    int month,
-  ) async {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('disponibilidad')
-        .doc(doctorId)
-        .collection('$year-$month')
-        .get();
-    
-    final Map<DateTime, DisponibilidadDia> disponibilidad = {};
-    
-    for (var doc in snapshot.docs) {
-      final data = DisponibilidadDia.fromJson(doc.data());
-      disponibilidad[data.fecha] = data;
+      
+      // Si no hay datos en Firestore, usar disponibilidad por defecto
+      return _generarDisponibilidadMes(year, month);
+    } catch (e) {
+      print('⚠️ Error fetching availability from Firestore: $e');
+      // Fallback a disponibilidad generada
+      return _generarDisponibilidadMes(year, month);
     }
-    
-    return disponibilidad;
   }
 
-  static Future<void> guardarCita(
-    String pacienteId,
-    String doctorId,
-    DateTime fecha,
-    String hora,
-  ) async {
-    await FirebaseFirestore.instance.collection('citas').add({
-      'pacienteId': pacienteId,
-      'doctorId': doctorId,
-      'fecha': fecha.toIso8601String(),
-      'hora': hora,
-      'estado': 'pendiente',
-      'createdAt': FieldValue.serverTimestamp(),
-    });
-  }
-  */
-  // Generador de disponibilidad para 2026 con parámetros
-  static Map<String, List<String>> _generarDisponibilidadAnual({
-    required bool esEspecialista,
-    required bool altaDemanda,
-  }) {
-    final Map<String, List<String>> disponibilidad = {};
-    final year = 2026;
-
-    // Días festivos oficiales y comunes en México (MM-DD)
-    final holidays = {
-      '01-01', // Año Nuevo
-      '02-05', // Día de la Constitución
-      '03-21', // Natalicio de Benito Juárez
-      '05-01', // Día del Trabajo
-      '05-10', // Día de las Madres (medio día)
-      '09-16', // Día de la Independencia
-      '11-02', // Día de Muertos
-      '11-20', // Día de la Revolución
-      '12-12', // Día de la Virgen de Guadalupe
-      '12-25', // Navidad
-    };
-
-    // Horarios Base
-    final fullDay = [
-      '08:00',
-      '09:00',
-      '10:00',
-      '11:00',
-      '14:00',
-      '15:00',
-      '16:00',
-    ];
-    final halfDay = ['09:00', '10:00', '11:00'];
-    final mediumDay = ['10:00', '11:00', '14:00', '15:00'];
-
-    // Horarios Reducidos (para especialistas o alta demanda)
-    final busyDay = ['10:00', '11:00', '16:00']; // Pocos huecos
-    final veryBusyDay = ['11:00', '16:00']; // Muy pocos huecos
-
-    var date = DateTime(year, 1, 1);
-    // Iterar todo el año
-    while (date.year == year) {
-      final key =
-          "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
-      final monthDay =
-          "${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
-
-      if (holidays.contains(monthDay)) {
-        // Festivo - Sin citas
-        disponibilidad[key] = [];
-      } else if (date.weekday == DateTime.sunday) {
-        // Domingo - Sin citas
-        disponibilidad[key] = [];
-      } else if (date.weekday == DateTime.saturday) {
-        // Sábado
-        if (altaDemanda) {
-          // Si es alta demanda, sábados muy llenos o no trabaja
-          disponibilidad[key] = (date.day % 2 == 0) ? [] : ['10:00', '11:00'];
-        } else {
-          disponibilidad[key] = halfDay;
-        }
-      } else {
-        // Lunes a Viernes
-        if (altaDemanda) {
-          // Alta demanda: mezcla de días ocupados y medios
-          if (date.day % 3 == 0) {
-            disponibilidad[key] = veryBusyDay;
-          } else if (date.day % 2 == 0) {
-            disponibilidad[key] = busyDay;
-          } else {
-            disponibilidad[key] = mediumDay;
-          }
-        } else if (esEspecialista) {
-          // Especialista normal: mezcla de full y medium
-          if (date.day % 4 == 0) {
-            disponibilidad[key] = mediumDay;
-          } else {
-            disponibilidad[key] = fullDay;
-          }
-        } else {
-          // General / Baja demanda: casi siempre full
-          disponibilidad[key] = fullDay;
-        }
+  /// Obtener horas disponibles para un doctor en una fecha específica
+  static Future<List<String>> getHorasDisponibles(String doctorId, DateTime fecha) async {
+    try {
+      final mesKey = '${fecha.year}-${fecha.month.toString().padLeft(2, '0')}';
+      final diaKey = '${fecha.year}-${fecha.month.toString().padLeft(2, '0')}-${fecha.day.toString().padLeft(2, '0')}';
+      
+      // Intentar obtener de Firestore
+      final docSnapshot = await _db
+          .collection('disponibilidad_medicos')
+          .doc(doctorId)
+          .collection(mesKey)
+          .doc(diaKey)
+          .get();
+      
+      if (docSnapshot.exists) {
+        final data = docSnapshot.data();
+        final horas = List<String>.from(data?['horas'] ?? []);
+        
+        // Excluir horas ya ocupadas por citas existentes
+        final citasExistentes = await _getCitasDelDia(doctorId, fecha);
+        return horas.where((hora) => !citasExistentes.contains(hora)).toList();
       }
+      
+      // Fallback: generar horas disponibles por defecto
+      return _generarHorasDisponibles(fecha);
+    } catch (e) {
+      print('⚠️ Error fetching hours: $e');
+      return _generarHorasDisponibles(fecha);
+    }
+  }
 
+  /// Obtener citas existentes de un doctor en un día específico
+  static Future<List<String>> _getCitasDelDia(String doctorId, DateTime fecha) async {
+    try {
+      final inicioDelDia = DateTime(fecha.year, fecha.month, fecha.day);
+      final finDelDia = inicioDelDia.add(const Duration(days: 1));
+      
+      final snapshot = await _db
+          .collection('citas')
+          .where('doctorId', isEqualTo: doctorId)
+          .where('fechaHora', isGreaterThanOrEqualTo: Timestamp.fromDate(inicioDelDia))
+          .where('fechaHora', isLessThan: Timestamp.fromDate(finDelDia))
+          .get();
+      
+      return snapshot.docs.map((doc) => doc.data()['hora'] as String? ?? '').toList();
+    } catch (e) {
+      print('Error getting citas: $e');
+      return [];
+    }
+  }
+
+  // ============================================
+  // BÚSQUEDA DE PACIENTES EXISTENTES
+  // ============================================
+  
+  /// Buscar pacientes por nombre o teléfono
+  static Future<List<Map<String, dynamic>>> buscarPacientes(String query) async {
+    if (query.isEmpty || query.length < 2) return [];
+    
+    try {
+      final queryLower = query.toLowerCase();
+      
+      // Buscar en colección pacientes
+      final snapshot = await _db.collection('pacientes').get();
+      
+      return snapshot.docs
+          .where((doc) {
+            final data = doc.data();
+            final nombre = (data['nombreCompleto'] ?? '').toString().toLowerCase();
+            final telefono = (data['telefono'] ?? '').toString();
+            final curp = (data['curp'] ?? data['CURP'] ?? '').toString().toLowerCase();
+            
+            return nombre.contains(queryLower) || 
+                   telefono.contains(query) ||
+                   curp.contains(queryLower);
+          })
+          .map((doc) => {
+            ...doc.data(),
+            'id': doc.id,
+          })
+          .take(10) // Limitar resultados
+          .toList();
+    } catch (e) {
+      print('❌ Error searching patients: $e');
+      return [];
+    }
+  }
+
+  /// Obtener paciente por CURP
+  static Future<Map<String, dynamic>?> getPacienteByCurp(String curp) async {
+    if (curp.isEmpty) return null;
+    
+    try {
+      final snapshot = await _db
+          .collection('pacientes')
+          .where('curp', isEqualTo: curp.toUpperCase())
+          .limit(1)
+          .get();
+      
+      if (snapshot.docs.isNotEmpty) {
+        return {
+          ...snapshot.docs.first.data(),
+          'id': snapshot.docs.first.id,
+        };
+      }
+      return null;
+    } catch (e) {
+      print('❌ Error getting patient by CURP: $e');
+      return null;
+    }
+  }
+
+  /// Obtener paciente por teléfono
+  static Future<Map<String, dynamic>?> getPacienteByTelefono(String telefono) async {
+    if (telefono.isEmpty || telefono.length < 10) return null;
+    
+    try {
+      final snapshot = await _db
+          .collection('pacientes')
+          .where('telefono', isEqualTo: telefono)
+          .limit(1)
+          .get();
+      
+      if (snapshot.docs.isNotEmpty) {
+        return {
+          ...snapshot.docs.first.data(),
+          'id': snapshot.docs.first.id,
+        };
+      }
+      return null;
+    } catch (e) {
+      print('❌ Error getting patient by phone: $e');
+      return null;
+    }
+  }
+
+  // ============================================
+  // GENERADORES DE DISPONIBILIDAD (FALLBACK)
+  // ============================================
+
+  /// Generar disponibilidad para un mes cuando no hay datos en Firestore
+  static Map<DateTime, DisponibilidadDia> _generarDisponibilidadMes(int year, int month) {
+    final Map<DateTime, DisponibilidadDia> disponibilidad = {};
+    
+    // Obtener primer y último día del mes
+    final firstDay = DateTime(year, month, 1);
+    final lastDay = DateTime(year, month + 1, 0);
+    
+    var date = firstDay;
+    while (date.isBefore(lastDay.add(const Duration(days: 1)))) {
+      if (date.weekday != DateTime.sunday) {
+        int citasDisponibles;
+        int citasTotal = 8;
+        
+        if (date.weekday == DateTime.saturday) {
+          citasDisponibles = 3;
+          citasTotal = 4;
+        } else {
+          // Simular algo de variación
+          citasDisponibles = 4 + (date.day % 4);
+        }
+        
+        disponibilidad[date] = DisponibilidadDia(
+          fecha: date,
+          citasDisponibles: citasDisponibles,
+          citasOcupadas: citasTotal - citasDisponibles,
+          citasTotal: citasTotal,
+        );
+      }
+      
       date = date.add(const Duration(days: 1));
     }
-
-    // Agregar Diciembre 2025 (copiado de lo que ya teníamos)
-    final dec2025 = {
-      '2025-12-01': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-02': ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00'],
-      '2025-12-03': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-04': ['08:00', '09:00'],
-      '2025-12-05': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-06': <String>[],
-      '2025-12-08': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-09': ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00'],
-      '2025-12-10': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-11': ['10:00', '11:00'],
-      '2025-12-12': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-13': <String>[],
-      '2025-12-15': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-16': ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00'],
-      '2025-12-17': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-18': ['14:00', '15:00'],
-      '2025-12-19': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-20': ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00'],
-      '2025-12-22': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-23': ['08:00', '09:00', '10:00'],
-      '2025-12-24': <String>[],
-      '2025-12-26': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-27': <String>[],
-      '2025-12-29': [
-        '08:00',
-        '09:00',
-        '10:00',
-        '11:00',
-        '14:00',
-        '15:00',
-        '16:00',
-      ],
-      '2025-12-30': ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00'],
-      '2025-12-31': ['09:00', '10:00'],
-    };
-
-    disponibilidad.addAll(dec2025);
-
+    
     return disponibilidad;
+  }
+
+  /// Generar horas disponibles para un día cuando no hay datos en Firestore
+  static List<String> _generarHorasDisponibles(DateTime fecha) {
+    if (fecha.weekday == DateTime.sunday) {
+      return [];
+    }
+    
+    if (fecha.weekday == DateTime.saturday) {
+      return ['09:00', '10:00', '11:00'];
+    }
+    
+    // Lunes a Viernes - horario completo
+    List<String> horas = [
+      '08:00', '09:00', '10:00', '11:00',
+      '14:00', '15:00', '16:00',
+    ];
+    
+    // Simular algunas horas ocupadas basado en el día
+    if (fecha.day % 3 == 0) {
+      horas.removeAt(0);
+      horas.removeAt(1);
+    }
+    
+    return horas;
   }
 }

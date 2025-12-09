@@ -3,6 +3,7 @@ import '../widgets/finance_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../widgets/export_dialog.dart';
 import '../models/financial_models.dart';
+import '../services/balance_export_service.dart';
 
 class BalancesScreen extends StatefulWidget {
   const BalancesScreen({super.key});
@@ -98,6 +99,7 @@ class _BalancesScreenState extends State<BalancesScreen> with SingleTickerProvid
                 fontWeight: FontWeight.bold,
               ),
             ),
+          const FinanceLogoCircle(),
             if (!isSmallScreen)
               ElevatedButton(
                 onPressed: () async {
@@ -107,9 +109,56 @@ class _BalancesScreenState extends State<BalancesScreen> with SingleTickerProvid
                   );
 
                   if (result != null && mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Exportando en ${result.name}...')),
-                    );
+                    try {
+                      // Show processing message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Generando ${result.name}...')),
+                      );
+
+                      // Execute export
+                      switch (result) {
+                        case ExportOption.excel:
+                          await BalanceExportService.exportToExcel(
+                            balancesByArea: _balancesByArea,
+                            saldoDisponible: 4500000.00,
+                            saldoComprometido: 750000.00,
+                          );
+                          break;
+                        case ExportOption.pdf:
+                          await BalanceExportService.exportToPdf(
+                            balancesByArea: _balancesByArea,
+                            saldoDisponible: 4500000.00,
+                            saldoComprometido: 750000.00,
+                          );
+                          break;
+                        case ExportOption.print:
+                          await BalanceExportService.printBalances(
+                            balancesByArea: _balancesByArea,
+                            saldoDisponible: 4500000.00,
+                            saldoComprometido: 750000.00,
+                          );
+                          break;
+                      }
+
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Exportación completada'),
+                            backgroundColor: Colors.green,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Error: $e'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -406,5 +455,6 @@ class _BalancesScreenState extends State<BalancesScreen> with SingleTickerProvid
     );
   }
 }
+
 
 

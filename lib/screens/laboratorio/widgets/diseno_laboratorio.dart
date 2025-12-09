@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // IMPORTA LAS PANTALLAS DEL MÓDULO LABORATORIO
 import '../dashboard_laboratorio.dart';
@@ -69,13 +72,13 @@ class _LaboratoryLayoutState extends State<LaboratoryLayout> {
   Widget _getCurrentPage() {
     switch (_selectedIndex) {
       case 0:
-        return const LaboratoryDashboardScreen();
+        return LaboratoryDashboardScreen(onNavigate: _handleMenuSelected);
       case 1:
         return const LaboratoryRequestsScreen();
       case 2:
         return const LaboratoryResultsScreen();
       default:
-        return const LaboratoryDashboardScreen();
+        return LaboratoryDashboardScreen(onNavigate: _handleMenuSelected);
     }
   }
 
@@ -132,7 +135,7 @@ class _LaboratoryLayoutState extends State<LaboratoryLayout> {
 
 /// ========== MENÚ LATERAL ESCRITORIO ==========
 
-class _LaboratorySideMenu extends StatelessWidget {
+class _LaboratorySideMenu extends StatefulWidget {
   final int selectedIndex;
   final Function(int) onMenuSelected;
   final VoidCallback onLogout;
@@ -144,6 +147,78 @@ class _LaboratorySideMenu extends StatelessWidget {
   });
 
   @override
+  State<_LaboratorySideMenu> createState() => _LaboratorySideMenuState();
+}
+
+class _LaboratorySideMenuState extends State<_LaboratorySideMenu> {
+  String _userName = 'Cargando...';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  Future<void> _loadUserName() async {
+    try {
+      // Intentar obtener de SharedPreferences primero
+      final prefs = await SharedPreferences.getInstance();
+      final currentUsername = prefs.getString('current_username');
+      
+      if (currentUsername != null && currentUsername.isNotEmpty) {
+        // Buscar nombre completo en la colección personal
+        final personalDoc = await FirebaseFirestore.instance
+            .collection('personal')
+            .where('username', isEqualTo: currentUsername)
+            .limit(1)
+            .get();
+        
+        if (personalDoc.docs.isNotEmpty && mounted) {
+          setState(() {
+            _userName = personalDoc.docs.first.data()['nombre'] ?? currentUsername;
+          });
+          return;
+        }
+        
+        // Si no se encuentra en personal, buscar en users
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .where('username', isEqualTo: currentUsername)
+            .limit(1)
+            .get();
+        
+        if (userDoc.docs.isNotEmpty && mounted) {
+          setState(() {
+            _userName = userDoc.docs.first.data()['name'] ?? currentUsername;
+          });
+          return;
+        }
+        
+        if (mounted) {
+          setState(() {
+            _userName = currentUsername;
+          });
+        }
+      } else {
+        // Fallback a FirebaseAuth
+        final currentUser = FirebaseAuth.instance.currentUser;
+        if (currentUser != null && mounted) {
+          setState(() {
+            _userName = currentUser.displayName ?? currentUser.email ?? 'Usuario';
+          });
+        }
+      }
+    } catch (e) {
+      print('❌ Error cargando nombre de usuario: $e');
+      if (mounted) {
+        setState(() {
+          _userName = 'Usuario';
+        });
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: 260,
@@ -151,30 +226,53 @@ class _LaboratorySideMenu extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 90,
+            height: 110,
             width: double.infinity,
             color: kLSidebarBlue,
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: 22,
-                  backgroundColor: kLWhite,
-                  child: Icon(
-                    Icons.science,
-                    color: kLSidebarBlue,
-                    size: 26,
-                  ),
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 22,
+                      backgroundColor: kLWhite,
+                      child: Icon(
+                        Icons.science,
+                        color: kLSidebarBlue,
+                        size: 26,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      'Laboratorio',
+                      style: GoogleFonts.archivo(
+                        color: kLWhite,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 12),
-                Text(
-                  'Laboratorio',
-                  style: GoogleFonts.archivo(
-                    color: kLWhite,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
-                  ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Icon(Icons.person, color: kLWhite, size: 16),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        _userName,
+                        style: GoogleFonts.archivoNarrow(
+                          color: kLWhite,
+                          fontSize: 14,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -188,22 +286,22 @@ class _LaboratorySideMenu extends StatelessWidget {
                 _SideItem(
                   icon: Icons.home,
                   text: 'Inicio',
-                  selected: selectedIndex == 0,
-                  onTap: () => onMenuSelected(0),
+                  selected: widget.selectedIndex == 0,
+                  onTap: () => widget.onMenuSelected(0),
                 ),
                 const SizedBox(height: 18),
                 _SideItem(
                   icon: Icons.assignment_outlined,
                   text: 'Solicitudes',
-                  selected: selectedIndex == 1,
-                  onTap: () => onMenuSelected(1),
+                  selected: widget.selectedIndex == 1,
+                  onTap: () => widget.onMenuSelected(1),
                 ),
                 const SizedBox(height: 18),
                 _SideItem(
                   icon: Icons.description_outlined,
                   text: 'Resultados',
-                  selected: selectedIndex == 2,
-                  onTap: () => onMenuSelected(2),
+                  selected: widget.selectedIndex == 2,
+                  onTap: () => widget.onMenuSelected(2),
                 ),
               ],
             ),
@@ -223,7 +321,7 @@ class _LaboratorySideMenu extends StatelessWidget {
                     fontSize: 15,
                   ),
                 ),
-                onPressed: onLogout,
+                onPressed: widget.onLogout,
                 child: const Text('Cerrar sesión'),
               ),
             ),
@@ -273,7 +371,7 @@ class _SideItem extends StatelessWidget {
 
 /// ========== DRAWER MÓVIL ==========
 
-class _LaboratoryDrawer extends StatelessWidget {
+class _LaboratoryDrawer extends StatefulWidget {
   final int selectedIndex;
   final Function(int) onMenuSelected;
   final VoidCallback onLogout;
@@ -285,10 +383,77 @@ class _LaboratoryDrawer extends StatelessWidget {
   });
 
   @override
+  State<_LaboratoryDrawer> createState() => _LaboratoryDrawerState();
+}
+
+class _LaboratoryDrawerState extends State<_LaboratoryDrawer> {
+  String _userName = 'Cargando...';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  Future<void> _loadUserName() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final currentUsername = prefs.getString('current_username');
+      
+      if (currentUsername != null && currentUsername.isNotEmpty) {
+        final personalDoc = await FirebaseFirestore.instance
+            .collection('personal')
+            .where('username', isEqualTo: currentUsername)
+            .limit(1)
+            .get();
+        
+        if (personalDoc.docs.isNotEmpty && mounted) {
+          setState(() {
+            _userName = personalDoc.docs.first.data()['nombre'] ?? currentUsername;
+          });
+          return;
+        }
+        
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .where('username', isEqualTo: currentUsername)
+            .limit(1)
+            .get();
+        
+        if (userDoc.docs.isNotEmpty && mounted) {
+          setState(() {
+            _userName = userDoc.docs.first.data()['name'] ?? currentUsername;
+          });
+          return;
+        }
+        
+        if (mounted) {
+          setState(() {
+            _userName = currentUsername;
+          });
+        }
+      } else {
+        final currentUser = FirebaseAuth.instance.currentUser;
+        if (currentUser != null && mounted) {
+          setState(() {
+            _userName = currentUser.displayName ?? currentUser.email ?? 'Usuario';
+          });
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _userName = 'Usuario';
+        });
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     void handleSelect(int index) {
       Navigator.pop(context);
-      onMenuSelected(index);
+      widget.onMenuSelected(index);
     }
 
     return Drawer(
@@ -298,43 +463,113 @@ class _LaboratoryDrawer extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: 70,
+                height: 90,
                 width: double.infinity,
                 color: kLSidebarBlue,
-                alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Laboratorio',
-                  style: GoogleFonts.archivo(
-                    color: kLWhite,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Laboratorio',
+                      style: GoogleFonts.archivo(
+                        color: kLWhite,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        const Icon(Icons.person, color: kLWhite, size: 14),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            _userName,
+                            style: GoogleFonts.archivoNarrow(
+                              color: kLWhite,
+                              fontSize: 13,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 24),
               _SideItem(
                 icon: Icons.home,
                 text: 'Inicio',
-                selected: selectedIndex == 0,
+                selected: widget.selectedIndex == 0,
                 onTap: () => handleSelect(0),
               ),
               const SizedBox(height: 16),
               _SideItem(
                 icon: Icons.assignment_outlined,
                 text: 'Solicitudes',
-                selected: selectedIndex == 1,
+                selected: widget.selectedIndex == 1,
                 onTap: () => handleSelect(1),
               ),
               const SizedBox(height: 16),
               _SideItem(
                 icon: Icons.description_outlined,
                 text: 'Resultados',
-                selected: selectedIndex == 2,
+                selected: widget.selectedIndex == 2,
                 onTap: () => handleSelect(2),
+              ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 24),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kLSidebarBlue,
+                      foregroundColor: kLWhite,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      textStyle: GoogleFonts.archivo(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      widget.onLogout();
+                    },
+                    child: const Text('Cerrar sesión'),
+                  ),
+                ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Logo circular reutilizable
+class LaboratoryLogoCircle extends StatelessWidget {
+  const LaboratoryLogoCircle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 52,
+      height: 52,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.grey.shade300),
+        color: kLWhite,
+      ),
+      padding: const EdgeInsets.all(4),
+      child: ClipOval(
+        child: Image.asset(
+          kLLabLogoPath,
+          fit: BoxFit.cover,
         ),
       ),
     );
